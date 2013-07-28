@@ -12,5 +12,5 @@ fakefile () {
 }    
 function cd (){
     builtin cd "$@" 
-    echo "$PWD" > ~/.bash_last_directory
+    echo "$PWD" > ~/dot_files/.bash_last_directory
 }
