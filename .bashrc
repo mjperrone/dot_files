@@ -8,6 +8,15 @@ fi
 
 if [ -f ~/dot_files/.bash_functions ]; then
     source ~/dot_files/.bash_functions
+fi
+
+if [ -f ~/dot_files/completion/completionrc ]; then
+    source ~/dot_files/completion/completionrc
+fi
+
+if [ -f ~/dot_files/.git_functions ]; then
+    source ~/dot_files/.git_functions
+fi
 
 #branchy pathy stuff:
 export BRANCH=golden_set
@@ -31,12 +40,6 @@ export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]*  }"; if [[ ${hpw
 shopt -s cmdhist #multiline saved as one line
 shopt -s cdspell #autocorrect typos in path names when using cd
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
-
-branch_in_prompt (){
-    if [ $BRANCH_IN_PROMPT ]; then
-        echo '\e[0;35m$BRANCH'
-    fi
-}
 
 colorizeprompt () {
   local YELLOW="\[\033[0;33m\]"
