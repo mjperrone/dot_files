@@ -29,7 +29,9 @@ alias grep='grep --color'
 alias g='grep'
 
 #tools:
-alias pjson='python ~/dot_files/pprint-jl'
+alias pjson='python ~/dot_files/python_helpers/pprint-jl'
+alias csv='python ~/dot_files/python_helpers/csvcolumn.py'
+alias email'python ~/dot_files/python_helpers/sendemail.py'
 alias trim="sed -e 's/^ *//g' -e 's/ *$//g'"
 alias count='sort | uniq -c'
 alias len='wc -l | trim'
