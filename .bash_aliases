@@ -1,9 +1,8 @@
 #edit rcs:
-alias eb='vi ~/.bashrc'
-alias eba='vi ~/.bash_aliases'
-alias ebpg='vi ~/.bash_switch_pg'
-alias sb='source ~/.bashrc; echo source ~/.bashrc'
-alias ev='vi ~/.vimrc'
+alias eb='vi ~/dot_files/.bashrc'
+alias eba='vi ~/dot_files/.bash_aliases'
+alias ebpg='vi ~/dot_files/.bash_switch_pg'
+alias sb='source ~/dot_files/.bashrc; echo source ~/dot_files/.bashrc'
 
 #navigation:
 alias ..='cd ..'
@@ -45,7 +44,6 @@ alias intersect="grep -xF -f"
 alias sshl='ssh -L 5555:localhost:5432'
 alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app && exit' #for mac only
 alias diff='git --no-pager diff --no-index'
-alias d='open -a Terminal "`pwd`";line=$(head -n 1 ~/.bash_last_directory); cd $line;'
 
 #spell check:
 alias ci='vi'

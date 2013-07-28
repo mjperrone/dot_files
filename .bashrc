@@ -2,13 +2,12 @@ if [ -f /etc/bashrc ]; then
     source /etc/bashrc
 fi
 
-if [ -f ~/.bash_aliases ]; then
-    source ~/.bash_aliases
+if [ -f ~/dot_files/.bash_aliases ]; then
+    source ~/dot_files/.bash_aliases
 fi
 
-if [ -f ~/.bash_switch_pg ]; then
-    source ~/.bash_switch_pg
-fi
+if [ -f ~/dot_files/.bash_functions ]; then
+    source ~/dot_files/.bash_functions
 
 #branchy pathy stuff:
 export BRANCH=golden_set
@@ -47,29 +46,3 @@ colorizeprompt () {
   export PS1="$WHITE\t $CYAN\u$WHITE@$YELLOW\h\[\033[00m\]:$BLUE\w\[\033[00m\] $ "
 } 
 colorizeprompt
-
-
-#functions
-ip () {
-    curl -s "http://checkip.dyndns.org:8245/" | awk '{ print $6 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g' | sed 's/<.*>//g'
-}
-cdl () {
-    cd "$1" && ls
-}
-pushrc () {
-    scp ~/.bashrc $1:~/.bashrc
-    scp ~/.bash_aliases $1:~/.bash_aliases
-    scp ~/.bash_switch_pg $1:~/.bash_switch_pg
-    scp ~/.vimrc $1:~/.vimrc
-    scp ~/.inputrc $1:~/.inputrc
-}
-jump_branch () {
-        cd ~/src/$1/${PWD#$HOME/src/*/}/
-}
-fakefile () {
-    perl -e "print '0' x 1024 x 1024 x $1" > $1-MB-fake-file.txt
-}    
-function cd (){
-    builtin cd "$@" 
-    echo "$PWD" > ~/.bash_last_directory
-}
