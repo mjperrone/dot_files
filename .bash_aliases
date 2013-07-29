@@ -11,16 +11,15 @@ alias ....='cd ../../../'
 alias .....='cd ../../../../'
 alias -- -='cd -'
 
-
 #list:
-alias ld='ls -cd */'
-alias ld.='ls -cda */'
-alias lf='ls -p | grep -v "/$"'
-alias lf.='ls -ap | grep -v "/$"'
-alias l='ll'
+alias ls='ls -F --color'
 alias ll='ls -GlaF'
-alias ls='ls -GF'
-alias l.='ls -GaF'
+alias l='ll'
+alias l.='ls -ldF .*'
+alias ld='command ls -d --color */'
+alias ld.='command ls -da --color .*/'
+alias lf='ls -p | grep -v "/$"'
+alias lf.='ls -ap | grep -v "/$" | grep "^\."'
 
 #history
 alias hist='history'
