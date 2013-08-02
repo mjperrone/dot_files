@@ -55,6 +55,7 @@ alias :q='exit' #sure, you're in vim...
 
 #for eliot:
 alias cls='clear;ls'
+alias cl='clear;l'
 #for puneet:
 alias dir='ls -l'
 #for george and http://xkcd.com/530/
