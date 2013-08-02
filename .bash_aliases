@@ -1,3 +1,7 @@
+alias buuild_tunnel="ssh -fnL 5555:localhost:5432 buuild.kyru.us sleep 18000"                       
+alias jenkins_tunnel="ssh -fnL 5559:localhost:5432 buuild.kyru.us sleep 18000"
+
+
 #edit rcs:
 alias eb='vi ~/dot_files/.bashrc'
 alias eba='vi ~/dot_files/.bash_aliases'
@@ -12,12 +16,12 @@ alias .....='cd ../../../../'
 alias -- -='cd -'
 
 #list:
-alias ls='ls -F --color'
+alias ls='ls -FG'
 alias ll='ls -GlaF'
 alias l='ll'
 alias l.='ls -ldF .*'
-alias ld='command ls -d --color */'
-alias ld.='command ls -da --color .*/'
+alias ld='command ls -daG */'
+alias ld.='command ls -daG .*/'
 alias lf='ls -p | grep -v "/$"'
 alias lf.='ls -ap | grep -v "/$" | grep "^\."'
 
