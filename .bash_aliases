@@ -1,5 +1,5 @@
 alias buuild_tunnel="ssh -fnL 5555:localhost:5432 buuild.kyru.us sleep 18000"                       
-alias jenkins_tunnel="ssh -fnL 5559:localhost:5432 buuild.kyru.us sleep 18000"
+alias jenkins_tunnel="ssh -fnL 5559:localhost:5432 jenkins.slave.data.kyru.us sleep 18000"
 
 
 #edit rcs:
