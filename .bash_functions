@@ -2,7 +2,7 @@ ip () {
     curl -s "http://checkip.dyndns.org:8245/" | awk '{ print $6 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g' | sed 's/<.*>//g'
 }
 cdl () {
-    cd "$1" && ls
+    cd "$1" && l
 }
 jump_branch () {
         cd ~/src/$1/${PWD#$HOME/src/*/}/
