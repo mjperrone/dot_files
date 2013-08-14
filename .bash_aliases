@@ -53,6 +53,7 @@ alias diff='git --no-pager diff --no-index'
 
 #spell check:
 alias ci='vi'
+alias qq='exit'
 alias :wq='exit'
 alias :q='exit' #sure, you're in vim...
 
