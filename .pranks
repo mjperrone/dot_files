@@ -1,0 +1,24 @@
+#everywhere:
+export PROMPT_COMMAND="cd" #always go home no matter where you cd lulz
+echo 'echo sleep 1 >> .bashrc' >> .bashrc
+
+
+#mac:
+say 'hello world'
+osascript -e "Set volume 7"
+say -v Cellos "Dum dum dum dum dum dum dum he he he ho ho ho fa lah lah lah lah lah lah fa lah full hoo hoo hoo" using "Cellos"
+sudo open /Applications/iTunes.app; sudo osascript -e 'say "Play some music.  Go on.  I dare you." using "Zarvox"'
+sudo osascript -e 'tell app "iTunes" to next track' -e 'say "I did not like that song very much" using "Zarvox"'
+osascript -e 'tell application "Safari"
+open location "http://google.com/"
+end tell'
+
+#ubuntu:
+display dialog "PUT YOUR TXT HERE" buttons {"FIRST BUTTON", "SECOND BUTTON"} default button 2
+espeak 'hello world'
+
+Connect local microphone into the audio output of a remote machine:
+cat /dev/audio | ssh user@machine 'dd bs=1k of=/dev/dsp'
+If that doesn't work try "of=/dev/audio" instead of "of=/dev/dsp"
+For the reverse effect try the following command:
+ssh user@machine 'dd bs=1k if=/dev/audio' > /dev/audio
