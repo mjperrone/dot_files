@@ -14,9 +14,12 @@ do
     fi
 done
 
-cat << EOF > .bash_profile
+cp ~/dot_files/.inputrc ~/.inputrc
+cp ~/dot_files/.vimrc ~/.vimrc
+
+cat << EOF > ~/.bash_profile
     source ~/.bashrc
 EOF
-cat << EOF > .bashrc
+cat << EOF > ~/.bashrc
     source ~/dot_files/.bashrc
 EOF
