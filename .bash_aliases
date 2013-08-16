@@ -31,6 +31,7 @@ alias hist='history'
 #grep:
 alias grep='grep --color'
 alias g='grep'
+alias egrep='egrep --color'
 
 #tools:
 alias pjson='python ~/dot_files/python_helpers/pprint-jl'
