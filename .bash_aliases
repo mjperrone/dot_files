@@ -42,9 +42,6 @@ alias len='wc -l | trim'
 alias h='head -1'
 alias t='tail -1'
 
-#version control:
-alias st='svn status'
-
 #random:
 alias intersect="grep -xF -f"
 alias sshl='ssh -L 5555:localhost:5432'
