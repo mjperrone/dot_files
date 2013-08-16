@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 export OLD_DOT_FILES=~/old_dot_files
 if [ ! -d $OLD_DOT_FILES ]; then
     exit 0
