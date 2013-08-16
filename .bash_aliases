@@ -1,11 +1,9 @@
-alias buuild_tunnel="ssh -fnL 5555:localhost:5432 buuild.kyru.us sleep 18000"                       
-alias jenkins_tunnel="ssh -fnL 5559:localhost:5432 jenkins.slave.data.kyru.us sleep 18000"
-
-
+#!/usr/bin/env bash
 #edit rcs:
 alias eb='vi ~/dot_files/.bashrc'
 alias eba='vi ~/dot_files/.bash_aliases'
-alias ebpg='vi ~/dot_files/.bash_switch_pg'
+alias ebs='vi ~/dot_files/.bash_secrets'
+alias ebf='vi ~/dot_files/.bash_functions'
 alias sb='source ~/dot_files/.bashrc; echo source ~/dot_files/.bashrc'
 
 #navigation:
@@ -51,6 +49,7 @@ alias intersect="grep -xF -f"
 alias sshl='ssh -L 5555:localhost:5432'
 alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app && exit' #for mac only
 alias diff='git --no-pager diff --no-index'
+alias k='kill %1'
 
 #spell check:
 alias ci='vi'
@@ -58,12 +57,17 @@ alias qq='exit'
 alias :wq='exit'
 alias :q='exit' #sure, you're in vim...
 
+if [ ! -x "$(which tree 2>/dev/null)" ]
+then
+  alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+fi
+
 #for eliot:
 alias cls='clear;ls'
 alias cl='clear;l'
 #for puneet:
 alias dir='ls -l'
-#for george and http://xkcd.com/530/
+#for george and http://xkcd.com/530/  mac only...
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"
 
@@ -72,11 +76,3 @@ alias pumpitup="osascript -e 'set volume 10'"
 alias lol='l'
 alias gg='telnet towel.blinkenlights.nl'
 alias beep='say "done running command"'
-
-alias k='kill %1'
-
-
-if [ ! -x "$(which tree 2>/dev/null)" ]
-then
-  alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-fi
