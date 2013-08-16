@@ -14,3 +14,9 @@ function cd (){
     builtin cd "$@" 
     echo "$PWD" > ~/dot_files/.bash_last_directory
 }
+
+rep () {
+    TMPFILELOCATION=`mktemp -q /tmp/mpXXXXXXXXXXXXXXXX`
+    cat >> $TMPFILELOCATION
+    mv $TMPFILELOCATION $1
+}
