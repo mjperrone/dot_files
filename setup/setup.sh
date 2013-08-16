@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 export OLD_DOT_FILES=~/old_dot_files
 if [ -d "$OLD_DOT_FILES" ]; then
     exit 0
@@ -12,5 +12,11 @@ do
     if [ -f ~/$f ]; then
         mv ~/$f $OLD_DOT_FILES/$f
     fi
-    cp ~/dot_files/$f ~/$f
 done
+
+cat << EOF > .bash_profile
+    source ~/.bashrc
+EOF
+cat << EOF > .bashrc
+    source ~/dot_files/.bashrc
+EOF
