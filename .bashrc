@@ -49,3 +49,5 @@ colorizeprompt () {
   export PS1="$WHITE\t $CYAN\u$WHITE@$YELLOW\h\[\033[00m\]:$BLUE\w\[\033[00m\] $ "
 } 
 colorizeprompt
+
+set -o vi
