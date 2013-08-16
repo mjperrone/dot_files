@@ -2,9 +2,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-
 set virtualedit=onemore "this makes end of line in visual mode go allll the way to the end instead of one short
-
 
 syntax on
 set whichwrap+=<,>,h,l,[,]
@@ -21,16 +19,12 @@ set hlsearch
 "display
 set numberwidth=1 "line numbers will be  smaller if you do set number to see line numbers
 
-
-
 "editing
 set backspace=2 " Backspace over anything! (Super backspace!)
 set softtabstop=4 " 4 spaces as a tab for bs/del
 set tabstop=4                                                                   
 set shiftwidth=4
 set expandtab
-
-
 
 " Shift + Arrows - Visually Select text
  nnoremap  <s-up>     Vk
@@ -47,3 +41,7 @@ set expandtab
 "case insensitive search unless used caps
  set ignorecase
  set smartcase
+
+ " spell checks
+ :command W w
+ :command Q q
