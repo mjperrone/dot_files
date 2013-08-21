@@ -31,6 +31,8 @@ alias grep='grep --color'
 alias g='grep'
 alias egrep='egrep --color'
 alias fgrep='fgrep --color'
+alias gri='grep -r -i'
+alias gi='grep -i'
 
 #tools:
 alias pjson='python ~/dot_files/python_helpers/pprint-jl'
