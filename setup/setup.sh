@@ -17,6 +17,7 @@ if [ -d ~/$f ]; then
 fi
 
 
+
 cat << EOF > ~/.bashrc
     source ~/dot_files/.bashrc
 EOF
