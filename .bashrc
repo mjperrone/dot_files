@@ -41,7 +41,7 @@ alias pinfo='echo -e "\x1B[0;31mbranch: \x1B[0;36m$BRANCH"; echo -e "\x1B[0;31mp
 export HISTFILESIZE=30000
 export HISTCONTROL=ignoredups
 shopt -s histappend #append to the bash history file rather than overwriting it
-export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]*  }"; if [[ ${hpwd%% *} == "cd" ]]; then cwd=$OLDPWD; else cwd=$PWD; fi; echo "cd $cwd && $hpwd" >> ~/.bash_directory_history;update_terminal_cwd'
+export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]*  }"; if [[ ${hpwd%% *} == "cd" ]]; then cwd=$OLDPWD; else cwd=$PWD; fi; echo "cd $cwd && $hpwd" >> ~/.bash_directory_history;if [[ `uname` != "Linux" ]];then update_terminal_cwd; fi'
 shopt -s cmdhist #multiline saved as one line
 shopt -s cdspell #autocorrect typos in path names when using cd
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
