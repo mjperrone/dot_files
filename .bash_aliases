@@ -39,10 +39,11 @@ alias pjson='python ~/dot_files/python_helpers/pprint-jl'
 alias csv='python ~/dot_files/python_helpers/csvcolumn.py'
 alias email='python ~/dot_files/python_helpers/sendemail.py'
 alias trim="sed -e 's/^ *//g' -e 's/ *$//g'"
-alias count='sort | uniq -c'
+alias count='sort | uniq -c | sort -n'
 alias len='wc -l | trim'
 alias h='head -1'
 alias t='tail -1'
+alias pysum='egrep "class |def "'
 
 #random:
 alias intersect="grep -xF -f"
