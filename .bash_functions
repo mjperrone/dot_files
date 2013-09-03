@@ -30,3 +30,15 @@ function st () {
         echo 'neither git nor svn'
     fi
 }
+
+vlpdf () {
+    LINE_NUM=`grep -n -m 1 "Tex_DefaultTargetFormat"  ~/.vim/ftplugin/latex-suite/texrc | cut -d: -f1`
+    echo "$LINE_NUM"
+    sed "${LINE_NUM}s/.*/    TexLet g:Tex_DefaultTargetFormat = 'pdf'/" ~/.vim/ftplugin/latex-suite/texrc | rep ~/.vim/ftplugin/latex-suite/texrc
+}
+
+vldvi () {
+    LINE_NUM=`grep -n -m 1 "Tex_DefaultTargetFormat"  ~/.vim/ftplugin/latex-suite/texrc | cut -d: -f1`
+    echo "$LINE_NUM"
+    sed "${LINE_NUM}s/.*/    TexLet g:Tex_DefaultTargetFormat = 'dvi'/" ~/.vim/ftplugin/latex-suite/texrc | rep ~/.vim/ftplugin/latex-suite/texrc
+}
