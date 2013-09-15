@@ -42,3 +42,11 @@ vldvi () {
     echo "$LINE_NUM"
     sed "${LINE_NUM}s/.*/    TexLet g:Tex_DefaultTargetFormat = 'dvi'/" ~/.vim/ftplugin/latex-suite/texrc | rep ~/.vim/ftplugin/latex-suite/texrc
 }
+
+highlight_red () {
+    perl -pe "s/$1/\e[0;31m$&\e[0m/g"
+}
+highlight_yellow () {
+    perl -pe "s/$1/\e[0;33m$&\e[0m/g"
+}
+

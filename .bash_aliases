@@ -26,6 +26,9 @@ alias lf.='ls -ap | grep -v "/$" | grep "^\."'
 #history
 alias hist='history'
 
+#todo help:
+alias td='cat ~/Dropbox/**/todo.txt | highlight_red \-\-.* | highlight_yellow "\\*\\*\\*.*"'
+
 #grep:
 alias grep='grep --color'
 alias g='grep'
@@ -49,6 +52,7 @@ alias pysum='egrep "class |def "'
 alias intersect="grep -xF -f"
 alias sshl='ssh -L 5555:localhost:5432'
 alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app && exit' #for mac only
+
 alias diff='git --no-pager diff --no-index'
 alias k='kill %1'
 
