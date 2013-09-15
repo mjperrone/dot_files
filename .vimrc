@@ -4,6 +4,8 @@ set expandtab
 
 set virtualedit=onemore "this makes end of line in visual mode go allll the way to the end instead of one short
 
+set ruler "row and col numbers in bottom right always
+
 syntax on
 set whichwrap+=<,>,h,l,[,]
 filetype indent plugin on
