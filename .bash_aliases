@@ -6,6 +6,8 @@ alias ebs='vi ~/dot_files/.bash_secrets'
 alias ebf='vi ~/dot_files/.bash_functions'
 alias sb='source ~/dot_files/.bashrc; echo source ~/dot_files/.bashrc'
 
+alias refresh_dot_files='source ~/dot_files/setup/teardown.sh; source ~/dot_files/setup/setup.sh'
+
 #navigation:
 alias ..='cd ..'
 alias ...='cd ../../'
