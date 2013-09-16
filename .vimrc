@@ -1,53 +1,42 @@
-set tabstop=4
-set shiftwidth=4
-set expandtab
+set tabstop=4 "tabs are 4 spaces
+set shiftwidth=4 ">> and << behave right 
+set expandtab "hitting <tab> will indent correctly
+set softtabstop=4 " 4 spaces as a tab for bs/del
 
-set virtualedit=onemore "this makes end of line in visual mode go allll the way to the end instead of one short
+set virtualedit=onemore "this makes the cursor go one past the last character of a line
 
 set ruler "row and col numbers in bottom right always
 
 syntax on
-set whichwrap+=<,>,h,l,[,]
+set whichwrap+=<,>,h,l,[,] "auto wrap around to next line
 filetype indent plugin on
 set statusline+=%c
 set statusline+=\ %P
 set statusline+=%l/%L
 
-set cursorline
+set cursorline " horizontal line at cursor
 
 "searching
-set hlsearch
+set hlsearch "highlights search matches
 
 "display
-set numberwidth=1 "line numbers will be  smaller if you do set number to see line numbers
+set numberwidth=1 "line numbers will be smaller if you do set number to see line numbers
 
 "editing
 set backspace=2 " Backspace over anything! (Super backspace!)
-set softtabstop=4 " 4 spaces as a tab for bs/del
-set tabstop=4                                                                   
-set shiftwidth=4
-set expandtab
 
-" Shift + Arrows - Visually Select text
- nnoremap  <s-up>     Vk
- nnoremap  <s-down>   Vj
- nnoremap  <s-right>  vl
- nnoremap  <s-left>   vh
-
- "exit inser mode by tapping jj really fast
- imap jj <Esc>
-
- "make the yy and d and stuff work with the clipboard
- set clipboard=unnamed
+"exit inser mode by tapping jj really fast
+imap jj <Esc>
 
 "case insensitive search unless used caps
- set ignorecase
- set smartcase
+set ignorecase
+set smartcase
 
- " spell checks
- :command W w
- :command Q q
- 
+" spell checks
+:command W w
+:command Q q
+:command WQ wg
+
 
 " vim-latex config stuff follows: ********************************
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
@@ -70,5 +59,5 @@ to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
- 
+
 
