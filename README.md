@@ -35,3 +35,6 @@ The structure of my dotfiles is roughly as follows:
 * completion/ has the auto completion scripts for various commands
 * setup/ contains the scripts to set up all the config files, and to remove them.
 * .pranks has a bunch of useless fun stuff with which one can mess with people
+
+
+A lot of credit to https://github.com/revans/bash-it and numerous other people slowly throughout this campaign.

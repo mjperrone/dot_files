@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 export OLD_DOT_FILES=~/old_dot_files
 if [ ! -d $OLD_DOT_FILES ]; then
-    exit 0
+    exit 0 #if there isn't any old stuff then don't go back, why would this happen?
 fi
 
+#move the old stuff back, overwriting whatever
 for f in .bashrc .bash_profile .inputrc .vimrc
 do
     if [ -f $OLD_DOT_FILES/$f ]; then
@@ -15,4 +16,5 @@ if [ -d $OLD_DOT_FILES/.vim ]; then
     mv -r $OLD_DOT_FILES/.vim ~/
 fi
 
+#delete what's left
 rm -rf $OLD_DOT_FILES
