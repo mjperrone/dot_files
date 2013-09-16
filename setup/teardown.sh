@@ -10,10 +10,9 @@ do
         mv $OLD_DOT_FILES/$f ~/$f
     fi
 done
+rm ~/.vim
 if [ -d $OLD_DOT_FILES/.vim ]; then
     mv -r $OLD_DOT_FILES/.vim ~/
-else
-    rm -rf ~/.vim
 fi
 
 rm -rf $OLD_DOT_FILES

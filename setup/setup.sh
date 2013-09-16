@@ -16,8 +16,6 @@ if [ -d ~/$f ]; then
     mv  ~/.vim $OLD_DOT_FILES/.vim
 fi
 
-
-
 cat << EOF > ~/.bashrc
     source ~/dot_files/.bashrc
 EOF
@@ -26,6 +24,6 @@ cat << EOF > ~/.bash_profile
 EOF
 cp ~/dot_files/.inputrc ~/.inputrc
 cp ~/dot_files/.vimrc ~/.vimrc
-cp -r ~/dot_files/.vim ~/
+ln -s ~/dot_files/.vim ~/.vim
 
 source ~/.bashrc
