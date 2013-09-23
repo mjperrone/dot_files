@@ -2,3 +2,4 @@
 .bash_last_directory
 .bash_secrets
 *.swp
+*.pyc
