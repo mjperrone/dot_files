@@ -1,0 +1,31 @@
+set tabstop=4
+set expandtab
+
+set cursorline
+
+"searching
+set hlsearch
+
+
+"editing
+set softtabstop=4 " 4 spaces as a tab for bs/del
+set tabstop=4                                                                   
+set expandtab
+
+" Shift + Arrows - Visually Select text
+ nnoremap  <s-up>     Vk
+ nnoremap  <s-down>   Vj
+ nnoremap  <s-right>  vl
+ nnoremap  <s-left>   vh
+
+ "exit insert mode by tapping jj really fast
+ imap jj <Esc>
+
+
+"case insensitive search unless used caps
+ set ignorecase
+ set smartcase
+
+ " spell checks
+ :command W w
+ :command Q q
