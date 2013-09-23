@@ -31,11 +31,11 @@ alias lf.='ls -ap | grep -v "/$" | grep "^\."' #hidden files
 alias td='cat ~/Dropbox/**/todo.txt | highlight_red \-\-.* | highlight_yellow "\\*\\*\\*.*"'
 
 #grep:
-alias grep='grep --color'
+alias grep='grep --color -I' #be colorful and ignore binary files
 alias g='grep'
-alias egrep='egrep --color'
+alias egrep='egrep --color -I'
 alias eg='egrep'
-alias fgrep='fgrep --color'
+alias fgrep='fgrep --color -I'
 alias gri='grep -r -i'
 alias gi='grep -i'
 
