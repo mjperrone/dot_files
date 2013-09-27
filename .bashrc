@@ -46,7 +46,6 @@ export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]*  }"; if [[ ${hpw
 shopt -s cmdhist #multiline saved as one line
 shopt -s cdspell #autocorrect typos in path names when using cd
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
-set -o vi #vim mode for editing the terminal commands
 
 colorizeprompt () {
   local YELLOW="\[\033[0;33m\]"
