@@ -7,7 +7,7 @@ fi
 mkdir $OLD_DOT_FILES
 
 # save old dot files
-for f in .bashrc .bash_profile .inputrc .vimrc .vrapperrc
+for f in .bashrc .bash_profile .inputrc .vimrc .vrapperrc .editrc
 do
     if [ -f ~/$f ]; then
         mv ~/$f $OLD_DOT_FILES/$f
@@ -29,6 +29,7 @@ EOF
 cp ~/dot_files/.inputrc ~/.inputrc
 cp ~/dot_files/.vimrc ~/.vimrc
 cp ~/dot_files/.vrapperrc ~/.vrapperrc
+cp ~/dot_files/.editrc ~/.editrc
 ln -s ~/dot_files/.vim ~/.vim
 
 #apply the changes! (this is why you have to run source ~/dot_files/setup/setup.sh and not sh ~/dot_files/setup/setup.sh
