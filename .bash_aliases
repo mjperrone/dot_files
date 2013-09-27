@@ -28,7 +28,8 @@ alias lf='ls -p | grep -v "/$"' #non-hidden files
 alias lf.='ls -ap | grep -v "/$" | grep "^\."' #hidden files
 
 #todo help:
-alias td='cat ~/Dropbox/**/todo.txt | highlight_red \-\-.* | highlight_yellow "\\*\\*\\*.*"'
+alias td='cat ~/Dropbox/**/todo.txt | highlight_red \-\-.* | highlight_yellow "\\*\\*\\*.*"' #print todolists color coded
+alias etd='vi ~/Dropbox/**/todo.txt' #edit todo lists
 
 #grep:
 alias grep='grep --color -I' #be colorful and ignore binary files
