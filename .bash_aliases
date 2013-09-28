@@ -49,7 +49,9 @@ alias count='sort | uniq -c | sort -n' #count how many times things appear
 alias len='wc -l | trim' #how many lines in the file
 alias h='head -1'
 alias t='tail -1'
+alias m='make'
 alias pysum='egrep "class |def "' #summary of a python files based on function and class names
+alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
 #random:
 alias intersect="grep -xF -f" #set intersectino of two files
@@ -64,7 +66,6 @@ alias ci='vi'
 alias qq='exit'
 alias :wq='exit'
 alias :q='exit' #sure, you're in vim...
-alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
 #for eliot:
 alias cls='clear;ls'
