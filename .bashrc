@@ -23,7 +23,7 @@ fi
 
 
 #branchy pathy stuff:
-export BRANCH=table_level_quality
+export BRANCH=trunk
 export ORIGINAL_PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/texlive/2013/bin/x86_64-darwin
 export PATH=/Users/mperrone/src/$BRANCH/bin:$ORIGINAL_PATH
 export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
