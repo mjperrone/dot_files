@@ -27,7 +27,7 @@ function st () { #decide if it's a git or svn repo, print status based on result
         if [ -z "$OUT" ]; then
             echo "svn repo, no status"
         else
-            echo $OUT
+            echo "$OUT"
         fi
     elif [ `git rev-parse --is-inside-work-tree 2>/dev/null` ]; then
         git status 
