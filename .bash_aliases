@@ -5,6 +5,7 @@ alias eb='vi ~/dot_files/.bashrc'
 alias eba='vi ~/dot_files/.bash_aliases'
 alias ebs='vi ~/dot_files/.bash_secrets'
 alias ebf='vi ~/dot_files/.bash_functions'
+alias ebv='vi ~/dot_files/.vimrc'
 
 #reset configs fast:
 alias sb='source ~/dot_files/.bashrc; echo source ~/dot_files/.bashrc'
