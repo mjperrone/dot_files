@@ -25,11 +25,11 @@ EOF
 cat << EOF > ~/.bash_profile
     source ~/.bashrc
 EOF
-#copy over the things that have to be, link the others
-cp ~/dot_files/.inputrc ~/.inputrc
-cp ~/dot_files/.vimrc ~/.vimrc
-cp ~/dot_files/.vrapperrc ~/.vrapperrc
-cp ~/dot_files/.editrc ~/.editrc
+#link everything to the relevant file in ~/dot+files/
+ln -s ~/dot_files/.inputrc ~/.inputrc
+ln -s ~/dot_files/.vimrc ~/.vimrc
+ln -s ~/dot_files/.vrapperrc ~/.vrapperrc
+ln -s ~/dot_files/.editrc ~/.editrc
 ln -s ~/dot_files/.vim ~/.vim
 
 #apply the changes! (this is why you have to run source ~/dot_files/setup/setup.sh and not sh ~/dot_files/setup/setup.sh

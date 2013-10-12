@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 export OLD_DOT_FILES=~/old_dot_files
 if [ ! -d $OLD_DOT_FILES ]; then
-    exit 0 #if there isn't any old stuff then don't go back, why would this happen?
+    exit 0 #if there isn't any old stuff, so don't go back
 fi
 
 #move the old stuff back, overwriting whatever
@@ -13,7 +13,7 @@ do
 done
 rm ~/.vim
 if [ -d $OLD_DOT_FILES/.vim ]; then
-    mv -r $OLD_DOT_FILES/.vim ~/
+    mv $OLD_DOT_FILES/.vim ~/.vim
 fi
 
 #delete what's left
