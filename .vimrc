@@ -68,3 +68,10 @@ let g:tex_flavor='latex'
 
 " the thing that pathogen told me to put in here:
 execute pathogen#infect() 
+"the thing that python-mode told me to put in here for pathogen:
+filetype off
+
+call pathogen#infect()
+call pathogen#helptags()
+
+filetype plugin indent on
