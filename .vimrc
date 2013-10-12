@@ -2,6 +2,7 @@ set tabstop=4 "tabs are 4 spaces
 set shiftwidth=4 ">> and << behave right 
 set expandtab "hitting <tab> will indent correctly
 set softtabstop=4 " 4 spaces as a tab for bs/del
+set shiftround "tab to multiples of 4 spaces instead o absolute shifting
 
 set virtualedit=onemore "this makes the cursor go one past the last character of a line
 
@@ -14,10 +15,15 @@ set statusline+=%c
 set statusline+=\ %P
 set statusline+=%l/%L
 
+set showmatch "show closing bracket locations briefly
+
+set scrolloff=2 "show two lines below the cursor before scrolling
+
 set cursorline " horizontal line at cursor
 
 "searching
 set hlsearch "highlights search matches
+set incsearch "start finding stuff before hitting 'enter'
 
 "display
 set numberwidth=1 "line numbers will be smaller if you do set number to see line numbers
@@ -60,4 +66,5 @@ to
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 
-
+" the thing that pathogen told me to put in here:
+execute pathogen#infect() 
