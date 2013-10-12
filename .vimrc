@@ -75,3 +75,7 @@ call pathogen#infect()
 call pathogen#helptags()
 
 filetype plugin indent on
+
+" python-mode config: https://github.com/klen/python-mode
+let g:pymode_lint_ignore = "E501" "ignore comma separated list of error codes
+let g:pymode_folding = 0 "default don't fold code
