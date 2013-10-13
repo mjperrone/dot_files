@@ -2,4 +2,7 @@
 .bash_last_directory
 .bash_secrets
 *.swp
+*.swo
 *.pyc
+*.un~
+.netrwhist
