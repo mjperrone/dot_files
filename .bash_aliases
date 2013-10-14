@@ -65,8 +65,6 @@ alias hist='history'
 #spell check:
 alias ci='vi'
 alias qq='exit'
-alias :wq='exit'
-alias :q='exit' #sure, you're in vim...
 
 #for eliot:
 alias cls='clear;ls'
