@@ -47,3 +47,4 @@ todo
 * make sure teardown cleans up everything (.bash_directory_history, for example)
 * make .bash_profile and .bash_rc links
 * clean up the PROMPT_COMMAND
+* make sure everything is compatible with ubuntu and somewhat with windows8
