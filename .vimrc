@@ -13,6 +13,9 @@ set virtualedit=onemore "this makes the cursor go one past the last character of
 set ruler "row and col numbers in bottom right always
 
 set undofile "keep undos across buffers and across editing instances
+set undodir=~/.vim/undodir "it's annoying to have to see them, so hide them there
+set undolevels=1000 "maximum number of changes that can be undone
+set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
 set whichwrap+=<,>,h,l,[,] "auto wrap around to next line for left/right in normal, visual
                         "and insert modes, and for 'h' and 'l' in normal and visual
