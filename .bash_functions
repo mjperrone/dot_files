@@ -55,3 +55,7 @@ highlight_red () { #output std with strings matching the parameter highlighted r
 highlight_yellow () { #* * * * yellow
     perl -pe "s/$1/\e[0;33m$&\e[0m/g"
 }
+
+function gri () {
+    grep -r -i "$*" .
+}
