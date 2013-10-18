@@ -38,7 +38,6 @@ alias g='grep'
 alias egrep='egrep --color -I'
 alias eg='egrep'
 alias fgrep='fgrep --color -I'
-alias gri='grep -r -i'
 alias gi='grep -i'
 
 #tools:
