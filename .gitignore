@@ -6,4 +6,4 @@
 *.pyc
 *.un~
 .netrwhist
-.vim/undodir/
+.vim/undodir/*
