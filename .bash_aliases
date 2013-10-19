@@ -12,13 +12,14 @@ alias sb='source ~/dot_files/.bashrc; echo source ~/dot_files/.bashrc'
 alias refresh_dot_files='source ~/dot_files/setup/teardown.sh; source ~/dot_files/setup/setup.sh'
 
 #relative navigation:
-alias ..='cd ..'
-alias ...='cd ../../'
-alias ....='cd ../../../'
-alias .....='cd ../../../../'
-alias ......='cd ../../../../../'
-alias .......='cd ../../../../../../'
-alias ........='cd ../../../../../../../'
+L=".."
+R="../"
+for i in  {1..7}
+do
+    alias $L="cd $R"
+    L="$L."
+    R="$R../"
+done
 alias -- -='cd -'
 
 #list:
