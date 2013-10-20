@@ -66,3 +66,7 @@ unset PGPASSWORD
 #stuff some tutorial told me to do some time somewhere for latex-suite
 export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man
 export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info
+
+#virtualenv stuff
+export WORKON_HOME=~/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
