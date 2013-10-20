@@ -47,3 +47,4 @@ todo
 * make sure teardown cleans up everything (.bash_directory_history, for example)
 * make sure everything is compatible with ubuntu and somewhat with windows8
 * make vlpdf and vldvi functions less gross
+* make all instances of '~/dot_files' into some variable that defaults to the original
