@@ -1,1 +1,13 @@
-export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]*  }"; if [[ ${hpwd%% *} == "cd" ]]; then cwd=$OLDPWD; else cwd=$PWD; fi; echo "cd $cwd && $hpwd" >> ~/.bash_directory_history;if [[ `uname` != "Linux" ]];then update_terminal_cwd; fi' #output into .bash_directory_history after every command the history entrry plus the directory in which the command was run. often context matters. also, if not on linux, run 'update_terminal_cwd', which allows mac to open new terminal windows in the same directory as the one from which you openeed it.
+export PROMPT_COMMAND="$PROMPT_COMMAND"'
+hpwd=$(history 1);
+idnum=$(expr "$hpwd" : '\''\([0-9]*\)'\'');
+hpwd="${hpwd##[0-9]* }";
+if [[ ${hpwd%% *} = "cd" ]];
+    then cwd=$OLDPWD;
+    else cwd=$PWD;
+fi;
+echo "cd $cwd && $hpwd #$idnum" >> ~/.bash_directory_history;'
+
+
+#output the history entry and the directory in which the command was run into .bash_directory_history 
+#often context matters. 
