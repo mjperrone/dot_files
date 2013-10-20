@@ -36,16 +36,25 @@ function st () { #decide if it's a git or svn repo, print status based on result
     fi
 }
 
+find_line_num (){ #args: search string, file path
+    grep -n -m 1 "$1" "$2" | cut -d: -f1
+}
+
+replace_line (){ #args: replacement string, line number, file path
+    sed "$2s/.*/$1/" "$3" | rep "$3"
+}
+
+vl_switch_target_format () { #args: format
+    LINE_NUM=`find_line_num "Tex_DefaultTargetFormat"  ~/.vim/bundle/vim-latex/ftplugin/tex.vim`
+    replace_line "let g:Tex_DefaultTargetFormat = '$1'" 1 ~/.vim/bundle/vim-latex/ftplugin/tex.vim
+}
+
 vlpdf () { #tell latex-suite to output to pdf
-    LINE_NUM=`grep -n -m 1 "Tex_DefaultTargetFormat"  ~/.vim/bundle/vim-latex/ftplugin/tex.vim | cut -d: -f1`
-    echo "$LINE_NUM"
-    sed "${LINE_NUM}s/.*/let g:Tex_DefaultTargetFormat = 'pdf'/" ~/.vim/bundle/vim-latex/ftplugin/tex.vim | rep ~/.vim/bundle/vim-latex/ftplugin/tex.vim
+    vl_switch_target_format pdf
 }
 
 vldvi () { #tell latex-suite to output to dvi
-    LINE_NUM=`grep -n -m 1 "Tex_DefaultTargetFormat"  ~/.vim/bundle/vim-latex/ftplugin/tex.vim | cut -d: -f1`
-    echo "$LINE_NUM"
-    sed "${LINE_NUM}s/.*/let g:Tex_DefaultTargetFormat = 'dvi'/" ~/.vim/bundle/vim-latex/ftplugin/tex.vim | rep ~/.vim/bundle/vim-latex/ftplugin/tex.vim
+    vl_switch_target_format dvi
 }
 
 highlight_red () { #output std with strings matching the parameter highlighted red
