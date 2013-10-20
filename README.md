@@ -6,9 +6,9 @@ My unix dot files
 This is my home. I can get home by running the following commands:
 
 ```bash
-cd ~
-git clone https://github.com/mjperrone/dot_files.git
-source ~/dot_files/setup/setup.sh
+#$DOT_FILES can be set in .bashrc, default is ~/dot_files
+git clone https://github.com/mjperrone/dot_files.git $DOT_FILES
+source $DOT_FILES/setup/setup.sh
 ```
 
 That will take the current user's config files, store them in ~/old_dot_files, and then put mine in their place, with a combination of copies and symlinks.
@@ -16,8 +16,8 @@ That will take the current user's config files, store them in ~/old_dot_files, a
 When I'm done, I run:
 
 ```bash
-source ~/dot_files/setup/teardown.sh
-rm -rf ~/dot_files
+source $DOT_FILES/setup/teardown.sh
+rm -rf $DOT_FILES
 ```
 And it's like I was never there! 
 
@@ -45,4 +45,4 @@ todo
 * fully flesh out the .bash_directory_history idea (saving WHERE a command was run along the actual command, so better replication of old commands is possible)
 * make sure teardown cleans up everything (.bash_directory_history, for example)
 * make sure everything is compatible with ubuntu and somewhat with windows8
-* make all instances of '~/dot_files' into some variable that defaults to the original
+* clean up pinfo

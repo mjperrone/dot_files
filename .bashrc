@@ -1,27 +1,28 @@
 #!/usr/bin/env bash
 
+export DOT_FILES=~/dot_files
 
 #trigger all those other dot files!
 if [ -f /etc/bashrc ]; then
     source /etc/bashrc
 fi
-if [ -f ~/dot_files/.bash_aliases ]; then
-    source ~/dot_files/.bash_aliases
+if [ -f $DOT_FILES/.bash_aliases ]; then
+    source $DOT_FILES/.bash_aliases
 fi
-if [ -f ~/dot_files/.bash_functions ]; then
-    source ~/dot_files/.bash_functions
+if [ -f $DOT_FILES/.bash_functions ]; then
+    source $DOT_FILES/.bash_functions
 fi
-if [ -f ~/dot_files/.bash_prompt ]; then
-    source ~/dot_files/.bash_prompt
+if [ -f $DOT_FILES/.bash_prompt ]; then
+    source $DOT_FILES/.bash_prompt
 fi
-if [ -f ~/dot_files/bash_secrets ]; then
-    source ~/dot_files/.bash_secrets
+if [ -f $DOT_FILES/bash_secrets ]; then
+    source $DOT_FILES/.bash_secrets
 fi
-if [ -f ~/dot_files/completion/completionrc ]; then
-    source ~/dot_files/completion/completionrc
+if [ -f $DOT_FILES/completion/completionrc ]; then
+    source $DOT_FILES/completion/completionrc
 fi
-if [ -f ~/dot_files/.git_functions ]; then
-    source ~/dot_files/.git_functions
+if [ -f $DOT_FILES/.git_functions ]; then
+    source $DOT_FILES/.git_functions
 fi
 
 
