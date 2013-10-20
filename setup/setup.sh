@@ -17,15 +17,9 @@ if [ -d ~/$f ]; then
     mv  ~/.vim $OLD_DOT_FILES/.vim
 fi
 
-
-#have .bashrc point to the one in dot_files
-cat << EOF > ~/.bashrc
-    source ~/dot_files/.bashrc
-EOF
-cat << EOF > ~/.bash_profile
-    source ~/.bashrc
-EOF
 #link everything to the relevant file in ~/dot+files/
+ln -s ~/dot_files/.bashrc ~/.bashrc
+ln -s ~/dot_file/.bashrc ~/.bash_profile #make .bash_profile+.bashrc the same
 ln -s ~/dot_files/.inputrc ~/.inputrc
 ln -s ~/dot_files/.vimrc ~/.vimrc
 ln -s ~/dot_files/.vrapperrc ~/.vrapperrc
