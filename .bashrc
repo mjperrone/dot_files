@@ -11,6 +11,9 @@ fi
 if [ -f ~/dot_files/.bash_functions ]; then
     source ~/dot_files/.bash_functions
 fi
+if [ -f ~/dot_files/.bash_prompt ]; then
+    source ~/dot_files/.bash_prompt
+fi
 if [ -f ~/dot_files/bash_secrets ]; then
     source ~/dot_files/.bash_secrets
 fi
@@ -41,7 +44,6 @@ alias pinfo='echo -e "\x1B[0;31mbranch: \x1B[0;36m$BRANCH"; echo -e "\x1B[0;31mp
 export HISTFILESIZE=30000 #store 30k of bash command history, you know, in case
 export HISTCONTROL=ignoredups
 shopt -s histappend #append to the bash history file rather than overwriting it
-export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]*  }"; if [[ ${hpwd%% *} == "cd" ]]; then cwd=$OLDPWD; else cwd=$PWD; fi; echo "cd $cwd && $hpwd" >> ~/.bash_directory_history;if [[ `uname` != "Linux" ]];then update_terminal_cwd; fi' #output into .bash_directory_history after every command the history entrry plus the directory in which the command was run. often context matters. also, if not on linux, run 'update_terminal_cwd', which allows mac to open new terminal windows in the same directory as the one from which you openeed it.
 
 shopt -s cmdhist #multiline saved as one line
 shopt -s cdspell #autocorrect typos in path names when using cd
