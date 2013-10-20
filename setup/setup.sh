@@ -18,15 +18,15 @@ if [ -d ~/$f ]; then
 fi
 
 #link everything to the relevant file in ~/dot+files/
-ln -s ~/dot_files/.bashrc ~/.bashrc
-ln -s ~/dot_file/.bashrc ~/.bash_profile #make .bash_profile+.bashrc the same
-ln -s ~/dot_files/.inputrc ~/.inputrc
-ln -s ~/dot_files/.vimrc ~/.vimrc
-ln -s ~/dot_files/.vrapperrc ~/.vrapperrc
-ln -s ~/dot_files/.editrc ~/.editrc
-ln -s ~/dot_files/.vim ~/.vim
-ln -s ~/dot_files/.bash_prompt ~/.bash_prompt
+ln -s $DOT_FILES/.bashrc ~/.bashrc
+ln -s $DOT_FILES/.bashrc ~/.bash_profile #make .bash_profile+.bashrc the same
+ln -s $DOT_FILES/.inputrc ~/.inputrc
+ln -s $DOT_FILES/.vimrc ~/.vimrc
+ln -s $DOT_FILES/.vrapperrc ~/.vrapperrc
+ln -s $DOT_FILES/.editrc ~/.editrc
+ln -s $DOT_FILES/.vim ~/.vim
+ln -s $DOT_FILES/.bash_prompt ~/.bash_prompt
 
 #apply the changes to the current shell instance!
-#(this is why you have to run source ~/dot_files/setup/setup.sh and not sh ~/dot_files/setup/setup.sh
+#(this is why you have to run source $DOT_FILES/setup/setup.sh and not just sh $DOT_FILES/setup/setup.sh
 source ~/.bashrc

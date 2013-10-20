@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 #edit configs fast:
-alias eb='vi ~/dot_files/.bashrc'
-alias eba='vi ~/dot_files/.bash_aliases'
-alias ebs='vi ~/dot_files/.bash_secrets'
-alias ebf='vi ~/dot_files/.bash_functions'
-alias ebv='vi ~/dot_files/.vimrc'
+alias eb='vi $DOT_FILES/.bashrc'
+alias eba='vi $DOT_FILES/.bash_aliases'
+alias ebs='vi $DOT_FILES/.bash_secrets'
+alias ebf='vi $DOT_FILES/.bash_functions'
+alias ebv='vi $DOT_FILES/.vimrc'
 
 #reset configs fast:
-alias sb='source ~/dot_files/.bashrc; echo source ~/dot_files/.bashrc'
-alias refresh_dot_files='source ~/dot_files/setup/teardown.sh; source ~/dot_files/setup/setup.sh'
+alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
+alias refresh_dot_files='source $DOT_FILES/setup/teardown.sh; source $DOT_FILES/setup/setup.sh'
 
 #relative navigation:
 L=".."
@@ -48,9 +48,9 @@ alias fg='fgrep'
 alias gi='grep -i'
 
 #tools:
-alias pjson='python ~/dot_files/python_helpers/pprint-jl' #pretty print json
-alias csv='python ~/dot_files/python_helpers/csvcolumn.py' #split csvs
-alias email='python ~/dot_files/python_helpers/sendemail.py' #used to pipe to an email
+alias pjson='python $DOT_FILES/python_helpers/pprint-jl' #pretty print json
+alias csv='python $DOT_FILES/python_helpers/csvcolumn.py' #split csvs
+alias email='python $DOT_FILES/python_helpers/sendemail.py' #used to pipe to an email
 alias trim="sed -e 's/^ *//g' -e 's/ *$//g'" #remove trailing and leading whitespace
 alias count='sort | uniq -c | sort -n' #count how many times things appear
 alias len='wc -l | trim' #how many lines in the file
