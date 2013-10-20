@@ -45,4 +45,4 @@ todo
 * fully flesh out the .bash_directory_history idea (saving WHERE a command was run along the actual command, so better replication of old commands is possible)
 * make sure teardown cleans up everything (.bash_directory_history, for example)
 * make sure everything is compatible with ubuntu and somewhat with windows8
-* clean up pinfo
+* make colors reasonable

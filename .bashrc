@@ -38,7 +38,11 @@ switch_branch () {
     export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
 }
 
-alias pinfo='echo -e "\x1B[0;31mbranch: \x1B[0;36m$BRANCH"; echo -e "\x1B[0;31mpath:\x1B[0m$PATH" | sed -e "s/:/  /g" -e "s/path/path:/g"; echo -e "\x1B[0;31mpythonpath:  \x1B[0m$PYTHONPATH"' #path info, and this should probably be a function. ew.
+pinfo () { #path info
+    echo -e "\x1B[0;31mbranch: \x1B[0;36m$BRANCH"
+    echo -e "\x1B[0;31mpath: \x1B[0m$PATH" | sed -e "s/:\//  \//g"
+    echo -e "\x1B[0;31mpythonpath:  \x1B[0m$PYTHONPATH"
+}
 
 
 #bash settings
