@@ -5,7 +5,7 @@ if [ ! -d $OLD_DOT_FILES ]; then
 fi
 
 #move the old stuff back, overwriting whatever
-for f in .bashrc .bash_profile .inputrc .vimrc .vrapperrc .editrc .bash_prompt
+for f in .bashrc .bash_profile .inputrc .vimrc .vrapperrc .editrc .bash_prompt .bash_history
 do
     if [ -f $OLD_DOT_FILES/$f ]; then
         mv $OLD_DOT_FILES/$f ~/$f
