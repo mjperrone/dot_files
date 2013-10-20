@@ -20,6 +20,8 @@ do
     L="$L."
     R="$R../"
 done
+unset L
+unset R
 alias -- -='cd -'
 
 #list:
@@ -42,6 +44,7 @@ alias g='grep'
 alias egrep='egrep --color -I'
 alias eg='egrep'
 alias fgrep='fgrep --color -I'
+alias fg='fgrep'
 alias gi='grep -i'
 
 #tools:
@@ -51,19 +54,20 @@ alias email='python ~/dot_files/python_helpers/sendemail.py' #used to pipe to an
 alias trim="sed -e 's/^ *//g' -e 's/ *$//g'" #remove trailing and leading whitespace
 alias count='sort | uniq -c | sort -n' #count how many times things appear
 alias len='wc -l | trim' #how many lines in the file
+alias pysum='egrep "class |def "' #summary of a python files based on function and class names
+alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+alias intersect="grep -xF -f" #set intersectino of two files
+alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
+alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app' #locks screen on mac only
+alias beep='say "done running command" && tput bel' #second part makes notification on mac
+
+#abbreviations
+alias hist='history'
+alias k='kill %1'
+alias diff='git --no-pager diff --no-index' #default git's colorful diff
 alias h='head -1'
 alias t='tail -1'
 alias m='make'
-alias pysum='egrep "class |def "' #summary of a python files based on function and class names
-alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-
-#random:
-alias intersect="grep -xF -f" #set intersectino of two files
-alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
-alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app && exit' #locks screen on mac only
-alias diff='git --no-pager diff --no-index' #default git's colorful diff
-alias k='kill %1'
-alias hist='history'
 
 #spell check:
 alias ci='vi'
@@ -78,8 +82,6 @@ alias dir='ls -l'
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"
 
-
 #fun:
 alias lol='l'
 alias gg='telnet towel.blinkenlights.nl' #Star Wars: A New Hope. In ascii art.
-alias beep='say "done running command"'
