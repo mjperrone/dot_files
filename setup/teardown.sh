@@ -12,6 +12,8 @@ do
     fi
 done
 rm ~/.vim
+rm ~/.bash_directory_history
+
 if [ -d $OLD_DOT_FILES/.vim ]; then
     mv $OLD_DOT_FILES/.vim ~/.vim
 fi
