@@ -10,6 +10,8 @@ set shiftround "tab to multiples of 4 spaces instead o absolute shifting
 
 set virtualedit=onemore "this makes the cursor go one past the last character of a line
 
+set iskeyword-=_ " underscores are treated as word boundaries, but not WORD boundaries
+
 set ruler "row and col numbers in bottom right always
 
 set undofile "keep undos across buffers and across editing instances
