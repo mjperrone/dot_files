@@ -39,7 +39,7 @@ alias td='cat ~/Dropbox/**/todo.txt | highlight_red \-\-.* | highlight_yellow "\
 alias etd='vi ~/Dropbox/**/todo.txt' #edit todo lists
 
 #grep:
-alias grep='grep --color -I' #be colorful and ignore binary files
+alias grep='grep --exclude-dir=".svn" --color -I' #be colorful and ignore binary files and svn directories
 alias g='grep'
 alias egrep='egrep --color -I'
 alias eg='egrep'
