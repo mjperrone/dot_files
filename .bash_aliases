@@ -44,7 +44,6 @@ alias g='grep'
 alias egrep='egrep --color -I'
 alias eg='egrep'
 alias fgrep='fgrep --color -I'
-alias fg='fgrep'
 alias gi='grep -i'
 
 #tools:
