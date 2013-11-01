@@ -77,3 +77,7 @@ export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info
 #virtualenv stuff
 export WORKON_HOME=~/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
+
+#https://github.com/joelthelion/autojump
+[[ -s ~/.autojump/etc/profile.d/autojump.bash ]] && . ~/.autojump/etc/profile.d/autojump.bash
+
