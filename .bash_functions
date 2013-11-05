@@ -68,3 +68,14 @@ highlight_yellow () { #* * * * yellow
 function gri () {
     grep -r -i "$*" .
 }
+
+#todo help:
+function td(){
+    cat ~/Dropbox/**/todo.txt | highlight_red \\-\\-.* | highlight_yellow \\*\\*\\*.*
+    cat ~/Dropbox/**/todo.txt > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
+}
+function etd(){
+    vi ~/Dropbox/**/todo.txt #edit todo lists
+    cat ~/Dropbox/**/todo.txt > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
+}
+
