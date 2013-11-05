@@ -34,10 +34,6 @@ alias ld.='command ls -daG .*/' #hidden directories
 alias lf='ls -p | grep -v "/$"' #non-hidden files
 alias lf.='ls -ap | grep -v "/$" | grep "^\."' #hidden files
 
-#todo help:
-alias td='cat ~/Dropbox/**/todo.txt | highlight_red \-\-.* | highlight_yellow "\\*\\*\\*.*"' #print todolists color coded
-alias etd='vi ~/Dropbox/**/todo.txt' #edit todo lists
-
 #grep:
 alias grep='grep --exclude-dir=".svn" --color -I' #be colorful and ignore binary files and svn directories
 alias g='grep'
