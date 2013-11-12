@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export DOT_FILES=~/dot_files
 export OLD_DOT_FILES=~/old_dot_files
 if [ -d "$OLD_DOT_FILES" ]; then
     exit 0 #don't overwrite saved dotfiles!
@@ -9,11 +10,12 @@ mkdir $OLD_DOT_FILES
 # save old dot files
 for f in .bashrc .bash_profile .inputrc .vimrc .vrapperrc .editrc .bash_prompt .bash_history
 do
-    if [ -f ~/$f ]; then
+    if [ -e ~/$f ]; then
         mv ~/$f $OLD_DOT_FILES/$f
+        echo "I just moved $f"
     fi
 done
-if [ -d ~/$f ]; then
+if [ -d ~/$e ]; then
     mv  ~/.vim $OLD_DOT_FILES/.vim
 fi
 
