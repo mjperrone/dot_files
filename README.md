@@ -46,3 +46,4 @@ todo
 * make sure teardown cleans up everything (.bash_directory_history, for example)
 * make sure everything is compatible with ubuntu and somewhat with windows8(doesn't work on red.dev.... because it wont source ~/.bashrc when its a link)
 * make colors reasonable
+* make sure the .vimrc is version-safe
