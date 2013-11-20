@@ -1,6 +1,12 @@
 syntax on
 filetype indent plugin on
 
+
+autocmd BufNewFile,BufRead *.txt setlocal spell
+autocmd BufNewFile,BufRead *.md setlocal spell
+autocmd BufNewFile,BufRead gitcommit setlocal spell 
+autocmd BufNewFile,BufRead *.tex setlocal spell 
+
 "tabbing stuff:
 set tabstop=4 "tabs are 4 spaces
 set shiftwidth=4 ">> and << behave right 
