@@ -1,3 +1,11 @@
+"personal maps:
+
+"don't save the deleted stuff in the default register when modifying delete
+"with leader
+map <Leader>d "_d
+
+set shellcmdflag=-ic "make vim's :! shell behave like my command prompt
+
 syntax on
 filetype indent plugin on
 
