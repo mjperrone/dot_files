@@ -14,7 +14,7 @@ else
             mv ~/$f $OLD_DOT_FILES/$f
         fi
     done
-    if [ -d ~/$e ]; then
+    if [ -d ~/$f ]; then
         mv  ~/.vim $OLD_DOT_FILES/.vim
     fi
     
