@@ -7,12 +7,15 @@ alias ebs='vi $DOT_FILES/.bash_secrets'
 alias ebf='vi $DOT_FILES/.bash_functions'
 alias ebv='vi $DOT_FILES/.vimrc'
 
+#go places:
+alias drop='cd ~/Dropbox'
+alias dot='cd ~/dot_files'
+
 #reset configs fast:
 alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
-alias refresh_dot_files='source $DOT_FILES/setup/teardown.sh; source $DOT_FILES/setup/setup.sh'
 
 #relative navigation:
-L=".."
+L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
 R="../"
 for i in  {1..7}
 do
@@ -22,7 +25,8 @@ do
 done
 unset L
 unset R
-alias -- -='cd -'
+
+alias -- -='cd -' #this remaps '-' to 'cd -'
 
 #list:
 alias ls='ls -FG' #default color + directory flags
@@ -36,11 +40,8 @@ alias lf.='ls -ap | grep -v "/$" | grep "^\."' #hidden files
 
 #grep:
 alias grep='grep --exclude-dir=".svn" --color -I' #be colorful and ignore binary files and svn directories
-alias g='grep'
 alias egrep='egrep --color -I'
-alias eg='egrep'
 alias fgrep='fgrep --color -I'
-alias gi='grep -i'
 
 #tools:
 alias pjson='python $DOT_FILES/python_helpers/pprint-jl' #pretty print json
@@ -50,7 +51,7 @@ alias trim="sed -e 's/^ *//g' -e 's/ *$//g'" #remove trailing and leading whites
 alias count='sort | uniq -c | sort -n' #count how many times things appear
 alias len='wc -l | trim' #how many lines in the file
 alias pysum='egrep "class |def "' #summary of a python files based on function and class names
-alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'" #print out the directory structure in a tree format
 alias intersect="grep -xF -f" #set intersectino of two files
 alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
 alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app' #locks screen on mac only
@@ -63,10 +64,10 @@ alias diff='git --no-pager diff --no-index' #default git's colorful diff
 alias h='head -1'
 alias t='tail -1'
 alias m='make'
+alias qq='exit'
 
 #spell check:
 alias ci='vi'
-alias qq='exit'
 
 #for eliot:
 alias cls='clear;ls'
