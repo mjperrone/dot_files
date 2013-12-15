@@ -78,5 +78,6 @@ alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 10'"
 
 #fun:
+alias fucking='sudo'
 alias lol='l'
 alias gg='telnet towel.blinkenlights.nl' #Star Wars: A New Hope. In ascii art.
