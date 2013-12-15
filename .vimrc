@@ -1,4 +1,4 @@
-"personal maps:
+"personal maps
 
 "don't save the deleted stuff in the default register when modifying delete
 "with leader
@@ -70,6 +70,10 @@ command W w
 command Q q
 command WQ wg
 
+"don't want to edit those types of files:
+set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp
+
+set wildmenu    " Autocomplete featuers in the status bar
 
 " vim-latex config stuff follows: ********************************
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
