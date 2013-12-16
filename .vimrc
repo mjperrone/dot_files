@@ -20,7 +20,7 @@ set tabstop=4 "tabs are 4 spaces
 set shiftwidth=4 ">> and << behave right 
 set expandtab "hitting <tab> will indent correctly
 set softtabstop=4 " 4 spaces as a tab for bs/del
-set shiftround "tab to multiples of 4 spaces instead o absolute shifting
+set shiftround "tab to multiples of 4 spaces instead of absolute shifting
 
 set virtualedit=onemore "this makes the cursor go one past the last character of a line
 
@@ -46,11 +46,25 @@ set statusline+=%l/%L
 
 set showcmd "show partial commands in status
 
+set splitright "default new buffer when splitting is on the right
+
 set showmatch "show closing bracket locations briefly
 
 set scrolloff=2 "show two lines below the cursor before scrolling
+set sidescroll=1 "when reach end of line, jump ahead 1 chars (default jmp middle)
+set sidescrolloff=5 "when reach 5 chars from the end, begin scrolling
+
+set nostartofline "cursor stays at col pos when jumping around
 
 set cursorline " horizontal line at cursor
+
+"color stuff
+set t_Co=256    "give terminal 256 colors instead of 8
+set textwidth=80
+let &colorcolumn="80,".join(range(120,999),",") " warning bar at 81 chars, highlighted forever at 120 chars
+highlight ColorColumn ctermbg=242 " make it highlighted in a grey
+"run :XtermColorTable to see all the colors
+
 
 "searching
 set hlsearch "highlights search matches
@@ -58,12 +72,9 @@ set incsearch "start finding stuff before hitting 'enter'
 set ignorecase "case insensitive search
 set smartcase "unless I use caps
 
-set numberwidth=1 "line numbers will be smaller if you do ":set number: to see line numbers
+set numberwidth=1 "line numbers will be smaller if you do ":set number: to see line number
 
 set backspace=indent,eol,start " Backspace over anything! (Super backspace!)
-
-"exit insert mode by tapping jj really fast
-imap jj <Esc>
 
 " spell checks
 command W w
@@ -71,7 +82,7 @@ command Q q
 command WQ wg
 
 "don't want to edit those types of files:
-set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp
+set wildignore+=.hg,.git,.svn,*.aux,*.out,*.toc,*.jpg,*.bmp,*.gif,*.png,*.jpeg,*.o,*.obj,*.exe,*.dll,*.manifest,*.spl,*.sw?,*.DS_Store,*.luac,migrations,*.pyc,*.orig
 
 set wildmenu    " Autocomplete featuers in the status bar
 
