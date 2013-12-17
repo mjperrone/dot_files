@@ -49,12 +49,18 @@ filetype plugin indent on
 "don't save the deleted stuff in the default register when modifying delete
 "with leader
 map <Leader>d "_d
+"toggle spellcheck
+map <Leader>s :set spell!<CR>
+
 
 set shellcmdflag=-ic "make vim's :! shell behave like my command prompt
 
 syntax on
 
+"spellcheck
+set spelllang=en_us
 
+" spellcheck these files by default
 autocmd BufNewFile,BufRead *.txt setlocal spell
 autocmd BufNewFile,BufRead *.md setlocal spell
 autocmd BufNewFile,BufRead gitcommit setlocal spell 
