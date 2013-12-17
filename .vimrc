@@ -1,3 +1,49 @@
+" BEGIN Vundle
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle (required)
+    Bundle 'gmarik/vundle'
+
+" my plugins:
+
+" python mode- (pylint, autopep8, etc...)
+    Bundle 'klen/python-mode'
+
+" SnipMate- autofill snippets for boilerplate
+    Bundle 'MarcWeber/vim-addon-mw-utils'
+    Bundle 'tomtom/tlib_vim'
+    Bundle 'garbas/vim-snipmate'
+
+" Vim-Fugitive- a bunch of git stuff (don't tell him I'm using Vundle now...)
+    Bundle 'tpope/vim-fugitive'
+
+" Vim-latex- as it's named...
+    Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
+
+" Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
+    Bundle 'justinmk/vim-sneak'
+
+" xterm-color-table- displays the xterm colors with hex+rgb codes
+    Bundle 'guns/xterm-color-table.vim'
+
+filetype plugin indent on
+" Vundle help:
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install (update) bundles
+" :BundleSearch(!) foo - search (or refresh cache first) for foo
+" :BundleClean(!)      - confirm (or auto-approve) removal of unused bundles
+
+" END Vundle
+
+
+
+
+
+
 "personal maps
 
 "don't save the deleted stuff in the default register when modifying delete
@@ -7,7 +53,6 @@ map <Leader>d "_d
 set shellcmdflag=-ic "make vim's :! shell behave like my command prompt
 
 syntax on
-filetype indent plugin on
 
 
 autocmd BufNewFile,BufRead *.txt setlocal spell
@@ -104,17 +149,6 @@ to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
-
-
-" pathogen config stuff follows: *********************************
-" the thing that pathogen told me to put in here:
-"the thing that python-mode told me to put in here for pathogen:
-filetype off
-
-call pathogen#infect()
-call pathogen#helptags()
-
-filetype plugin indent on
 
 " python-mode config stuff follows: https://github.com/klen/python-mode
 let g:pymode_lint_ignore = "E501" "ignore comma separated list of error codes
