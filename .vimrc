@@ -39,12 +39,14 @@ filetype plugin indent on
 
 " END Vundle
 
+" quasi plugins:
+" super basic addition on nums newline separated.
+source ~/.vim/quasi_plugins/vmath.vim
+" drag around visual blocks
+source ~/.vim/quasi_plugins/dragvisuals.vim
 
 
-
-
-
-"personal maps
+"personal maps:
 
 "don't save the deleted stuff in the default register when modifying delete
 "with leader
