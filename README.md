@@ -37,7 +37,7 @@ The structure of my dotfiles is roughly as follows:
 * .pranks has a bunch of useless fun stuff with which one can mess with people
 
 
-A lot of credit to <https://github.com/revans/bash-it>,<https://github.com/linduxed/dotfiles>, <a href=http://www.linkedin.com/in/vinaysethmohta>Vinay Seth Mohta</a>, <a href=https://github.com/GeorgeErickson/dotfiles>George Erickson</a>, and numerous other people slowly throughout this campaign.
+A lot of credit to <https://github.com/revans/bash-it>,<https://github.com/linduxed/dotfiles>, <a href=http://www.linkedin.com/in/vinaysethmohta>Vinay Seth Mohta</a>, <a href=https://github.com/GeorgeErickson/dotfiles>George Erickson</a>, <a href=http://www.youtube.com/watch?v=aHm36-na4-4>Damian Conway</a>, and numerous other people slowly throughout this campaign.
 
 
 todo
