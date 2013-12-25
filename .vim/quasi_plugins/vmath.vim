@@ -6,8 +6,8 @@
 "##                                                                  ##
 "##  To use:                                                         ##
 "##                                                                  ##
-"##     vmap <expr>  ++  VMATH_YankAndAnalyse()                      ##
-"##     nmap         ++  vip++                                       ##
+     vmap <expr>  ++  VMATH_YankAndAnalyse()
+     nmap         ++  vip++
 "##                                                                  ##
 "##  (or whatever keys you prefer to remap these actions to)         ##
 "##                                                                  ##
