@@ -114,7 +114,7 @@ set cursorline " horizontal line at cursor
 "color stuff
 set t_Co=256    "give terminal 256 colors instead of 8
 set textwidth=80
-let &colorcolumn="80,".join(range(120,999),",") " warning bar at 81 chars, highlighted forever at 120 chars
+let &colorcolumn="80" " warning bar at 81 chars
 highlight ColorColumn ctermbg=242 " make it highlighted in a grey
 "run :XtermColorTable to see all the colors
 
