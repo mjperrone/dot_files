@@ -44,6 +44,18 @@ pinfo () { #path info
     echo -e "\x1B[0;31mpythonpath:  \x1B[0m$PYTHONPATH"
 }
 
+pginfo () { #postgres info
+    echo -e "\x1B[0;31mPGHOST: \x1B[0m$PGHOST"
+    echo -e "\x1B[0;31mPGPORT: \x1B[0m$PGPORT"
+    echo -e "\x1B[0;31mPGDATABASE: \x1B[0m$PGDATABASE"
+    echo -e "\x1B[0;31mPGUSER: \x1B[0m$PGUSER"
+    if [[ -z "$PGPASSWORD" ]]; then
+        echo -e "\x1B[0;31mPGPASSWORD: <NOT set>"
+    else
+        echo -e "\x1B[0;31mPGPASSWORD: \x1B[0;36m<set>"
+    fi
+}
+
 
 #bash settings
 export HISTFILESIZE=30000 #store 30k of bash command history, you know, in case
