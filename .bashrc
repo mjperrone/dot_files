@@ -38,13 +38,13 @@ switch_branch () {
     export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
 }
 
-pinfo () { #path info
+function pinfo () { #path info
     echo -e "\x1B[0;31mbranch: \x1B[0;36m$BRANCH"
     echo -e "\x1B[0;31mpath: \x1B[0m$PATH" | sed -e "s/:\//  \//g"
     echo -e "\x1B[0;31mpythonpath:  \x1B[0m$PYTHONPATH"
 }
 
-pginfo () { #postgres info
+function pginfo () { #postgres info
     echo -e "\x1B[0;31mPGHOST: \x1B[0m$PGHOST"
     echo -e "\x1B[0;31mPGPORT: \x1B[0m$PGPORT"
     echo -e "\x1B[0;31mPGDATABASE: \x1B[0m$PGDATABASE"
