@@ -15,8 +15,8 @@ alias drop='cd ~/Dropbox'
 alias dot='cd ~/dot_files'
 
 #relative navigation:
-local L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
-local R="../"
+L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
+R="../"
 for i in  {1..7}
 do
     alias $L="cd $R"

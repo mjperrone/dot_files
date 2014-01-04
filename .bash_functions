@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-function pinfo () { #path info
+pinfo () { #path info
     echo -e "\x1B[0;31mbranch: \x1B[0;36m$BRANCH"
     echo -e "\x1B[0;31mpath: \x1B[0m$PATH" | sed -e "s/:\//  \//g"
     echo -e "\x1B[0;31mpythonpath:  \x1B[0m$PYTHONPATH"
@@ -19,14 +19,11 @@ function pginfo () { #postgres info
     fi
 }
 
-
 ip () { #print external ip address
-    curl -s "http://checkip.dyndns.org:8245/" | awk '{ print $6 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g' | sed 's/<.*>//g'
+    curl -s "http://checkip.dyndns.org:8245/" | awk '{ print $6 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g; s/<.*>//g'
 }
 
-cdl () {
-    cd "$1" && l
-}
+cdl () { cd "$1" && l; }
 
 switch_branch () {
     export BRANCH=$1
@@ -34,7 +31,7 @@ switch_branch () {
     export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
 }
 
-jump_branch () { #assumes svn branches are at ~/src/*
+jump_branch () { #assumes svn branches are at ~/src/* (and currend PWD is in that tree)
     cd ~/src/$1/${PWD#$HOME/src/*/}/
 }
 
@@ -48,7 +45,7 @@ rep () { #to be able to output stuff to a file that's being used to generate the
     mv $TMPFILELOCATION $1
 }
 
-function st () { #decide if it's a git or svn repo, print status based on result
+st () { #decide if it's a git or svn repo, print status based on result
     if [ -d .svn ]; then
         OUT=`svn status`
         if [ -z "$OUT" ]; then
@@ -63,6 +60,7 @@ function st () { #decide if it's a git or svn repo, print status based on result
     fi
 }
 
+#TODO: remove find_line_num and replace_line, do the job of vl_switch.. with sed/awk
 find_line_num (){ #args: search string, file path
     grep -n -m 1 "$1" "$2" | cut -d: -f1
 }
@@ -92,16 +90,15 @@ highlight_yellow () { #* * * * yellow
     perl -pe "s/$1/\e[0;33m$&\e[0m/g"
 }
 
-function gri () {
-    grep -r -i "$*" .
-}
+gri () { grep -r -i "$*" .; }
+gr () { grep -r  "$*" .; }
 
 #todo help:
-function td(){
+td(){
     cat ~/Dropbox/**/todo.txt | highlight_red \\-\\-.* | highlight_yellow \\*\\*\\*.*
     cat ~/Dropbox/**/todo.txt > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
 }
-function etd(){
+etd(){
     vi ~/Dropbox/**/todo.txt #edit todo lists
     cat ~/Dropbox/**/todo.txt > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
 }
