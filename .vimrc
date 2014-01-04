@@ -54,6 +54,16 @@ map <Leader>d "_d
 "toggle spellcheck
 map <Leader>s :set spell!<CR>
 
+if has("unix")
+    let s:uname = system("uname -s")
+    if s:uname == "Darwin"
+        "copy selected text in visual mode to mac system clipboard
+        vmap <leader>c :w !pbcopy<CR><CR>
+        "paste from clipboard without having to do :set paste i <cmd>v
+        map <leader>p :r!pbpaste<CR>
+    endif
+endif
+
 
 set shellcmdflag=-ic "make vim's :! shell behave like my command prompt
 
