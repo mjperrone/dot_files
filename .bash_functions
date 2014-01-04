@@ -1,10 +1,37 @@
 #!/usr/bin/env bash
+function pinfo () { #path info
+    echo -e "\x1B[0;31mbranch: \x1B[0;36m$BRANCH"
+    echo -e "\x1B[0;31mpath: \x1B[0m$PATH" | sed -e "s/:\//  \//g"
+    echo -e "\x1B[0;31mpythonpath:  \x1B[0m$PYTHONPATH"
+    echo -e "\x1B[0;31mmanpath:  \x1B[0m$MANPATH"
+    echo -e "\x1B[0;31minfopath:  \x1B[0m$infopath"
+}
+
+function pginfo () { #postgres info
+    echo -e "\x1B[0;31mPGHOST: \x1B[0m$PGHOST"
+    echo -e "\x1B[0;31mPGPORT: \x1B[0m$PGPORT"
+    echo -e "\x1B[0;31mPGDATABASE: \x1B[0m$PGDATABASE"
+    echo -e "\x1B[0;31mPGUSER: \x1B[0m$PGUSER"
+    if [[ -z "$PGPASSWORD" ]]; then
+        echo -e "\x1B[0;31mPGPASSWORD: <NOT set>"
+    else
+        echo -e "\x1B[0;31mPGPASSWORD: \x1B[0;36m<set>"
+    fi
+}
+
+
 ip () { #print external ip address
     curl -s "http://checkip.dyndns.org:8245/" | awk '{ print $6 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g' | sed 's/<.*>//g'
 }
 
 cdl () {
     cd "$1" && l
+}
+
+switch_branch () {
+    export BRANCH=$1
+    export PATH=$ORIGINAL_PATH:/Users/mperrone/src/$BRANCH/bin
+    export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
 }
 
 jump_branch () { #assumes svn branches are at ~/src/*

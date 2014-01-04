@@ -30,34 +30,12 @@ fi
 export BRANCH=trunk
 export ORIGINAL_PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
 export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/texlive/2013/bin/x86_64-darwin
-export ORIGINAL_PATH=$ORIGINAL_PATH:/Applications/Postgres.app/Contents/MacOS/bin #lets createdb, dropdb,.. work
+export ORIGINAL_PATH=$ORIGINAL_PATH:/Applications/Postgres.app/Contents/MacOS/bin #allows createdb, dropdb,.. work
 export PATH=/Users/mperrone/src/$BRANCH/bin:$ORIGINAL_PATH
 export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
-
-switch_branch () {
-    export BRANCH=$1
-    export PATH=$ORIGINAL_PATH:/Users/mperrone/src/$BRANCH/bin
-    export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
-}
-
-function pinfo () { #path info
-    echo -e "\x1B[0;31mbranch: \x1B[0;36m$BRANCH"
-    echo -e "\x1B[0;31mpath: \x1B[0m$PATH" | sed -e "s/:\//  \//g"
-    echo -e "\x1B[0;31mpythonpath:  \x1B[0m$PYTHONPATH"
-}
-
-function pginfo () { #postgres info
-    echo -e "\x1B[0;31mPGHOST: \x1B[0m$PGHOST"
-    echo -e "\x1B[0;31mPGPORT: \x1B[0m$PGPORT"
-    echo -e "\x1B[0;31mPGDATABASE: \x1B[0m$PGDATABASE"
-    echo -e "\x1B[0;31mPGUSER: \x1B[0m$PGUSER"
-    if [[ -z "$PGPASSWORD" ]]; then
-        echo -e "\x1B[0;31mPGPASSWORD: <NOT set>"
-    else
-        echo -e "\x1B[0;31mPGPASSWORD: \x1B[0;36m<set>"
-    fi
-}
-
+#stuff some tutorial told me to do some time somewhere for latex-suite
+export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
+export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH
 
 #bash settings
 export HISTFILESIZE=30000 #store 30k of bash command history, you know, in case
@@ -83,10 +61,6 @@ export PGPORT=5432
 export PGHOST=localhost
 unset PGUSER
 unset PGPASSWORD
-
-#stuff some tutorial told me to do some time somewhere for latex-suite
-export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
-export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH
 
 #virtualenv stuff
 export WORKON_HOME=~/.virtualenvs
