@@ -6,14 +6,15 @@ export DOT_FILES=~/dot_files
 if [ -f /etc/bashrc ]; then
     source /etc/bashrc
 fi
-for f in .bash_aliases .bash_functions .bash_prompt .bash_secrets
-    completion/completionrc .git_functions
+if [ -f completion/completionrc ]; then
+    source /etc/bashrc
+fi
+for f in .bash_aliases .bash_functions .bash_prompt .bash_secrets .git_functions
 do
     if [ -f $DOT_FILES/$f ]; then
         source $DOT_FILES/$f
     fi
 done
-
 
 #branchy pathy stuff:
 export BRANCH=trunk
@@ -22,7 +23,6 @@ export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/texlive/2013/bin/x86_64-darwin
 export ORIGINAL_PATH=$ORIGINAL_PATH:/Applications/Postgres.app/Contents/MacOS/bin #allows createdb, dropdb,.. work
 export PATH=/Users/mperrone/src/$BRANCH/bin:$ORIGINAL_PATH
 export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
-#stuff some tutorial told me to do some time somewhere for latex-suite
 export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
 export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH
 
@@ -34,16 +34,6 @@ shopt -s histappend #append to the bash history file rather than overwriting it
 shopt -s cmdhist #multiline saved as one line
 shopt -s cdspell #autocorrect typos in path names when using cd
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
-
-colorizeprompt () {
-  local YELLOW="\[\033[0;33m\]"
-  local BLUE="\[\033[0;34m\]"
-  local CYAN="\[\033[0;36m\]"
-  local WHITE="\[\033[0;37m\]"
-  export PS1="$WHITE\t $CYAN\u$WHITE@$YELLOW\h\[\033[00m\]:$BLUE\w\[\033[00m\] $ "
-  #time name@location: ~/dir $
-} 
-colorizeprompt
 
 #postgres defaults
 export PGPORT=5432
@@ -57,4 +47,3 @@ export WORKON_HOME=~/.virtualenvs
 
 #https://github.com/joelthelion/autojump
 [[ -s ~/.autojump/etc/profile.d/autojump.bash ]] && . ~/.autojump/etc/profile.d/autojump.bash
-
