@@ -15,8 +15,8 @@ alias drop='cd ~/Dropbox'
 alias dot='cd ~/dot_files'
 
 #relative navigation:
-L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
-R="../"
+local L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
+local R="../"
 for i in  {1..7}
 do
     alias $L="cd $R"
@@ -26,12 +26,11 @@ done
 unset L
 unset R
 
-alias -- -='cd -' #this remaps '-' to 'cd -'
+alias -- -='cd -' #this remaps '-' to 'cd -', don't ask me how
 
 #list:
 alias ls='ls -FG' #default color + directory flags
-alias ll='ls -GlaF' #detailed ls
-alias l='ll' #too lazy
+alias l='ls -GlaF' #detailed ls
 alias l.='ls -ldF .*' #only hidden stuff
 alias ld='command ls -daG */' #non-hidden directories
 alias ld.='command ls -daG .*/' #hidden directories
@@ -49,8 +48,8 @@ alias csv='python $DOT_FILES/python_helpers/csvcolumn.py' #split csvs
 alias email='python $DOT_FILES/python_helpers/sendemail.py' #used to pipe to an email
 alias trim="sed -e 's/^ *//g' -e 's/ *$//g'" #remove trailing and leading whitespace
 alias count='sort | uniq -c | sort -n' #count how many times things appear
-alias len='wc -l | trim' #how many lines in the file
-alias pysum='egrep "class |def "' #summary of a python files based on function and class names
+alias len='wc -l | trim' #how many lines given in stdin
+alias pysum='egrep "class |def "' #quick outline of a python files based on function and class names
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'" #print out the directory structure in a tree format
 alias intersect="grep -xF -f" #set intersection of two files
 alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
@@ -59,12 +58,11 @@ alias beep='say "done running command" && tput bel' #second part makes notificat
 
 #abbreviations
 alias hist='history'
-alias k='kill %1'
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
 alias h='head -1'
 alias t='tail -1'
 alias m='make'
-alias qq='exit'
+alias qq='exit' #I use this all the fucking time
 
 #spell check:
 alias ci='vi'
