@@ -49,3 +49,5 @@ todo
 * make sure the .vimrc is version-safe
 * use more environment variables for portability
 * get vundle to work on new machines
+* replace hard locations with vars. I'm very guilty of that since I mostly just
+  use one machine, but it will cause problems when I switch.
