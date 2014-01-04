@@ -6,24 +6,13 @@ export DOT_FILES=~/dot_files
 if [ -f /etc/bashrc ]; then
     source /etc/bashrc
 fi
-if [ -f $DOT_FILES/.bash_aliases ]; then
-    source $DOT_FILES/.bash_aliases
-fi
-if [ -f $DOT_FILES/.bash_functions ]; then
-    source $DOT_FILES/.bash_functions
-fi
-if [ -f $DOT_FILES/.bash_prompt ]; then
-    source $DOT_FILES/.bash_prompt
-fi
-if [ -f $DOT_FILES/bash_secrets ]; then
-    source $DOT_FILES/.bash_secrets
-fi
-if [ -f $DOT_FILES/completion/completionrc ]; then
-    source $DOT_FILES/completion/completionrc
-fi
-if [ -f $DOT_FILES/.git_functions ]; then
-    source $DOT_FILES/.git_functions
-fi
+for f in .bash_aliases .bash_functions .bash_prompt .bash_secrets
+    completion/completionrc .git_functions
+do
+    if [ -f $DOT_FILES/$f ]; then
+        source $DOT_FILES/$f
+    fi
+done
 
 
 #branchy pathy stuff:
