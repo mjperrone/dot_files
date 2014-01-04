@@ -9,6 +9,7 @@ alias ebv='vi $DOT_FILES/.vimrc'
 
 #go places:
 alias drop='cd ~/Dropbox'
+alias note='cd ~/Dropbox/Notes'
 alias dot='cd ~/dot_files'
 
 #reset configs fast:
