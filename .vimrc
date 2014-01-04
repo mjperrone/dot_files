@@ -53,7 +53,6 @@ source ~/.vim/quasi_plugins/dragvisuals.vim
 map <Leader>d "_d
 "toggle spellcheck
 map <Leader>s :set spell!<CR>
-
 if has("unix")
     let s:uname = system("uname -s")
     if s:uname == "Darwin"
@@ -63,6 +62,18 @@ if has("unix")
         map <leader>p :r!pbpaste<CR>
     endif
 endif
+"I like for mark jumping to go to the row AND the column, and the apostrophe
+"is easier to reach, so I'll swap those
+nnoremap ' `
+nnoremap ` '
+"edit important files quickly
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>eb :vsplit ~/dot_files/.bashrc<cr>
+nnoremap <leader>eba :vsplit ~/.bash_aliases<cr>
+nnoremap <leader>ebf :vsplit ~/.bash_functions<cr>
+"reload .vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
 
 
 set shellcmdflag=-ic "make vim's :! shell behave like my command prompt
