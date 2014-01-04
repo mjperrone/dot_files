@@ -28,7 +28,9 @@ fi
 
 #branchy pathy stuff:
 export BRANCH=trunk
-export ORIGINAL_PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/texlive/2013/bin/x86_64-darwin
+export ORIGINAL_PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
+export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/texlive/2013/bin/x86_64-darwin
+export ORIGINAL_PATH=$ORIGINAL_PATH:/Applications/Postgres.app/Contents/MacOS/bin #lets createdb, dropdb,.. work
 export PATH=/Users/mperrone/src/$BRANCH/bin:$ORIGINAL_PATH
 export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
 
