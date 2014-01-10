@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#uncategorized:
+alias today='date +"%b_%d_%Y"'
+
+
 #edit configs fast:
 alias eb='vi $DOT_FILES/.bashrc'
 alias eba='vi $DOT_FILES/.bash_aliases'
@@ -13,6 +17,7 @@ alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
 #go places:
 alias drop='cd ~/Dropbox'
 alias dot='cd ~/dot_files'
+alias notes='cd ~/Dropbox/Notes'
 
 #relative navigation:
 L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
