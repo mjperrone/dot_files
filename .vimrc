@@ -2,6 +2,8 @@
 set nocompatible
 filetype off
 
+set history=200 "number of exec commands saved
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 " let Vundle manage Vundle (required)
@@ -29,17 +31,13 @@ source ~/.vim/quasi_plugins/vmath.vim
 " drag around visual blocks
 source ~/.vim/quasi_plugins/dragvisuals.vim
 
-"don't save the deleted stuff in the default register when modifying delete
-"with leader
+"don't save the deleted stuff in the default register this way
 map <Leader>d "_d
 if has("unix")
-    let s:uname = system("uname -s")
-    if s:uname == "Darwin"
-        "copy selected text in visual mode to mac system clipboard
-        vmap <leader>c :w !pbcopy<CR><CR>
-        "paste from clipboard without having to do :set paste i <cmd>v
-        map <leader>p :r!pbpaste<CR>
-    endif
+    "copy selected text in visual mode to mac system clipboard
+    vmap <leader>c :w !pbcopy<CR><CR>
+    "paste from clipboard without having to do :set paste i <cmd>v
+    map <leader>p :r!pbpaste<CR>
 endif
 "I like for mark jumping to go to the row AND the column, and the apostrophe
 "is easier to reach, so I'll swap those
@@ -52,8 +50,11 @@ nnoremap <leader>eba :vsplit ~/.bash_aliases<cr>
 nnoremap <leader>ebf :vsplit ~/.bash_functions<cr>
 "reload .vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
-
-set shellcmdflag=-ic "make vim's :! shell behave like my command prompt
+"go to the command window by default instead of exec mode
+nnoremap : q:i
+nnoremap q: :
+"replay the last 'q' macro quickly
+nnoremap Q @q
 
 syntax on
 
@@ -79,14 +80,13 @@ set softtabstop=4 " 4 spaces as a tab for bs/del
 set shiftround "tab to multiples of 4 spaces instead of absolute shifting
 
 set number "line numbers
-set numberwidth=1 "line numbers will be smaller if you do ":set number: to see line number
+set numberwidth=1 "min width of line number columns
 
 set iskeyword-=_ " underscores are treated as word boundaries, but not WORD boundaries. sometimes helpful, sometimes annoying, not sure on this one.
 
 set ruler "row and col numbers in bottom right always
 
 if version >= 703
-
     set undofile "keep undos across buffers and across editing instances
     set undodir=~/.vim/undodir "it's annoying to have to see them, so hide them there
     set undoreload=10000 "maximum number lines to save for undo on a buffer reload
@@ -95,6 +95,7 @@ if version >= 703
     "run :XtermColorTable to see all the colors
 endif
 set undolevels=1000 "maximum number of changes that can be undone
+set textwidth=80
 
 set statusline+=%c
 set statusline+=\ %P
@@ -114,9 +115,8 @@ set nostartofline "cursor stays at col pos when jumping around rather than going
 
 set cursorline " horizontal line at cursor
 
-"color stuff
 set t_Co=256    "give terminal 256 colors instead of 8
-set textwidth=80
+
 
 "searching
 set hlsearch "highlights search matches
