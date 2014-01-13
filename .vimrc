@@ -143,6 +143,7 @@ set textwidth=80
 
 "searching
 set hlsearch "highlights search matches
+nnoremap <leader>h :set hlsearch!<cr>
 set incsearch "start finding stuff before hitting 'enter'
 set ignorecase "case insensitive search
 set smartcase "unless I use caps
