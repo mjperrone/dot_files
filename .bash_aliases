@@ -56,6 +56,7 @@ alias count='sort | uniq -c | sort -n' #count how many times things appear
 alias len='wc -l | trim' #how many lines given in stdin
 alias pysum='egrep "class |def "' #quick outline of a python files based on function and class names
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'" #print out the directory structure in a tree format
+alias space='du -ks ./* | sort -n'
 alias intersect="grep -xF -f" #set intersection of two files
 alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
 alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app' #locks screen on mac only
