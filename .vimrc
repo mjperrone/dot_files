@@ -52,6 +52,8 @@ nnoremap <leader>ebf :vsplit ~/.bash_functions<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 "go to the command window by default instead of exec mode
 nnoremap : q:i
+"and make it smaller
+set cmdwinheight=3
 nnoremap q: :
 "replay the last 'q' macro quickly
 nnoremap Q @q
