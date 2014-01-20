@@ -21,5 +21,5 @@ espeak 'hello world'
 #Connect local microphone into the audio output of a remote machine:
 cat /dev/audio | ssh user@machine 'dd bs=1k of=/dev/dsp'
 #If that doesn't work try "of=/dev/audio" instead of "of=/dev/dsp"
-#For the reverse effect try the following command:
+#For the reverse effect try the following command(not tested):
 ssh user@machine 'dd bs=1k if=/dev/audio' > /dev/audio
