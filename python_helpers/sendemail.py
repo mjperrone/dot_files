@@ -8,7 +8,7 @@ import argparse
 GMAIL_SMTP_SERVER = "smtp.gmail.com"
 GMAIL_SMTP_PORT = 587
 
-DEFAULT_EMAIL = "mperrone@kyru.us"
+DEFAULT_EMAIL = "mike.j.perrone@gmail.com"
 
 
 def initialize_smtp_server(from_email):
