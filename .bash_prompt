@@ -3,7 +3,7 @@ colorizeprompt () { # in a function so variables are local only
   local BLUE="\[\033[0;34m\]"
   local CYAN="\[\033[0;36m\]"
   local WHITE="\[\033[0;37m\]"
-  export PS1="$WHITE\t $CYAN\u$WHITE@$YELLOW\h\[\033[00m\]:$BLUE\w\[\033[00m\] $ "
+  export PS1="$? $WHITE\t $CYAN\u$WHITE@$YELLOW\h\[\033[00m\]:$BLUE\w\[\033[00m\] \\$ "
   #time name@location:~/working/dir $
 } 
 colorizeprompt
