@@ -6,8 +6,8 @@ export DOT_FILES=~/dot_files
 if [ -f /etc/bashrc ]; then
     source /etc/bashrc
 fi
-if [ -f completion/completionrc ]; then
-    source /etc/bashrc
+if [ -f $DOT_FILES/completion/completionrc ]; then
+    source $DOT_FILES/completion/completionrc
 fi
 for f in .bash_aliases .bash_functions .bash_prompt .bash_secrets .git_functions
 do
@@ -19,12 +19,14 @@ done
 #branchy pathy stuff:
 export BRANCH=trunk
 export ORIGINAL_PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
-export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/texlive/2013/bin/x86_64-darwin
+export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/texlive/2013basic/bin/x86_64-darwin
 export ORIGINAL_PATH=:/Applications/Postgres.app/Contents/MacOS/bin:$ORIGINAL_PATH #allows createdb, dropdb,.. to work
 export PATH=/Users/mperrone/src/$BRANCH/bin:$ORIGINAL_PATH
-export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
+export PYTHONPATH=/Users/mjperrone/Development/averagexkcd
 export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
 export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH
+
+export EDITOR="vim" #puhlease.
 
 #bash settings
 export HISTFILESIZE=30000 #store 30k of bash command history, you know, in case
