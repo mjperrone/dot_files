@@ -67,6 +67,11 @@ iab lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit
 iab llorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu. Nulla non quam erat, luctus consequat nisi
 iab lllorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu. Nulla non quam erat, luctus consequat nisi. Integer hendrerit lacus sagittis erat fermentum tincidunt. Cras vel dui neque. In sagittis commodo luctus. Mauris non metus dolor, ut suscipit dui. Aliquam mauris lacus, laoreet et consequat quis, bibendum id ipsum. Donec gravida, diam id imperdiet cursus, nunc nisl bibendum sapien, eget tempor neque elit in tortor
 
+" un-join (split) the current lin at the cursor position
+nnoremap <c-j> i<c-j><esc>k$
+" replay @q macro for each line of a visual selection
+vnoremap @q :normal @q<cr>
+
 
 syntax on
 
@@ -190,3 +195,5 @@ let g:tex_flavor='latex'
 " python-mode config stuff follows: https://github.com/klen/python-mode
 let g:pymode_lint_ignore = "E501" "ignore comma separated list of error codes
 let g:pymode_folding = 0 "default don't fold code
+let g:pymode_rope_goto_definition_bind = '<leader>gd' "different mapping
+let g:pymode_rope_goto_definition_cmd = 'e' "open in new buffer
