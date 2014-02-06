@@ -34,6 +34,8 @@ source ~/.vim/quasi_plugins/vmath.vim
 
 "don't save the deleted stuff in the default register this way
 map <Leader>d "_d
+map <Leader>D "_D
+map <Leader>x "_x
 if has("unix")
     "copy selected text in visual mode to mac system clipboard
     vmap <leader>c :w !pbcopy<CR><CR>
@@ -59,7 +61,7 @@ nnoremap q: :
 "replay the last 'q' macro quickly
 nnoremap Q @q
 "yank to the end of the line like D and C do
-nnoremap Y y$"
+nnoremap Y y$
 "fast lorem ipsums
 iab lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit
 iab llorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu. Nulla non quam erat, luctus consequat nisi
@@ -79,8 +81,10 @@ autocmd BufNewFile,BufRead *.md setlocal spell
 autocmd BufNewFile,BufRead gitcommit setlocal spell
 autocmd BufNewFile,BufRead *.tex setlocal spell 
 
-"tabbing stuff:
-"once i learn about IF statements and stuff, then can toggle 2 and 4
+"==============================================================================
+"tabbing, indent, text stuff:
+
+"once I learn about IF statements and stuff, then can toggle 2 and 4
 autocmd BufNewFile,BufRead *.sql set tabstop=2 | set shiftwidth=2 | set softtabstop=2
 autocmd BufNewFile,BufRead *.html set tabstop=2 | set shiftwidth=2 | set softtabstop=2
 set tabstop=4 "tabs are 4 spaces
@@ -88,6 +92,15 @@ set shiftwidth=4 ">> and << behave right
 set expandtab "hitting <tab> will indent correctly
 set softtabstop=4 " 4 spaces as a tab for bs/del
 set shiftround "tab to multiples of 4 spaces instead of absolute shifting
+
+set formatoptions+=rno1l
+if v:version > 703 || v:version == 703 && has("patch541")
+  " Delete comment character when joining commented lines
+  set formatoptions+=j
+endif
+
+"end tabbing, indent, text stuff:
+"==============================================================================
 
 set number "line numbers
 set numberwidth=1 "min width of line number columns
