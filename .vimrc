@@ -4,32 +4,33 @@ filetype off
 
 set history=200 "number of exec commands saved
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" let Vundle manage Vundle (required)
-    Bundle 'gmarik/vundle'
-" python mode- (pylint, autopep8, etc...)
-    Bundle 'klen/python-mode'
-" SnipMate- autofill snippets for boilerplate
-    Bundle 'MarcWeber/vim-addon-mw-utils'
-    Bundle 'tomtom/tlib_vim'
-    Bundle 'garbas/vim-snipmate'
-" Vim-Fugitive- a bunch of git stuff (don't tell him I'm using Vundle now...)
-    Bundle 'tpope/vim-fugitive'
-" Vim-latex- as it's named...
-    Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
-" Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
-    Bundle 'justinmk/vim-sneak'
-" xterm-color-table- displays the xterm colors with hex+rgb codes
-    Bundle 'guns/xterm-color-table.vim'
+" vundle {{{{
+    "boostrap vundle on new systems
+    fun! InstallVundle()
+        echo "Installing Vundle..."
+        silent call mkdir(expand("~/.vim/bundle", 1), 'p')
+        silent !git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+    endfun
+
+    set rtp+=~/.vim/bundle/vundle/
+    call vundle#rc()
+    " let Vundle manage Vundle (required)
+        Bundle 'gmarik/vundle'
+    " python mode- (pylint, autopep8, etc...)
+        Bundle 'klen/python-mode'
+    " Vim-latex- as it's named...
+        Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
+    " Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
+        Bundle 'justinmk/vim-sneak'
+    " xterm-color-table- displays the xterm colors with hex+rgb codes
+        Bundle 'guns/xterm-color-table.vim'
+" end vundle }}}}
 
 filetype plugin indent on
 
 " quasi plugins:
 " super basic addition on nums newline separated.
 source ~/.vim/quasi_plugins/vmath.vim
-" drag around visual blocks
-source ~/.vim/quasi_plugins/dragvisuals.vim
 
 "don't save the deleted stuff in the default register this way
 map <Leader>d "_d
