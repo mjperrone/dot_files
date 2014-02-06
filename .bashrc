@@ -25,6 +25,7 @@ export PATH=/Users/mperrone/src/$BRANCH/bin:$ORIGINAL_PATH
 export PYTHONPATH=/Users/mjperrone/Development/averagexkcd
 export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
 export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH
+export AVERAGE_XKCD_CACHE_PATH=/Users/mjperrone/Development/ax_path
 
 export EDITOR="vim" #puhlease.
 
