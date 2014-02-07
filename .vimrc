@@ -190,10 +190,16 @@ set grepprg=grep\ -nH\ $*
 to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
+let g:tex_flavor = 'latex'
 
 " python-mode config stuff follows: https://github.com/klen/python-mode
-let g:pymode_lint_ignore = "E501" "ignore comma separated list of error codes
-let g:pymode_folding = 0 "default don't fold code
+
+" ignore comma separated list of error codes
+" E501 = line too long
+" E231 = missing whitespace after ,;:
+let g:pymode_lint_ignore = "E501,E231"
+
+let g:pymode_folding = 0 "don't fold code
 let g:pymode_rope_goto_definition_bind = '<leader>gd' "different mapping
 let g:pymode_rope_goto_definition_cmd = 'e' "open in new buffer
+let g:pymode_lint_on_fly = 0 "pylint while editing
