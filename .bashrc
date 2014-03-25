@@ -37,6 +37,7 @@ shopt -s histappend #append to the bash history file rather than overwriting it
 shopt -s cmdhist #multiline saved as one line
 shopt -s cdspell #autocorrect typos in path names when using cd
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
+complete -cf sudo man
 
 #postgres defaults
 export PGPORT=5432
