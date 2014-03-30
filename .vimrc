@@ -24,6 +24,8 @@ set history=200 "number of exec commands saved
         Bundle 'justinmk/vim-sneak'
     " xterm-color-table- displays the xterm colors with hex+rgb codes
         Bundle 'guns/xterm-color-table.vim'
+    " previews github markdown 
+        Bundle 'greyblake/vim-preview'
 " end vundle }}}}
 
 filetype plugin indent on
@@ -31,46 +33,6 @@ filetype plugin indent on
 " quasi plugins:
 " super basic addition on nums newline separated.
 source ~/.vim/quasi_plugins/vmath.vim
-
-"don't save the deleted stuff in the default register this way
-map <Leader>d "_d
-map <Leader>D "_D
-map <Leader>x "_x
-if has("unix")
-    "copy selected text in visual mode to mac system clipboard
-    vmap <leader>c :w !pbcopy<CR><CR>
-    "paste from clipboard without having to do :set paste i <cmd>v
-    map <leader>p :r!pbpaste<CR>
-endif
-"I like for mark jumping to go to the row AND the column, and the apostrophe
-"is easier to reach, so I'll swap those
-nnoremap ' `
-nnoremap ` '
-"edit important files quickly
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>eb :vsplit ~/dot_files/.bashrc<cr>
-nnoremap <leader>eba :vsplit ~/.bash_aliases<cr>
-nnoremap <leader>ebf :vsplit ~/.bash_functions<cr>
-"reload .vimrc
-nnoremap <leader>sv :source $MYVIMRC<cr>
-"go to the command window by default instead of exec mode
-nnoremap : q:i
-"and make it smaller
-set cmdwinheight=3
-nnoremap q: :
-"replay the last 'q' macro quickly
-nnoremap Q @q
-"yank to the end of the line like D and C do
-nnoremap Y y$
-"fast lorem ipsums
-iab lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit
-iab llorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu. Nulla non quam erat, luctus consequat nisi
-iab lllorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu. Nulla non quam erat, luctus consequat nisi. Integer hendrerit lacus sagittis erat fermentum tincidunt. Cras vel dui neque. In sagittis commodo luctus. Mauris non metus dolor, ut suscipit dui. Aliquam mauris lacus, laoreet et consequat quis, bibendum id ipsum. Donec gravida, diam id imperdiet cursus, nunc nisl bibendum sapien, eget tempor neque elit in tortor
-
-" un-join (split) the current lin at the cursor position
-nnoremap <c-j> i<c-j><esc>k$
-" replay @q macro for each line of a visual selection
-vnoremap @q :normal @q<cr>
 
 
 syntax on
@@ -203,3 +165,61 @@ let g:pymode_folding = 0 "don't fold code
 let g:pymode_rope_goto_definition_bind = '<leader>gd' "different mapping
 let g:pymode_rope_goto_definition_cmd = 'e' "open in new buffer
 let g:pymode_lint_on_fly = 0 "pylint while editing
+
+
+" {{{ my maps
+"don't save the deleted stuff in the default register this way
+map <Leader>d "_d
+map <Leader>D "_D
+map <Leader>x "_x
+if has("unix")
+    "TODO: better test for being mac...
+    "copy selected text in visual mode to mac system clipboard
+    vmap <leader>c :w !pbcopy<CR><CR>
+    "paste from clipboard without having to do :set paste i <cmd>v
+    map <leader>p :r!pbpaste<CR>
+endif
+"I like for mark jumping to go to the row AND the column, and the apostrophe
+"is easier to reach, so I'll swap those
+nnoremap ' `
+nnoremap ` '
+
+"edit important files quickly
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>eb :vsplit ~/dot_files/.bashrc<cr>
+nnoremap <leader>eba :vsplit ~/.bash_aliases<cr>
+nnoremap <leader>ebf :vsplit ~/.bash_functions<cr>
+"reload .vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+"go to the command window by default instead of exec mode
+nnoremap : q:i
+nnoremap q: :
+"and make it smaller
+set cmdwinheight=3
+
+"replay the last 'q' macro quickly
+nnoremap Q @q
+
+"yank to the end of the line like D and C do
+nnoremap Y y$
+
+"fast lorem ipsums
+iab lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit
+iab llorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu. Nulla non quam erat, luctus consequat nisi
+iab lllorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu. Nulla non quam erat, luctus consequat nisi. Integer hendrerit lacus sagittis erat fermentum tincidunt. Cras vel dui neque. In sagittis commodo luctus. Mauris non metus dolor, ut suscipit dui. Aliquam mauris lacus, laoreet et consequat quis, bibendum id ipsum. Donec gravida, diam id imperdiet cursus, nunc nisl bibendum sapien, eget tempor neque elit in tortor
+
+" un-join (split) the current line at the cursor position
+nnoremap <c-j> i<c-j><esc>k$
+" replay @q macro for each line of a visual selection
+vnoremap @q :normal @q<cr>
+
+" my maps }}}
+
+
+" Temp settings, testing them out or transient needs:
+iab align \begin{align}<cr><cr>\end{align}<up><esc>A<tab>
+iab frac \frac{<++>}{<++>}<++>
+iab sum \sum \limits _{<++>}^{<++>}<++>
+cnoremap w!! %!sudo tee > /dev/null %
+map <Leader>m :w<cr>:make<cr>
