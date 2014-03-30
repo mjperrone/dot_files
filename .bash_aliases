@@ -16,6 +16,7 @@ alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
 
 #go places:
 alias drop='cd ~/Dropbox'
+alias dev='cd ~/Development'
 alias ax='cd ~/Development/averagexkcd'
 alias note='cd ~/Dropbox/Notes'
 alias dot='cd ~/dot_files'
