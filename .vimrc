@@ -169,9 +169,9 @@ let g:pymode_lint_on_fly = 0 "pylint while editing
 
 " {{{ my maps
 "don't save the deleted stuff in the default register this way
-map <Leader>d "_d
-map <Leader>D "_D
-map <Leader>x "_x
+nnoremap <Leader>d "_d
+nnoremap <Leader>D "_D
+nnoremap <Leader>x "_x
 if has("unix")
     "TODO: better test for being mac...
     "copy selected text in visual mode to mac system clipboard
@@ -218,8 +218,5 @@ vnoremap @q :normal @q<cr>
 
 
 " Temp settings, testing them out or transient needs:
-iab align \begin{align}<cr><cr>\end{align}<up><esc>A<tab>
-iab frac \frac{<++>}{<++>}<++>
-iab sum \sum \limits _{<++>}^{<++>}<++>
 cnoremap w!! %!sudo tee > /dev/null %
 map <Leader>m :w<cr>:make<cr>
