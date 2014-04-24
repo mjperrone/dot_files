@@ -21,6 +21,7 @@ export BRANCH=trunk
 export ORIGINAL_PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
 export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/texlive/2013basic/bin/x86_64-darwin
 export ORIGINAL_PATH=:/Applications/Postgres.app/Contents/MacOS/bin:$ORIGINAL_PATH #allows createdb, dropdb,.. to work
+export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/Cellar/go/1.2/libexec/bin
 export PATH=/Users/mperrone/src/$BRANCH/bin:$ORIGINAL_PATH
 export PYTHONPATH=/Users/mjperrone/Development/averagexkcd
 export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
