@@ -19,10 +19,6 @@ function pginfo () { #postgres info
     fi
 }
 
-ip () { #print external ip address
-    curl -s "http://checkip.dyndns.org:8245/" | awk '{ print $6 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g; s/<.*>//g'
-}
-
 cdl () { cd "$1" && l; }
 
 switch_branch () {
