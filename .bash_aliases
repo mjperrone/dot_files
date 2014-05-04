@@ -64,6 +64,7 @@ alias intersect="grep -xF -f" #set intersection of two files
 alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
 alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app' #locks screen on mac only
 alias beep='say "done running command" && tput bel' #second part makes notification on mac
+alias ip='ifconfig | grep "inet " | grep -v 127.0.0.1'
 
 #abbreviations
 alias hist='history'
