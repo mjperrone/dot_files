@@ -16,16 +16,10 @@ set history=200 "number of exec commands saved
     call vundle#rc()
     " let Vundle manage Vundle (required)
         Bundle 'gmarik/vundle'
-    " python mode- (pylint, autopep8, etc...)
-        Bundle 'klen/python-mode'
-    " Vim-latex- as it's named...
-        Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
     " Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
         Bundle 'justinmk/vim-sneak'
     " xterm-color-table- displays the xterm colors with hex+rgb codes
         Bundle 'guns/xterm-color-table.vim'
-    " previews github markdown 
-        Bundle 'greyblake/vim-preview'
 " end vundle }}}}
 
 filetype plugin indent on
@@ -134,37 +128,6 @@ set whichwrap+=<,>,h,l,[,] "auto wrap around to next line for left/right in norm
 "don't want to edit those types of files:
 set wildignore+=.hg,.git,.svn,*.aux,*.out,*.toc,*.jpg,*.bmp,*.gif,*.png,*.jpeg,*.o,*.obj,*.exe,*.dll,*.manifest,*.spl,*.sw?,*.DS_Store,*.luac,migrations,*.pyc,*.orig
 set wildmenu    " Autocomplete featuers in the status bar
-
-" vim-latex config stuff follows: ********************************
-" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-filetype plugin on
-
-" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
-" can be called correctly.
-set shellslash
-
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults
-to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor = 'latex'
-
-" python-mode config stuff follows: https://github.com/klen/python-mode
-
-" ignore comma separated list of error codes
-" E501 = line too long
-" E231 = missing whitespace after ,;:
-let g:pymode_lint_ignore = "E501,E231"
-
-let g:pymode_folding = 0 "don't fold code
-let g:pymode_rope_goto_definition_bind = '<leader>gd' "different mapping
-let g:pymode_rope_goto_definition_cmd = 'e' "open in new buffer
-let g:pymode_lint_on_fly = 0 "pylint while editing
 
 
 " {{{ my maps
