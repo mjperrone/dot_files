@@ -27,6 +27,6 @@ else
     # the difference is documented in , but I want both to do the same thing
     
     #apply the changes to the current shell instance!
-    #(this is why you ought to run source $DOT_FILES/setup/setup.sh and not just sh $DOT_FILES/setup/setup.sh
+    #(this is why you ought to run source $DOT_FILES/setup/setup.sh and not just sh $DOT_FILES/setup/setup.sh)
     source ~/.bashrc
 fi
