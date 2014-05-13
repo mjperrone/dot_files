@@ -7,3 +7,4 @@
 *.un~
 .netrwhist
 .vim/undodir/*
+.vim/bundle
