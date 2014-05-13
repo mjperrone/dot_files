@@ -19,7 +19,6 @@ else
     fi
     
     #link everything to the relevant file in $DOT_FILES?
-    #TODO: make this into a loop
     for f in .bashrc .bash_prompt .inputrc .editrc .vimrc .vim .vrapperrc 
     do
         ln -s $DOT_FILES/$f ~/$f
