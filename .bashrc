@@ -20,7 +20,7 @@ done
 export BRANCH=trunk
 export ORIGINAL_PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
 export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/texlive/2013basic/bin/x86_64-darwin
-export ORIGINAL_PATH=:/Applications/Postgres.app/Contents/MacOS/bin:$ORIGINAL_PATH #allows createdb, dropdb,.. to work
+export ORIGINAL_PATH=:/Applications/Postgres.app/Contents/MacOS/bin:$ORIGINAL_PATH #allows createdb, dropdb,.. to be found
 export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/Cellar/go/1.2/libexec/bin
 export PATH=/Users/mperrone/src/$BRANCH/bin:$ORIGINAL_PATH
 export PYTHONPATH=/Users/mjperrone/Development/averagexkcd
@@ -28,13 +28,12 @@ export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
 export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH
 export AVERAGE_XKCD_CACHE_PATH=/Users/mjperrone/Development/ax_path
 
-export EDITOR="vim" #puhlease.
+export EDITOR="vim"
 
 #bash settings
 export HISTFILESIZE=30000 #store 30k of bash command history, you know, in case
 export HISTCONTROL=ignoredups
 shopt -s histappend #append to the bash history file rather than overwriting it
-
 shopt -s cmdhist #multiline saved as one line
 shopt -s cdspell #autocorrect typos in path names when using cd
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page

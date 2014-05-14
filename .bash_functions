@@ -4,7 +4,7 @@ pinfo () { #path info
     echo -e "\x1B[0;31mpath: \x1B[0m$PATH" | sed -e "s/:\//  \//g"
     echo -e "\x1B[0;31mpythonpath:  \x1B[0m$PYTHONPATH"
     echo -e "\x1B[0;31mmanpath:  \x1B[0m$MANPATH"
-    echo -e "\x1B[0;31minfopath:  \x1B[0m$infopath"
+    echo -e "\x1B[0;31minfopath:  \x1B[0m$INFOPATH"
 }
 
 function pginfo () { #postgres info
@@ -13,9 +13,9 @@ function pginfo () { #postgres info
     echo -e "\x1B[0;31mPGDATABASE: \x1B[0m$PGDATABASE"
     echo -e "\x1B[0;31mPGUSER: \x1B[0m$PGUSER"
     if [[ -z "$PGPASSWORD" ]]; then
-        echo -e "\x1B[0;31mPGPASSWORD: <NOT set>"
+        echo -e "\x1B[0;31mPGPASSWORD: \x1B[0m<NOT set>"
     else
-        echo -e "\x1B[0;31mPGPASSWORD: \x1B[0;36m<set>"
+        echo -e "\x1B[0;31mPGPASSWORD: \x1B[0m<set>"
     fi
 }
 
@@ -40,6 +40,9 @@ fakefile () { #make a file of x MB
 }    
 
 rep () { #to be able to output stuff to a file that's being used to generate the input
+    # for example `cat file.txt | wc -l | rep file.txt`
+    # since this would fail `cat file.txt | wc -l > file.txt`
+    # rep = replace
     TMPFILELOCATION=`mktemp -q /tmp/mpXXXXXXXXXXXXXXXX`
     cat >> $TMPFILELOCATION
     mv $TMPFILELOCATION $1
@@ -60,28 +63,6 @@ st () { #decide if it's a git or svn repo, print status based on result
     fi
 }
 
-#TODO: remove find_line_num and replace_line, do the job of vl_switch.. with sed/awk
-find_line_num (){ #args: search string, file path
-    grep -n -m 1 "$1" "$2" | cut -d: -f1
-}
-
-replace_line (){ #args: replacement string, line number, file path
-    sed "$2s/.*/$1/" "$3" | rep "$3"
-}
-
-vl_switch_target_format () { #args: format
-    LINE_NUM=`find_line_num "Tex_DefaultTargetFormat"  ~/.vim/bundle/vim-latex/ftplugin/tex.vim`
-    replace_line "let g:Tex_DefaultTargetFormat = '$1'" 1 ~/.vim/bundle/vim-latex/ftplugin/tex.vim
-}
-
-vlpdf () { #tell latex-suite to output to pdf
-    vl_switch_target_format pdf
-}
-
-vldvi () { #tell latex-suite to output to dvi
-    vl_switch_target_format dvi
-}
-
 highlight_red () { #output std with strings matching the parameter highlighted red
     perl -pe "s/$1/\e[0;31m$&\e[0m/g"
 }
@@ -90,8 +71,7 @@ highlight_yellow () { #* * * * yellow
     perl -pe "s/$1/\e[0;33m$&\e[0m/g"
 }
 
-gri () { grep -r -i "$*" .; }
-gr () { grep -r  "$*" .; }
+gri () { grep -r -i "$*" .; } #search for the parameter here, recursively, case-insensitively
 
 #todo help:
 td(){
@@ -102,4 +82,3 @@ etd(){
     vi ~/Dropbox/**/todo.txt #edit todo lists
     cat ~/Dropbox/**/todo.txt > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
 }
-
