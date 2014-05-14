@@ -5,21 +5,32 @@ filetype off
 set history=200 "number of exec commands saved
 
 " vundle {{{{
-    "boostrap vundle on new systems
+if !exists('*InstallVundle')
     fun! InstallVundle()
         echo "Installing Vundle..."
-        silent call mkdir(expand("~/.vim/bundle", 1), 'p')
-        silent !git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-    endfun
-
+        silent! call mkdir(expand("~/.vim/bundle", 1), 'p')
+        silent! !git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+        redraw!
+        source $MYVIMRC
+        PluginInstall
+    endfunction
+else
     set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
+    silent call vundle#begin()
     " let Vundle manage Vundle (required)
-        Bundle 'gmarik/vundle'
+        Plugin 'gmarik/vundle'
     " Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
-        Bundle 'justinmk/vim-sneak'
+        Plugin 'justinmk/vim-sneak'
+    "   Golang suite
+        Plugin 'fatih/vim-go'
+    "   Python suite
+        Plugin 'klen/python-mode'
+    "   Python autocompletion
+        Plugin 'davidhalter/jedi-vim'
     " xterm-color-table- displays the xterm colors with hex+rgb codes
-        Bundle 'guns/xterm-color-table.vim'
+        Plugin 'guns/xterm-color-table.vim'
+    call vundle#end()
+endif
 " end vundle }}}}
 
 filetype plugin indent on
@@ -66,7 +77,7 @@ endif
 set number "line numbers
 set numberwidth=1 "min width of line number columns
 
-set iskeyword-=_ " underscores are treated as word boundaries, but not WORD boundaries. sometimes helpful, sometimes annoying, not sure on this one.
+"set iskeyword-=_ " underscores are treated as word boundaries, but not WORD boundaries. sometimes helpful, sometimes annoying, not sure on this one.
 
 set ruler "row and col numbers in bottom right always
 
@@ -179,6 +190,18 @@ vnoremap @q :normal @q<cr>
 
 " my maps }}}
 
+
+" python-mode config stuff follows: https://github.com/klen/python-mode
+" ignore comma separated list of error codes
+" E501 = line too long
+" E231 = missing whitespace after ,;:
+let g:pymode_lint_ignore = "E501,E231"
+let g:pymode_folding = 0 "don't fold code
+let g:pymode_rope = 0 "don't use rope (because I like jedi-vim better)
+let g:pymode_lint_on_fly = 0 "pylint while editing
+
+" jedi-vim config stuff follows: https://github.com/davidhalter/jedi-vim
+let g:jedi#rename_command = "<leader>cn"
 
 " Temp settings, testing them out or transient needs:
 cnoremap w!! %!sudo tee > /dev/null %
