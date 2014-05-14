@@ -30,7 +30,8 @@ And it's like I was never there!
 The structure of my dotfiles is roughly as follows:
 
 * .vimrc is my vim config file(includes plugins with vundle)
-* .bashrc sources all the other bash config files and handles things related to PATH variables, the PS1 prompt, and some general bash config stuff
+* .bashrc sources all the other bash config files and handles things related to PATH variables, and some general bash config stuff
+  .bash_prompt sets the PS1 variable (bash prompt line)
 * .bash_aliases has a bunch of my aliases
 * .bash_functions has a bunch of my functions
 * python_helpers/ has a few python scripts that are useful to pretend are bash commands

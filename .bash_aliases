@@ -60,7 +60,7 @@ alias len='wc -l | trim' #how many lines given in stdin
 alias pysum='egrep "class |def "' #quick outline of a python files based on function and class names
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'" #print out the directory structure in a tree format
 alias space='du -ks ./* | sort -n'
-alias intersect="grep -xF -f" #set intersection of two files
+alias intersect="grep -xF -f" #set intersection of two files, linewise
 alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
 alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app' #locks screen on mac only
 alias beep='say "done running command" && tput bel' #second part makes notification on mac
@@ -71,7 +71,7 @@ alias diff='git --no-pager diff --no-index' #default git's colorful diff
 alias h='head -1'
 alias t='tail -1'
 alias m='make'
-alias qq='exit' #I use this all the fucking time
+alias qq='exit' #I use this all the time
 
 #spell check:
 alias ci='vi'
