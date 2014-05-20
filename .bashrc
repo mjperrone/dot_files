@@ -17,12 +17,10 @@ do
 done
 
 #branchy pathy stuff:
-export BRANCH=trunk
-export ORIGINAL_PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
-export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/texlive/2013basic/bin/x86_64-darwin
-export ORIGINAL_PATH=:/Applications/Postgres.app/Contents/MacOS/bin:$ORIGINAL_PATH #allows createdb, dropdb,.. to be found
-export ORIGINAL_PATH=$ORIGINAL_PATH:/usr/local/Cellar/go/1.2/libexec/bin
-export PATH=/Users/mperrone/src/$BRANCH/bin:$ORIGINAL_PATH
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
+export PATH=$PATH:/usr/local/texlive/2013basic/bin/x86_64-darwin
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.3/bin #allows createdb, dropdb,.. to be found
+export PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin
 export PYTHONPATH=/Users/mjperrone/Development/averagexkcd
 export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
 export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH
