@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 pinfo () { #path info
-    echo -e "\x1B[0;31mbranch: \x1B[0;36m$BRANCH"
     echo -e "\x1B[0;31mpath: \x1B[0m$PATH" | sed -e "s/:\//  \//g"
     echo -e "\x1B[0;31mpythonpath:  \x1B[0m$PYTHONPATH"
     echo -e "\x1B[0;31mmanpath:  \x1B[0m$MANPATH"
@@ -24,12 +23,6 @@ ip () { #print external ip address
 }
 
 cdl () { cd "$1" && l; }
-
-switch_branch () {
-    export BRANCH=$1
-    export PATH=$ORIGINAL_PATH:/Users/mperrone/src/$BRANCH/bin
-    export PYTHONPATH=/Users/mperrone/src/$BRANCH/lib
-}
 
 jump_branch () { #assumes svn branches are at ~/src/* (and currend PWD is in that tree)
     cd ~/src/$1/${PWD#$HOME/src/*/}/
