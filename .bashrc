@@ -49,3 +49,10 @@ export WORKON_HOME=~/.virtualenvs
 
 #https://github.com/joelthelion/autojump
 [[ -s ~/.autojump/etc/profile.d/autojump.bash ]] && . ~/.autojump/etc/profile.d/autojump.bash
+
+
+export ARCHFLAGS="-arch x86_64"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
