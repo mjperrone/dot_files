@@ -1,36 +1,38 @@
+set history=200 "number of exec commands saved
+
+
 " BEGIN Vundle
 set nocompatible
-filetype off
 
-set history=200 "number of exec commands saved
 
 " vundle {{{{
 if !exists('*InstallVundle')
     fun! InstallVundle()
         echo "Installing Vundle..."
         silent! call mkdir(expand("~/.vim/bundle", 1), 'p')
-        silent! !git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+        silent! !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
         redraw!
         source $MYVIMRC
         PluginInstall
     endfunction
-else
-    set rtp+=~/.vim/bundle/vundle/
-    silent call vundle#begin()
-    " let Vundle manage Vundle (required)
-        Plugin 'gmarik/vundle'
-    " Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
-        Plugin 'justinmk/vim-sneak'
-    "   Golang suite
-        Plugin 'fatih/vim-go'
-    "   Python suite
-        Plugin 'klen/python-mode'
-    "   Python autocompletion
-        Plugin 'davidhalter/jedi-vim'
-    " xterm-color-table- displays the xterm colors with hex+rgb codes
-        Plugin 'guns/xterm-color-table.vim'
-    call vundle#end()
 endif
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+" let Vundle manage Vundle (required)
+    Plugin 'gmarik/Vundle.vim'
+" Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
+    Plugin 'justinmk/vim-sneak'
+"   Golang suite
+    Plugin 'fatih/vim-go'
+"   Python suite
+    Plugin 'klen/python-mode'
+"   Ruby on Rails suite
+    Plugin 'tpope/vim-rails'
+"   Python autocompletion
+    Plugin 'davidhalter/jedi-vim'
+" xterm-color-table- displays the xterm colors with hex+rgb codes
+    Plugin 'guns/xterm-color-table.vim'
+call vundle#end()
 " end vundle }}}}
 
 filetype plugin indent on
