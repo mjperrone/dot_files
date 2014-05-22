@@ -29,6 +29,8 @@ else
         Plugin 'davidhalter/jedi-vim'
     " xterm-color-table- displays the xterm colors with hex+rgb codes
         Plugin 'guns/xterm-color-table.vim'
+    " rails suite
+        Plugin 'tpope/vim-rails'
     call vundle#end()
 endif
 " end vundle }}}}
