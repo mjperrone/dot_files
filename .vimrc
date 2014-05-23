@@ -28,6 +28,8 @@ call vundle#begin()
     Plugin 'klen/python-mode'
 "   Ruby on Rails suite
     Plugin 'tpope/vim-rails'
+"   Quoting/parenthesizing made easy
+    Plugin 'tpope/vim-surround'
 "   Python autocompletion
     Plugin 'davidhalter/jedi-vim'
 " xterm-color-table- displays the xterm colors with hex+rgb codes
