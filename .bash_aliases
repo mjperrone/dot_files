@@ -49,6 +49,7 @@ alias lf.='ls -ap | grep -v "/$" | grep "^\."' #hidden files
 alias grep='grep --exclude-dir=".svn" --color -I' #be colorful and ignore binary files and svn directories
 alias egrep='egrep --color -I'
 alias fgrep='fgrep --color -I'
+alias ack='ack --pager="less -R"'
 
 #tools:
 alias pjson='python $DOT_FILES/python_helpers/pprint-jl' #pretty print json
@@ -75,6 +76,9 @@ alias qq='exit' #I use this all the time
 
 #spell check:
 alias ci='vi'
+
+#for ben:
+alias ben='set -o emacs'
 
 #for eliot:
 alias cls='clear;ls'
