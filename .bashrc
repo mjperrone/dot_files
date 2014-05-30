@@ -17,6 +17,7 @@ do
 done
 
 #branchy pathy stuff:
+export PATH=/usr/local/Cellar/ctags/5.8/bin:$PATH
 export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 export PATH=$PATH:/usr/local/texlive/2013basic/bin/x86_64-darwin
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.3/bin #allows createdb, dropdb,.. to be found
