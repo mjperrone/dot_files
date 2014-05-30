@@ -63,6 +63,12 @@ autocmd BufNewFile,BufRead *.tex setlocal spell
 "once I learn about IF statements and stuff, then can toggle 2 and 4
 autocmd BufNewFile,BufRead *.sql set tabstop=2 | set shiftwidth=2 | set softtabstop=2
 autocmd BufNewFile,BufRead *.html set tabstop=2 | set shiftwidth=2 | set softtabstop=2
+autocmd BufNewFile,BufRead *.haml set tabstop=2 | set shiftwidth=2 | set softtabstop=2
+autocmd BufNewFile,BufRead *.js set tabstop=2 | set shiftwidth=2 | set softtabstop=2
+autocmd BufNewFile,BufRead *.rb set tabstop=2 | set shiftwidth=2 | set softtabstop=2
+autocmd BufNewFile,BufRead *.erb set tabstop=2 | set shiftwidth=2 | set softtabstop=2
+autocmd BufNewFile,BufRead *.css set tabstop=2 | set shiftwidth=2 | set softtabstop=2
+autocmd BufNewFile,BufRead *.scss set tabstop=2 | set shiftwidth=2 | set softtabstop=2
 set tabstop=4 "tabs are 4 spaces
 set shiftwidth=4 ">> and << behave right 
 set expandtab "hitting <tab> will indent correctly
