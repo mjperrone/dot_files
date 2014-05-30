@@ -83,7 +83,6 @@ set numberwidth=1 "min width of line number columns
 
 "set iskeyword-=_ " underscores are treated as word boundaries, but not WORD boundaries. sometimes helpful, sometimes annoying, not sure on this one.
 
-set ruler "row and col numbers in bottom right always
 
 set lazyredraw "Don't redraw while executing macros (faster)
 
@@ -107,9 +106,8 @@ endif
 set undolevels=1000 "maximum number of changes that can be undone
 set textwidth=80
 
-set statusline+=%c
-set statusline+=\ %P
-set statusline+=%l/%L
+set laststatus=2
+set statusline=%4*[\ %<%F\ ]              "full path
 
 set showcmd "show partial commands in status
 
