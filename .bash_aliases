@@ -77,6 +77,9 @@ alias qq='exit' #I use this all the time
 #spell check:
 alias ci='vi'
 
+#for ben:
+alias ben='set -o emacs'
+
 #for eliot:
 alias cls='clear;ls'
 alias cl='clear;l'
