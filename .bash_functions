@@ -56,6 +56,15 @@ st () { #decide if it's a git or svn repo, print status based on result
     fi
 }
 
+get_git_branch () { #if in git repo, return the branch. I currently only use
+    #this for the bash prompt, hence the parens.
+    if [ `git rev-parse --is-inside-work-tree 2>/dev/null` ]; then
+        printf "("
+        printf `git rev-parse --abbrev-ref HEAD | tr '\n' ' ' | trim`
+        printf ")"
+    fi
+}
+
 highlight_red () { #output std with strings matching the parameter highlighted red
     perl -pe "s/$1/\e[0;31m$&\e[0m/g"
 }
