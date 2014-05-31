@@ -1,9 +1,9 @@
-colorizeprompt () { # in a function so variables are local only
+colorizeprompt () {
   local YELLOW="\[\033[0;33m\]"
   local BLUE="\[\033[0;34m\]"
   local CYAN="\[\033[0;36m\]"
   local WHITE="\[\033[0;37m\]"
   export PS1="$? $WHITE\t $CYAN\u$WHITE@$YELLOW\h\[\033[00m\]:$BLUE\w\[\033[00m\]\$(get_git_branch) \\$ "
-  #time name@location:~/working/dir $
+  #errorcode time name@location:~/working/dir(branch) $
 } 
 colorizeprompt

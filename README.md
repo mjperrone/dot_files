@@ -53,6 +53,4 @@ todo
 * make sure everything is compatible with ubuntu and somewhat with windows8(doesn't work on red.dev.... because it wont source ~/.bashrc when its a link)
 * make colors reasonable
 * make sure the .vimrc is version-safe
-* use more environment variables for portability
-* replace hard locations with vars. I'm very guilty of that since I mostly just
-  use one machine, but it will cause problems when I switch.
+* make vim's per-filetype setting cleaner
