@@ -1,0 +1,73 @@
+#!/bin/bash
+# see examples at the bottom
+# may have to wrap those in \[ \] sometimes. not sure why. see .bash_prompt
+
+# Primary color names
+export _black="\033[0;30m"
+export _red="\033[0;31m"
+export _green="\033[0;32m"
+export _yellow="\033[0;33m"
+export _blue="\033[0;34m"
+export _magenta="\033[0;35m"
+export _cyan="\033[0;36m"
+export _white="\033[0;37m"
+export _reset="\033[0;39m"
+
+# Bright color names
+export _BLACK="\033[1;30m"
+export _RED="\033[1;31m"
+export _GREEN="\033[1;32m"
+export _YELLOW="\033[1;33m"
+export _BLUE="\033[1;34m"
+export _MAGENTA="\033[1;35m"
+export _CYAN="\033[1;36m"
+export _WHITE="\033[1;37m"
+
+# background
+export _BBLACK="\033[;40m"
+export _BRED="\033[;41m"
+export _BGREEN="\033[;42m"
+export _BYELLOW="\033[;43m"
+export _BBLUE="\033[;44m"
+export _BMAGENTA="\033[;45m"
+export _BCYAN="\033[;46m"
+export _BWHITE="\033[;47m"
+export _BRESET="\033[;49m"
+
+# testing function
+test_colors() {
+  ## normal
+  ### foregrounds
+  echo -e "FOREGROUNDS"
+  echo -e "Black = ${_black}this is Black${_reset} --"
+  echo -e "Red = ${_red}this is Red${_reset} --"
+  echo -e "Green = ${_green}this is Green${_reset} --"
+  echo -e "Yellow = ${_yellow}this is Yellow${_reset} --"
+  echo -e "Blue = ${_blue}this is Blue${_reset} --"
+  echo -e "Magenta = ${_magenta}this is Magenta${_reset} --"
+  echo -e "Cyan = ${_cyan}this is Cyan${_reset} --"
+  echo -e "White = ${_white}this is White${_reset} --"
+  
+  ## bright
+  ### foregrounds
+  echo -e "\nBright FOREGROUNDS"
+  echo -e "Black = ${_black}this is BrightBlack${_reset} --"
+  echo -e "Red = ${_red}this is BrightRed${_reset} --"
+  echo -e "Green = ${_green}this is BrightGreen${_reset} --"
+  echo -e "Yellow = ${_yellow}this is BrightYellow${_reset} --"
+  echo -e "Blue = ${_blue}this is BrightBlue${_reset} --"
+  echo -e "Magenta = ${_magenta}this is BrightMagenta${_reset} --"
+  echo -e "Cyan = ${_cyan}this is BrightCyan${_reset} --"
+  echo -e "White = ${_white}this is BrightWhite${_reset} --"
+  
+  ## backgrounds
+  echo -e "\nBACKGROUNDS"
+  echo -e "Black = ${_BBLACK}this is Black${_reset} --"
+  echo -e "Red = ${_BRED}this is Red${_reset} --"
+  echo -e "Green = ${_BGREEN}this is Green${_reset} --"
+  echo -e "Yellow = ${_BYELLOW}this is Yellow${_reset} --"
+  echo -e "Blue = ${_BBLUE}this is Blue${_reset} --"
+  echo -e "Magenta = ${_BMAGENTA}this is Magenta${_reset} --"
+  echo -e "Cyan = ${_BCYAN}this is Cyan${_reset} --"
+  echo -e "White = ${_BWHITE}this is White${_reset} --"
+}

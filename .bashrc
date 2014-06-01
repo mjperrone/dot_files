@@ -9,7 +9,7 @@ fi
 if [ -f $DOT_FILES/completion/completionrc ]; then
     source $DOT_FILES/completion/completionrc
 fi
-for f in .bash_aliases .bash_functions .bash_prompt .bash_secrets .git_functions
+for f in .bash_aliases .bash_functions .bash_colors .bash_prompt .bash_secrets .git_functions
 do
     if [ -f $DOT_FILES/$f ]; then
         source $DOT_FILES/$f

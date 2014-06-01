@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 pinfo () { #path info
-    echo -e "\x1B[0;31mpath: \x1B[0m$PATH" | sed -e "s/:\//  \//g"
-    echo -e "\x1B[0;31mpythonpath:  \x1B[0m$PYTHONPATH"
-    echo -e "\x1B[0;31mmanpath:  \x1B[0m$MANPATH"
-    echo -e "\x1B[0;31minfopath:  \x1B[0m$INFOPATH"
+    echo -e "${_red}path: ${_reset}$PATH" | sed -e "s/:\//  \//g"
+    echo -e "${_red}pythonpath:  ${_reset}$PYTHONPATH"
+    echo -e "${_red}manpath:  ${_reset}$MANPATH"
+    echo -e "${_red}infopath:  ${_reset}$INFOPATH"
 }
 
 function pginfo () { #postgres info
-    echo -e "\x1B[0;31mPGHOST: \x1B[0m$PGHOST"
-    echo -e "\x1B[0;31mPGPORT: \x1B[0m$PGPORT"
-    echo -e "\x1B[0;31mPGDATABASE: \x1B[0m$PGDATABASE"
-    echo -e "\x1B[0;31mPGUSER: \x1B[0m$PGUSER"
+    echo -e "${_red}PGHOST: ${_reset}$PGHOST"
+    echo -e "${_red}PGPORT: ${_reset}$PGPORT"
+    echo -e "${_red}PGDATABASE: ${_reset}$PGDATABASE"
+    echo -e "${_red}PGUSER: ${_reset}$PGUSER"
     if [[ -z "$PGPASSWORD" ]]; then
-        echo -e "\x1B[0;31mPGPASSWORD: \x1B[0m<NOT set>"
+        echo -e "${_red}PGPASSWORD: ${_reset}<NOT set>"
     else
-        echo -e "\x1B[0;31mPGPASSWORD: \x1B[0m<set>"
+        echo -e "${_red}PGPASSWORD: ${_reset}<set>"
     fi
 }
 
@@ -66,11 +66,11 @@ get_git_branch () { #if in git repo, return the branch. I currently only use
 }
 
 highlight_red () { #output std with strings matching the parameter highlighted red
-    perl -pe "s/$1/\e[0;31m$&\e[0m/g"
+    perl -pe "s/$1/${_red}$&${_reset}/g"
 }
 
 highlight_yellow () { #* * * * yellow
-    perl -pe "s/$1/\e[0;33m$&\e[0m/g"
+    perl -pe "s/$1/${_yellow}$&${_reset}/g"
 }
 
 gri () { grep -r -i "$*" .; } #search for the parameter here, recursively, case-insensitively
