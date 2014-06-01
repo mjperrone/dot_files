@@ -22,10 +22,8 @@ export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 export PATH=$PATH:/usr/local/texlive/2013basic/bin/x86_64-darwin
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.3/bin #allows createdb, dropdb,.. to be found
 export PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin
-export PYTHONPATH=/Users/mjperrone/Development/averagexkcd
-export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
-export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH
-export AVERAGE_XKCD_CACHE_PATH=/Users/mjperrone/Development/ax_path
+export PYTHONPATH=$HOME/Development/averagexkcd
+export AVERAGE_XKCD_CACHE_PATH=$HOME/Development/ax_path
 
 export EDITOR="vim"
 

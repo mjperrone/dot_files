@@ -19,7 +19,7 @@ alias drop='cd ~/Dropbox'
 alias dev='cd ~/Development'
 alias ax='cd ~/Development/averagexkcd'
 alias note='cd ~/Dropbox/Notes'
-alias dot='cd ~/dot_files'
+alias dot='cd $DOT_FILES'
 alias notes='cd ~/Dropbox/Notes'
 
 #relative navigation:
