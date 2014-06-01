@@ -61,14 +61,7 @@ autocmd BufNewFile,BufRead *.tex setlocal spell
 "tabbing, indent, text stuff:
 
 "once I learn about IF statements and stuff, then can toggle 2 and 4
-autocmd BufNewFile,BufRead *.sql set tabstop=2 | set shiftwidth=2 | set softtabstop=2
-autocmd BufNewFile,BufRead *.html set tabstop=2 | set shiftwidth=2 | set softtabstop=2
-autocmd BufNewFile,BufRead *.haml set tabstop=2 | set shiftwidth=2 | set softtabstop=2
-autocmd BufNewFile,BufRead *.js set tabstop=2 | set shiftwidth=2 | set softtabstop=2
-autocmd BufNewFile,BufRead *.rb set tabstop=2 | set shiftwidth=2 | set softtabstop=2
-autocmd BufNewFile,BufRead *.erb set tabstop=2 | set shiftwidth=2 | set softtabstop=2
-autocmd BufNewFile,BufRead *.css set tabstop=2 | set shiftwidth=2 | set softtabstop=2
-autocmd BufNewFile,BufRead *.scss set tabstop=2 | set shiftwidth=2 | set softtabstop=2
+autocmd BufNewFile,BufRead *.sql,*.html,*.haml,*.js,*.rb,*.erb,*.css,*.scss set tabstop=2 | set shiftwidth=2 | set softtabstop=2
 set tabstop=4 "tabs are 4 spaces
 set shiftwidth=4 ">> and << behave right 
 set expandtab "hitting <tab> will indent correctly
@@ -117,7 +110,7 @@ set statusline=%4*[\ %<%F\ ]              "full path
 
 set showcmd "show partial commands in status
 
-set splitright "default new buffer when splitting is on the right
+set splitright "default new buffer, when splitting, is on the right
 
 set showmatch "show closing bracket locations briefly
 
@@ -153,13 +146,17 @@ set wildmenu    " Autocomplete featuers in the status bar
 "don't save the deleted stuff in the default register this way
 nnoremap <Leader>d "_d
 nnoremap <Leader>D "_D
+nnoremap <Leader>C "_C
+nnoremap <Leader>c "_c
 nnoremap <Leader>x "_x
 if has("unix")
-    "TODO: better test for being mac...
-    "copy selected text in visual mode to mac system clipboard
-    vmap <leader>c :w !pbcopy<CR><CR>
-    "paste from clipboard without having to do :set paste i <cmd>v
-    map <leader>p :r!pbpaste<CR>
+    let uname = system('uname')
+    if uname =~ 'Darwin'
+        "copy selected text in visual mode to mac system clipboard
+        vmap <leader>c :w !pbcopy<CR><CR>
+        "paste from clipboard without having to do :set paste i <cmd>v
+        map <leader>p :r!pbpaste<CR>
+    endif
 endif
 "I like for mark jumping to go to the row AND the column, and the apostrophe
 "is easier to reach, so I'll swap those

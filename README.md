@@ -49,9 +49,4 @@ Some of the places/people from which I've stolen ideas:<a href=http://learnvimsc
 todo
 =========
 * fully flesh out the .bash_directory_history idea (saving WHERE a command was run along the actual command, so better replication of old commands is possible)
-* make sure teardown cleans up everything (.bash_directory_history, for example)
-* make sure everything is compatible with ubuntu and somewhat with windows8(doesn't work on red.dev.... because it wont source ~/.bashrc when its a link)
-* make sure the .vimrc is version-safe
-* use more environment variables for portability
-* replace hard locations with vars. I'm very guilty of that since I mostly just
-  use one machine, but it will cause problems when I switch.
+* make sure everything is compatible with ubuntu and somewhat with windows8(doesn't work on ubuntu because it won't source ~/.bashrc when its a link)
