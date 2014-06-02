@@ -106,7 +106,11 @@ set undolevels=1000 "maximum number of changes that can be undone
 set textwidth=80
 
 set laststatus=2
-set statusline=%4*[\ %<%F\ ]              "full path
+set statusline=%4* "no background color
+set statusline+=\ %<%F\   "full path
+set statusline+=%=  "right justify the rest
+set statusline+=%y\ \ \ \  "filetype
+set statusline+=%l/%L\ (%P) "curson line / total lines (percent)
 
 set showcmd "show partial commands in status
 
