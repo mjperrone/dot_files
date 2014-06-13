@@ -37,9 +37,15 @@ unset R
 alias -- -='cd -' #this remaps '-' to 'cd -', don't ask me how
 
 #list:
-alias ls='ls -FG' #default color + directory flags
-alias l='ls -GlaF' #detailed ls
-alias l.='ls -ldF .*' #only hidden stuff
+if [ `uname` == 'Linux' ]
+then
+    alias ls='ls --color -F'
+elif [ `uname` == 'Darwin' ]
+then
+    alias ls='ls -FG' #default color + directory flags
+fi
+alias l='ls -la' #detailed ls
+alias l.='ls -ld .*' #only hidden stuff
 alias ld='command ls -daG */' #non-hidden directories
 alias ld.='command ls -daG .*/' #hidden directories
 alias lf='ls -p | grep -v "/$"' #non-hidden files
