@@ -22,6 +22,8 @@ call vundle#begin()
     Plugin 'gmarik/Vundle.vim'
 " Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
     Plugin 'justinmk/vim-sneak'
+"   markdown preview (in browser)
+    Plugin 'suan/vim-instant-markdown'
 "   Golang suite
     Plugin 'fatih/vim-go'
 "   Python suite
@@ -220,3 +222,4 @@ cnoremap w!! %!sudo tee > /dev/null %
 map <Leader>m :w<cr>:make<cr>
 " no background on the gutter
 highlight SignColumn ctermbg=none
+let g:instant_markdown_slow = 1 "dont try to compile the markdownupon every change
