@@ -26,6 +26,8 @@ call vundle#begin()
     Plugin 'fatih/vim-go'
 "   Python suite
     Plugin 'klen/python-mode'
+"   Syntax checker for loads of languages
+    Plugin 'scrooloose/syntastic'
 "   Ruby on Rails suite
     Plugin 'tpope/vim-rails'
 "   Quoting/parenthesizing made easy
@@ -204,6 +206,7 @@ vnoremap @q :normal @q<cr>
 " ignore comma separated list of error codes
 " E501 = line too long
 " E231 = missing whitespace after ,;:
+let g:pymode_link = 0 "just use syntastic for this job
 let g:pymode_lint_ignore = "E501,E231"
 let g:pymode_folding = 0 "don't fold code
 let g:pymode_rope = 0 "don't use rope (because I like jedi-vim better)
@@ -215,3 +218,5 @@ let g:jedi#rename_command = "<leader>cn"
 " Temp settings, testing them out or transient needs:
 cnoremap w!! %!sudo tee > /dev/null %
 map <Leader>m :w<cr>:make<cr>
+" no background on the gutter
+highlight SignColumn ctermbg=none
