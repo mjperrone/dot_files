@@ -4,7 +4,7 @@ if [ ! -d $OLD_DOT_FILES ]; then
     echo "There isn't any old_dot_files folder, so we're going to just leave things be."
 else
     #move the old stuff back, overwriting whatever
-    for f in .bashrc .bash_profile .inputrc .vimrc .vrapperrc .editrc .bash_prompt .bash_colors .bash_history
+    for f in .bashrc .bash_profile .inputrc .vimrc .vrapperrc .editrc .bash_prompt .bash_colors .bash_history .gitconfig
     do
         if [ -h ~/$f ] || [ -e ~/$f ] ; then
             rm ~/$f

@@ -22,12 +22,16 @@ call vundle#begin()
     Plugin 'gmarik/Vundle.vim'
 " Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
     Plugin 'justinmk/vim-sneak'
+"   markdown preview (in browser)
+    Plugin 'suan/vim-instant-markdown'
 "   Golang suite
     Plugin 'fatih/vim-go'
 "   Python suite
     Plugin 'klen/python-mode'
 "   fuzzy file searching
     Plugin 'kien/ctrlp.vim'
+"   Syntax checker for loads of languages
+    Plugin 'scrooloose/syntastic'
 "   Ruby on Rails suite
     Plugin 'tpope/vim-rails'
 "   Quoting/parenthesizing made easy
@@ -108,7 +112,11 @@ set undolevels=1000 "maximum number of changes that can be undone
 set textwidth=80
 
 set laststatus=2
-set statusline=%4*[\ %<%F\ ]              "full path
+set statusline=%4* "no background color
+set statusline+=\ %<%F\   "full path
+set statusline+=%=  "right justify the rest
+set statusline+=%y\ \ \ \  "filetype
+set statusline+=%l/%L\ (%P) "curson line / total lines (percent)
 
 set showcmd "show partial commands in status
 
@@ -204,6 +212,7 @@ vnoremap @q :normal @q<cr>
 " ignore comma separated list of error codes
 " E501 = line too long
 " E231 = missing whitespace after ,;:
+let g:pymode_link = 0 "just use syntastic for this job
 let g:pymode_lint_ignore = "E501,E231"
 let g:pymode_folding = 0 "don't fold code
 let g:pymode_rope = 0 "don't use rope (because I like jedi-vim better)
@@ -215,3 +224,6 @@ let g:jedi#rename_command = "<leader>cn"
 " Temp settings, testing them out or transient needs:
 cnoremap w!! %!sudo tee > /dev/null %
 map <Leader>m :w<cr>:make<cr>
+" no background on the gutter
+highlight SignColumn ctermbg=none
+let g:instant_markdown_slow = 1 "dont try to compile the markdownupon every change

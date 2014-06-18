@@ -8,7 +8,7 @@ else
     mkdir $OLD_DOT_FILES
 
     # save old dot files
-    for f in .bashrc .bash_profile .inputrc .vimrc .vrapperrc .editrc .bash_prompt .bash_history
+    for f in .bashrc .bash_profile .inputrc .vimrc .vrapperrc .editrc .bash_prompt .bash_history .gitconfig
     do
         if [ -e ~/$f ]; then
             mv ~/$f $OLD_DOT_FILES/$f
@@ -19,7 +19,7 @@ else
     fi
     
     #link everything to the relevant file in $DOT_FILES?
-    for f in .bashrc .bash_prompt .bash_colors .inputrc .editrc .vimrc .vim .vrapperrc 
+    for f in .bashrc .bash_prompt .bash_colors .inputrc .editrc .vimrc .vim .vrapperrc .gitconfig
     do
         ln -s $DOT_FILES/$f ~/$f
     done
