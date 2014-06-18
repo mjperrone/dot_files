@@ -33,6 +33,9 @@ export HISTCONTROL=ignoredups
 shopt -s histappend #append to the bash history file rather than overwriting it
 shopt -s cmdhist #multiline saved as one line
 shopt -s cdspell #autocorrect typos in path names when using cd
+shopt -s checkwinsize  #checks window size after each command, saves formatting madness
+shopt -s dotglob # includes .* files in *
+#bash >=4.0 #shopt -s globstar #** is directory-recursive filename expansion
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
 complete -cf sudo man
 
