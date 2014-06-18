@@ -30,6 +30,8 @@ call vundle#begin()
     Plugin 'klen/python-mode'
 "   fuzzy file searching
     Plugin 'kien/ctrlp.vim'
+"   ag integration
+    Plugin 'rking/ag.vim'
 "   Syntax checker for loads of languages
     Plugin 'scrooloose/syntastic'
 "   Ruby on Rails suite
