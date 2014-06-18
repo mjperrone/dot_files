@@ -1,2 +1,2 @@
-export PS1="$? \[${_white}\]\t \[${_cyan}\]\u\[${_white}\]@\[${yellow}\]\h\[${_reset}\]:\[${_blue}\]\w\[${_reset}\] \$(get_git_branch) \\$ "
+export PS1="$? \[${_white}\]\t \[${_cyan}\]\u\[${_white}\]@\[${_yellow}\]\h\[${_reset}\]:\[${_blue}\]\w\[${_reset}\] \$(get_git_branch) \\$ "
 #time name@location:~/working/dir (branch)$
