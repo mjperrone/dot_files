@@ -56,6 +56,7 @@ alias grep='grep --exclude-dir=".svn" --color -I' #be colorful and ignore binary
 alias egrep='egrep --color -I'
 alias fgrep='fgrep --color -I'
 alias ack='ack --pager="less -R"'
+alias ag='ag --pager="less -R"'
 
 #tools:
 alias pjson='python $DOT_FILES/python_helpers/pprint-jl' #pretty print json
