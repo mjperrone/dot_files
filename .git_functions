@@ -78,3 +78,7 @@ else
     echo "you're currently not in a git repository"
 fi
 }
+
+function git_edit_all_modified() {
+    $EDITOR $(git status --short | awk '$1 ~ /^M$/ {print $2}')
+}
