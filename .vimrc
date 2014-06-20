@@ -165,7 +165,7 @@ if has("unix")
     let uname = system('uname')
     if uname =~ 'Darwin'
         "copy selected text in visual mode to mac system clipboard
-        vmap <leader>c :w !pbcopy<CR><CR>
+        vmap <leader>c "my :call system("pbcopy", @m)<CR><CR>
         "paste from clipboard without having to do :set paste i <cmd>v
         map <leader>p :r!pbpaste<CR>
     endif
@@ -229,3 +229,4 @@ map <Leader>m :w<cr>:make<cr>
 " no background on the gutter
 highlight SignColumn ctermbg=none
 let g:instant_markdown_slow = 1 "dont try to compile the markdownupon every change
+autocmd BufWritePre * :%s/\s\+$//e "remove trailing whitespace on save on all files
