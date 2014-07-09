@@ -4,9 +4,12 @@
 [alias]
     st = status
     dc = diff --cached
-    cm = commit -m 
+    cm = commit -m
     ap = add -p
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
 [color]
     ui = true
 [push]
     default = simple
+[core]
+	excludesfile = ~/.gitignore_global
