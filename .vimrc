@@ -230,3 +230,7 @@ map <Leader>m :w<cr>:make<cr>
 highlight SignColumn ctermbg=none
 let g:instant_markdown_slow = 1 "dont try to compile the markdownupon every change
 autocmd BufWritePre * :%s/\s\+$//e "remove trailing whitespace on save on all files
+
+if !exists('g:loaded_matchit')
+    runtime! macros/matchit.vim
+endif
