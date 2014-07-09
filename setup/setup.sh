@@ -8,7 +8,7 @@ else
     mkdir $OLD_DOT_FILES
 
     # save old dot files
-    for f in .bashrc .bash_profile .inputrc .vimrc .vrapperrc .editrc .bash_prompt .bash_history .gitconfig
+    for f in .bashrc .bash_profile .bash_prompt .bash_colors .inputrc .editrc .vimrc .vrapperrc .bash_history .gitconfig .gitignore_global
     do
         if [ -e ~/$f ]; then
             mv ~/$f $OLD_DOT_FILES/$f
@@ -17,15 +17,15 @@ else
     if [ -d ~/$f ]; then
         mv  ~/.vim $OLD_DOT_FILES/.vim
     fi
-    
+
     #link everything to the relevant file in $DOT_FILES?
-    for f in .bashrc .bash_prompt .bash_colors .inputrc .editrc .vimrc .vim .vrapperrc .gitconfig
+    for f in .bashrc .bash_prompt .bash_colors .inputrc .editrc .vimrc .vrapperrc .gitconfig .gitignore_global .vim
     do
         ln -s $DOT_FILES/$f ~/$f
     done
     ln -s $DOT_FILES/.bashrc ~/.bash_profile #make .bash_profile+.bashrc the same
     # the difference is documented in , but I want both to do the same thing
-    
+
     #apply the changes to the current shell instance!
     #(this is why you ought to run source $DOT_FILES/setup/setup.sh and not just sh $DOT_FILES/setup/setup.sh)
     source ~/.bashrc
