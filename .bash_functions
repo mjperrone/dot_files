@@ -84,3 +84,6 @@ etd(){
     vi ~/Dropbox/**/todo.txt #edit todo lists
     cat ~/Dropbox/**/todo.txt > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
 }
+decode() {
+    echo `echo $1 | base64 --decode` | pjson
+}
