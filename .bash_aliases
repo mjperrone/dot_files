@@ -18,8 +18,8 @@ alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
 alias drop='cd ~/Dropbox'
 alias dev='cd ~/Development'
 alias ax='cd ~/Development/averagexkcd'
-alias note='cd ~/Dropbox/Notes'
 alias dot='cd $DOT_FILES'
+alias note='cd ~/Dropbox/Notes'
 alias notes='cd ~/Dropbox/Notes'
 
 #relative navigation:
