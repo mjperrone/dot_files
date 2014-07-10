@@ -65,7 +65,7 @@ map <Leader>s :set spell!<CR>
 autocmd BufNewFile,BufRead *.txt setlocal spell
 autocmd BufNewFile,BufRead *.md setlocal spell
 autocmd BufNewFile,BufRead gitcommit setlocal spell
-autocmd BufNewFile,BufRead *.tex setlocal spell 
+autocmd BufNewFile,BufRead *.tex setlocal spell
 
 "==============================================================================
 "tabbing, indent, text stuff:
@@ -73,7 +73,7 @@ autocmd BufNewFile,BufRead *.tex setlocal spell
 "once I learn about IF statements and stuff, then can toggle 2 and 4
 autocmd BufNewFile,BufRead *.sql,*.html,*.haml,*.js,*.rb,*.erb,*.css,*.scss set tabstop=2 | set shiftwidth=2 | set softtabstop=2
 set tabstop=4 "tabs are 4 spaces
-set shiftwidth=4 ">> and << behave right 
+set shiftwidth=4 ">> and << behave right
 set expandtab "hitting <tab> will indent correctly
 set softtabstop=4 " 4 spaces as a tab for bs/del
 set shiftround "tab to multiples of 4 spaces instead of absolute shifting
