@@ -47,7 +47,7 @@ test_colors() {
   echo -e "Magenta = ${_magenta}this is Magenta${_reset} --"
   echo -e "Cyan = ${_cyan}this is Cyan${_reset} --"
   echo -e "White = ${_white}this is White${_reset} --"
-  
+
   ## bright
   ### foregrounds
   echo -e "\nBright FOREGROUNDS"
@@ -59,7 +59,7 @@ test_colors() {
   echo -e "Magenta = ${_magenta}this is BrightMagenta${_reset} --"
   echo -e "Cyan = ${_cyan}this is BrightCyan${_reset} --"
   echo -e "White = ${_white}this is BrightWhite${_reset} --"
-  
+
   ## backgrounds
   echo -e "\nBACKGROUNDS"
   echo -e "Black = ${_BBLACK}this is Black${_reset} --"

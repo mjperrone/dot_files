@@ -30,7 +30,7 @@ jump_branch () { #assumes svn branches are at ~/src/* (and currend PWD is in tha
 
 fakefile () { #make a file of x MB
     perl -e "print '0' x 1024 x 1024 x $1" > $1-MB-fake-file.txt
-}    
+}
 
 rep () { #to be able to output stuff to a file that's being used to generate the input
     # for example `cat file.txt | wc -l | rep file.txt`
@@ -50,7 +50,7 @@ st () { #decide if it's a git or svn repo, print status based on result
             echo "$OUT"
         fi
     elif [ `git rev-parse --is-inside-work-tree 2>/dev/null` ]; then
-        git status 
+        git status
     else
         echo 'neither git nor svn'
     fi
