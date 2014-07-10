@@ -38,6 +38,8 @@ call vundle#begin()
     Plugin 'tpope/vim-rails'
 "   Quoting/parenthesizing made easy
     Plugin 'tpope/vim-surround'
+"   language agnostic commenting
+    Plugin 'tpope/vim-commentary'
 "   Python autocompletion
     Plugin 'davidhalter/jedi-vim'
 " xterm-color-table- displays the xterm colors with hex+rgb codes
