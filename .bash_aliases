@@ -37,11 +37,9 @@ unset R
 alias -- -='cd -' #this remaps '-' to 'cd -', don't ask me how
 
 #list:
-if [ `uname` == 'Linux' ]
-then
+if [ `uname` = 'Linux' ] ; then
     alias ls='ls --color -F'
-elif [ `uname` == 'Darwin' ]
-then
+elif [ `uname` = 'Darwin' ] ; then
     alias ls='ls -FG' #default color + directory flags
 fi
 alias l='ls -la' #detailed ls
