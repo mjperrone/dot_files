@@ -90,9 +90,6 @@ endif
 set number "line numbers
 set numberwidth=1 "min width of line number columns
 
-"set iskeyword-=_ " underscores are treated as word boundaries, but not WORD boundaries. sometimes helpful, sometimes annoying, not sure on this one.
-
-
 set lazyredraw "Don't redraw while executing macros (faster)
 
 
@@ -108,9 +105,6 @@ if version >= 703
     set undofile "keep undos across buffers and across editing instances
     set undodir=~/.vim/undodir "it's annoying to have to see them, so hide them there
     set undoreload=10000 "maximum number lines to save for undo on a buffer reload
-    let &colorcolumn="80" " warning bar at 81 chars
-    highlight ColorColumn ctermbg=242 " make it highlighted in a grey
-    "run :XtermColorTable to see all the colors
 endif
 set undolevels=1000 "maximum number of changes that can be undone
 set textwidth=80
@@ -207,10 +201,9 @@ iab realorem Sed ut perspiciatis, unde omnis iste natus error sit voluptatem acc
 " un-join (split) the current line at the cursor position
 nnoremap <c-j> i<c-j><esc>k$
 " replay @q macro for each line of a visual selection
-vnoremap @q :normal @q<cr>
+vnoremap Q :normal @q<cr>
 
 " my maps }}}
-
 
 " python-mode config stuff follows: https://github.com/klen/python-mode
 " ignore comma separated list of error codes
