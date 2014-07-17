@@ -236,3 +236,6 @@ autocmd BufWritePre * :%s/\s\+$//e "remove trailing whitespace on save on all fi
 if !exists('g:loaded_matchit')
     runtime! macros/matchit.vim
 endif
+
+nnoremap <C-a> q:iAg -i ""<ESC>i
+let g:ackhighlight = 1
