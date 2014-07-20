@@ -1,0 +1,20 @@
+#pathy stuff:
+
+export DOT_FILES=~/dot_files
+
+export PATH=/usr/local/Cellar/ctags/5.8/bin:$PATH
+export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
+export PATH=$PATH:/usr/local/texlive/2013basic/bin/x86_64-darwin
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.3/bin #allows createdb, dropdb,.. to be found
+export PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin
+export PYTHONPATH=$HOME/Development/averagexkcd
+export AVERAGE_XKCD_CACHE_PATH=$HOME/Development/ax_path
+
+export EDITOR="vim"
+export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
+
+#postgres defaults
+export PGPORT=5432
+export PGHOST=localhost
+unset PGUSER
+unset PGPASSWORD
