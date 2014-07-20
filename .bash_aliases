@@ -83,6 +83,10 @@ alias qq='exit' #I use this all the time
 
 #spell check:
 alias ci='vi'
+alias k='fc -s' # since I have vi mode, if I forget to hit ESC and hit k-enter,
+#I expect the last command to run. this does that.
+alias kk='fc -s -2' # and so on...
+alias kkk='fc -s -3'
 
 #for ben:
 alias ben='set -o emacs'
