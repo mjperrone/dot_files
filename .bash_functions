@@ -87,3 +87,11 @@ etd(){
 decode() {
     echo `echo $1 | base64 --decode` | pjson
 }
+
+cd() {
+    if [ -f $1 ]; then
+        builtin cd $(dirname $1)
+    else
+        builtin cd $1
+    fi
+}
