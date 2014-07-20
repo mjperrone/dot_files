@@ -18,8 +18,8 @@ else
         mv  ~/.vim $OLD_DOT_FILES/.vim
     fi
 
-    #link everything to the relevant file in $DOT_FILES?
-    for f in .bashrc .bash_prompt .bash_colors .inputrc .editrc .vimrc .vrapperrc .gitconfig .gitignore_global .vim .zshrc
+    #link everything to the relevant file in $DOT_FILES
+    for f in .bashrc .inputrc .editrc .vimrc .vrapperrc .gitconfig .gitignore_global .vim .zshrc
     do
         ln -s $DOT_FILES/$f ~/$f
     done
