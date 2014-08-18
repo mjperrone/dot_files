@@ -24,8 +24,6 @@ call vundle#begin()
     Plugin 'justinmk/vim-sneak'
 "   markdown preview (in browser)
     Plugin 'suan/vim-instant-markdown'
-"   Golang suite
-    Plugin 'fatih/vim-go'
 "   Python suite
     Plugin 'klen/python-mode'
 "   fuzzy file searching
