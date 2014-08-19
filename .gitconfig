@@ -7,6 +7,7 @@
     cm = commit -m
     ap = add -p
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    ri = !sh -c 'git rebase -i `git merge-base master head`'
 [color]
     ui = true
 [push]
