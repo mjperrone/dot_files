@@ -147,6 +147,7 @@ set whichwrap+=<,>,h,l,[,] "auto wrap around to next line for left/right in norm
 set wildignore+=.hg,.git,.svn,*.aux,*.out,*.toc,*.jpg,*.bmp,*.gif,*.png,*.jpeg,*.o,*.obj,*.exe,*.dll,*.manifest,*.spl,*.sw?,*.DS_Store,*.luac,migrations,*.pyc,*.orig
 set wildmenu    " Autocomplete featuers in the status bar
 
+autocmd BufWritePre * :%s/\s\+$//e "remove trailing whitespace on save on all files
 
 " {{{ my maps
 "don't save the deleted stuff in the default register this way
@@ -200,6 +201,9 @@ iab realorem Sed ut perspiciatis, unde omnis iste natus error sit voluptatem acc
 nnoremap <c-j> i<c-j><esc>k$
 " replay @q macro for each line of a visual selection
 vnoremap Q :normal @q<cr>
+" forgot to sudo open a file? no problem
+cnoremap w!! %!sudo tee > /dev/null %
+
 
 " my maps }}}
 
@@ -216,17 +220,16 @@ let g:pymode_lint_on_fly = 0 "pylint while editing
 " jedi-vim config stuff follows: https://github.com/davidhalter/jedi-vim
 let g:jedi#rename_command = "<leader>cn"
 
-" Temp settings, testing them out or transient needs:
-cnoremap w!! %!sudo tee > /dev/null %
-map <Leader>m :w<cr>:make<cr>
+" Temp settings; testing them out or transient needs:
 " no background on the gutter
-highlight SignColumn ctermbg=none
 let g:instant_markdown_slow = 1 "dont try to compile the markdownupon every change
-autocmd BufWritePre * :%s/\s\+$//e "remove trailing whitespace on save on all files
 
 if !exists('g:loaded_matchit')
     runtime! macros/matchit.vim
 endif
 
 nnoremap <C-a> q:iAg -i ""<ESC>i
+nnoremap <C-A> q:iAg ""<ESC>i
 let g:ackhighlight = 1
+
+nnoremap gp `[v`]
