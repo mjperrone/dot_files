@@ -89,9 +89,9 @@ decode() {
 }
 
 cd() {
-    if [ -f $1 ]; then
-        builtin cd $(dirname $1)
+    if [ -f "$*" ]; then
+        builtin cd $(dirname "$*")
     else
-        builtin cd $1
+        builtin cd "$*"
     fi
 }
