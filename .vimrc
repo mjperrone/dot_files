@@ -34,6 +34,8 @@ call vundle#begin()
     Plugin 'scrooloose/syntastic'
 "   Ruby on Rails suite
     Plugin 'tpope/vim-rails'
+"   Makes coding in LISP much easier.
+    Plugin 'kien/rainbow_parentheses.vim'
 "   Quoting/parenthesizing made easy
     Plugin 'tpope/vim-surround'
 "   language agnostic commenting
@@ -233,3 +235,5 @@ nnoremap <C-A> q:iAg ""<ESC>i
 let g:ackhighlight = 1
 
 nnoremap gp `[v`]
+
+nnoremap <leader>r :RainbowParenthesesToggle<cr>
