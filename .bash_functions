@@ -22,7 +22,7 @@ ip () { #print external ip address
     curl -s "http://checkip.dyndns.org:8245/" | awk '{ print $6 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g; s/<.*>//g'
 }
 
-cdl () { cd "$1" && l; }
+cdl () { cd "$*" && l; }
 
 jump_branch () { #assumes svn branches are at ~/src/* (and currend PWD is in that tree)
     cd ~/src/$1/${PWD#$HOME/src/*/}/
