@@ -237,3 +237,4 @@ let g:ackhighlight = 1
 nnoremap gp `[v`]
 
 nnoremap <leader>r :RainbowParenthesesToggle<cr>
+let g:instant_markdown_slow = 1 "don't write teh markdown until save
