@@ -5,6 +5,7 @@
     st = status
     dc = diff --cached
     d = diff
+    dn = diff --name-only
     br = branch
     cm = commit -m
     co = checkout
