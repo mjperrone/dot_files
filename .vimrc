@@ -71,7 +71,7 @@ autocmd BufNewFile,BufRead *.tex setlocal spell
 "tabbing, indent, text stuff:
 
 "once I learn about IF statements and stuff, then can toggle 2 and 4
-autocmd BufNewFile,BufRead *.sql,*.html,*.haml,*.js,*.rb,*.erb,*.css,*.scss set tabstop=2 | set shiftwidth=2 | set softtabstop=2
+autocmd BufNewFile,BufRead *.sql,*.html,*.haml,*.js,*.json,*.rb,*.erb,*.css,*.scss set tabstop=2 | set shiftwidth=2 | set softtabstop=2
 set tabstop=4 "tabs are 4 spaces
 set shiftwidth=4 ">> and << behave right
 set expandtab "hitting <tab> will indent correctly
