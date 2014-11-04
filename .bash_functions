@@ -91,6 +91,8 @@ decode() {
 cd() {
     if [ -f "$*" ]; then
         builtin cd $(dirname "$*")
+    elif [ -z "$*" ]; then # zero length string
+        builtin cd
     else
         builtin cd "$*"
     fi
