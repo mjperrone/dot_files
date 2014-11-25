@@ -22,6 +22,7 @@ alias dot='cd $DOT_FILES'
 alias note='cd ~/Dropbox/Notes'
 alias notes='cd ~/Dropbox/Notes'
 alias food='cd ~/Dropbox/food'
+alias rec='cd ~/Dropbox/food/recipes'
 
 #relative navigation:
 L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
