@@ -22,28 +22,30 @@ call vundle#begin()
     Plugin 'gmarik/Vundle.vim'
 " Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
     Plugin 'justinmk/vim-sneak'
-"   markdown preview (in browser)
+" markdown preview (in browser)
     Plugin 'suan/vim-instant-markdown'
-"   Python suite
+" Python suite
     Plugin 'klen/python-mode'
-"   fuzzy file searching
+" fuzzy file searching
     Plugin 'kien/ctrlp.vim'
-"   ag integration
+" ag integration
     Plugin 'rking/ag.vim'
-"   Syntax checker for loads of languages
+" Syntax checker for loads of languages
     Plugin 'scrooloose/syntastic'
-"   Ruby on Rails suite
+" Ruby on Rails suite
     Plugin 'tpope/vim-rails'
-"   Makes coding in LISP much easier.
+" Makes coding in LISP much easier.
     Plugin 'kien/rainbow_parentheses.vim'
-"   Quoting/parenthesizing made easy
+" Quoting/parenthesizing made easy
     Plugin 'tpope/vim-surround'
-"   language agnostic commenting
+" language agnostic commenting
     Plugin 'tpope/vim-commentary'
-"   Python autocompletion
+" Python autocompletion
     Plugin 'davidhalter/jedi-vim'
 " xterm-color-table- displays the xterm colors with hex+rgb codes
     Plugin 'guns/xterm-color-table.vim'
+" Highlight rgb hex codes in their color
+    Plugin 'lilydjwg/colorizer'
 call vundle#end()
 " end vundle }}}}
 
