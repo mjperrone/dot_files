@@ -77,12 +77,12 @@ gri () { grep -r -i "$*" .; } #search for the parameter here, recursively, case-
 
 #todo help:
 td(){
-    cat ~/Dropbox/**/todo.txt | highlight_red \\-\\-.* | highlight_yellow \\*\\*\\*.*
-    cat ~/Dropbox/**/todo.txt > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
+    cat "$DROPBOX_PATH/**/todo.txt" | highlight_red \\-\\-.* | highlight_yellow \\*\\*\\*.*
+    cat "$DROPBOX_PATH/**/todo.txt" > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
 }
 etd(){
-    vi ~/Dropbox/**/todo.txt #edit todo lists
-    cat ~/Dropbox/**/todo.txt > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
+    vi "$DROPBOX_PATH/**/todo.txt" #edit todo lists
+    cat "$DROPBOX_PATH/**/todo.txt" > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
 }
 decode() {
     echo `echo $1 | base64 --decode` | pjson
