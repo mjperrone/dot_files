@@ -22,12 +22,6 @@ ip () { #print external ip address
     curl -s "http://checkip.dyndns.org:8245/" | awk '{ print $6 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g; s/<.*>//g'
 }
 
-cdl () { cd "$*" && l; }
-
-jump_branch () { #assumes svn branches are at ~/src/* (and currend PWD is in that tree)
-    cd ~/src/$1/${PWD#$HOME/src/*/}/
-}
-
 fakefile () { #make a file of x MB
     perl -e "print '0' x 1024 x 1024 x $1" > $1-MB-fake-file.txt
 }
