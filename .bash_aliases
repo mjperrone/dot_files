@@ -27,7 +27,7 @@ alias rec='cd "${DROPBOX_PATH}/food/recipes"'
 #relative navigation:
 L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
 R="../"
-for i in  {1..7}
+for _ in  {1..7}
 do
     alias $L="cd $R"
     L="$L."
@@ -39,9 +39,9 @@ unset R
 alias -- -='cd -' #this remaps '-' to 'cd -', don't ask me how
 
 #list:
-if [ `uname` = 'Linux' ] ; then
+if [ "$(uname)" = 'Linux' ] ; then
     alias ls='ls --color -F'
-elif [ `uname` = 'Darwin' ] ; then
+elif [ "$(uname)" = 'Darwin' ] ; then
     alias ls='ls -FG' #default color + directory flags
 fi
 alias l='ls -la' #detailed ls
