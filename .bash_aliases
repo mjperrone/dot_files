@@ -76,8 +76,6 @@ alias beep='say "done running command" && tput bel' #second part makes notificat
 #abbreviations
 alias hist='history'
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
-alias h='head -1'
-alias t='tail -1'
 alias m='make'
 alias qq='exit' #I use this all the time
 alias vi='nvim'
