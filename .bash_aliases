@@ -15,14 +15,14 @@ alias ev='vi $DOT_FILES/.vimrc'
 alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
 
 #go places:
-alias drop='cd ~/Dropbox'
+alias drop='cd "${DROPBOX_PATH}"'
 alias dev='cd ~/Development'
 alias ax='cd ~/Development/averagexkcd'
 alias dot='cd $DOT_FILES'
-alias note='cd ~/Dropbox/Notes'
-alias notes='cd ~/Dropbox/Notes'
-alias food='cd ~/Dropbox/food'
-alias rec='cd ~/Dropbox/food/recipes'
+alias note='cd "${DROPBOX_PATH}/Notes"'
+alias notes='note'
+alias food='cd "${DROPBOX_PATH}/food"'
+alias rec='cd "${DROPBOX_PATH}/food/recipes"'
 
 #relative navigation:
 L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
