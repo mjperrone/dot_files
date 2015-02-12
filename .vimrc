@@ -50,12 +50,6 @@ call vundle#end()
 " end vundle }}}}
 
 filetype plugin indent on
-
-" quasi plugins:
-" super basic addition on nums newline separated.
-source ~/.vim/quasi_plugins/vmath.vim
-
-
 syntax on
 
 "spellcheck
