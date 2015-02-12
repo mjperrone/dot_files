@@ -168,11 +168,8 @@ endif
 nnoremap ' `
 nnoremap ` '
 
-"edit important files quickly
+"edit this file quickly
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>eb :vsplit ~/dot_files/.bashrc<cr>
-nnoremap <leader>eba :vsplit ~/.bash_aliases<cr>
-nnoremap <leader>ebf :vsplit ~/.bash_functions<cr>
 "reload .vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
