@@ -208,6 +208,9 @@ vnoremap Q :normal @q<cr>
 " forgot to sudo open a file? no problem
 cnoremap w!! %!sudo tee > /dev/null %
 
+" use ag (faster ack (like a better grep)) to search under this dir for a string
+nnoremap <C-a> q:iAg -i ""<ESC>i
+let g:ackhighlight = 1
 
 " my maps }}}
 
@@ -231,10 +234,6 @@ let g:instant_markdown_slow = 1 "dont try to compile the markdownupon every chan
 if !exists('g:loaded_matchit')
     runtime! macros/matchit.vim
 endif
-
-nnoremap <C-a> q:iAg -i ""<ESC>i
-nnoremap <C-A> q:iAg ""<ESC>i
-let g:ackhighlight = 1
 
 nnoremap gp `[v`]
 
