@@ -102,3 +102,5 @@ alias pumpitup="osascript -e 'set volume 10'"
 alias fucking='sudo'
 alias lol='l'
 alias gg='telnet towel.blinkenlights.nl' #Star Wars: A New Hope. In ascii art.
+
+alias write='$EDITOR "$DROPBOX_PATH/Notes/random/$(today).txt"'
