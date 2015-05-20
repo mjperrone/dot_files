@@ -19,7 +19,7 @@ else
     fi
 
     #link everything to the relevant file in $DOT_FILES
-    for f in .bashrc .inputrc .editrc .vimrc .vrapperrc .gitconfig .gitignore_global .vim .zshrc
+    for f in .bashrc .inputrc .editrc .vimrc .vrapperrc .gitconfig .gitignore_global .vim .zshrc .tmux.conf
     do
         ln -s $DOT_FILES/$f ~/$f
     done
