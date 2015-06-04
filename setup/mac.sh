@@ -17,6 +17,7 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 brew tap neovim/homebrew-neovim
 brew install --HEAD neovim
 brew install ag
+brew install reattach-to-user-namespace # for allowing tmux to copy into system clipboard
 sudo nvram SystemAudioVolume=" " # shhhhhhhhhh on startup.
 echo "install iterm2, then run `open Development/solarized/iterm2-colors-solarized/Solarized\ Dark.itermcolors` then Preferences>Profile>Colors>Load Presets..."
 open location "http://iterm2.com/downloads.html"
