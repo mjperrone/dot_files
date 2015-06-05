@@ -12,3 +12,9 @@ export AVERAGE_XKCD_CACHE_PATH=$HOME/Development/ax_path
 
 export EDITOR="vim"
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
+
+#postgres defaults
+export PGPORT=5432
+export PGHOST=localhost
+unset PGUSER
+unset PGPASSWORD

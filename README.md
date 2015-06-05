@@ -6,7 +6,7 @@ My unix dot files
 This is my home. I can get home by running the following commands:
 
 ```bash
-#$DOT_FILES can be set in .bashrc, default is ~/dot_files
+#$DOT_FILES can be set in .{bash,zsh}rc, default is `~/dot_files`
 git clone https://github.com/mjperrone/dot_files.git $DOT_FILES
 source $DOT_FILES/setup/setup.sh
 ```
@@ -25,18 +25,19 @@ When I'm done, I run:
 source $DOT_FILES/setup/teardown.sh
 rm -rf $DOT_FILES
 ```
-And it's like I was never there! 
+And it's like I was never there!
 
 The structure of my dotfiles is roughly as follows:
 
 * .vimrc is my vim config file(includes plugins with vundle)
-* .bashrc sources all the other bash config files and handles things related to PATH variables, and some general bash config stuff
-  .bash_prompt sets the PS1 variable (bash prompt line)
-* .bash_aliases has a bunch of my aliases
-* .bash_functions has a bunch of my functions
-* python_helpers/ has a few python scripts that are useful to pretend are bash commands
-* .bash_secrets is being ignored by git, because it has secret things like server locations/passwords/access keys for work and play, depending on the machine.
-* .git_functions are bash functions that relate to git specifically
+* .bashrc and .zshrc have shell specific config for bash and zsh respectively
+* .shellrc sources all the other shell config files and handles things related to PATH variables, and some general shell config stuff
+  .bash_prompt sets the PS1 variable (prompt line)
+* .shell_aliases has a bunch of my aliases
+* .shell_functions has a bunch of my functions
+* python_helpers/ has a few python scripts that are useful to pretend are shell commands
+* .shell_secrets is being ignored by git, because it has secret things like server ips and exploring/creating projects that I only care to run on one machine.
+* .git_functions are shell functions that relate to git specifically
 * .inputrc is the readline init file
 * completion/ has the auto completion scripts for git, ssh, ...
 * setup/ contains the scripts to set up all the config files for a new machine, and to remove them.
@@ -51,3 +52,7 @@ todo
 * fully flesh out the .bash_directory_history idea (saving WHERE a command was run along the actual command, so better replication of old commands is possible)
 * make sure everything is compatible with ubuntu and somewhat with windows8(doesn't work on ubuntu because it won't source ~/.bashrc when its a link)
 * zsh plz
+* default args to the setup script allowing different $DOT_FILES dirs to be set
+  up automatically
+* factor DOT_FILES into .shell_path (and find a better name for that file) for
+  Path-y and Env-y config
