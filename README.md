@@ -41,6 +41,9 @@ The structure of my dotfiles is roughly as follows:
 * completion/ has the auto completion scripts for git, ssh, ...
 * setup/ contains the scripts to set up all the config files for a new machine, and to remove them.
 * .pranks has a bunch of useless fun stuff with which one can mess with people
+* Note: There are a handful of instances where functions are defined outside of
+  `.bash_functions` and aliases outside of `.bash_aliases` to be groups with other
+  logically connected units.
 
 
 Some of the places/people from which I've stolen ideas:<a href=http://learnvimscriptthehardway.stevelosh.com/>Steve Losh</a>,<a href=http://dailyvim.blogspot.com/>DailyVim</a>, <https://github.com/revans/bash-it>,<https://github.com/linduxed/dotfiles>, <a href=http://www.linkedin.com/in/vinaysethmohta>Vinay Seth Mohta</a>, <a href=https://github.com/GeorgeErickson/dotfiles>George Erickson</a>, <a href=http://www.youtube.com/watch?v=aHm36-na4-4>Damian Conway</a>, <a href=https://github.com/Ziphilt/dotfiles>Cal Stepanian</a>, <a href=https://github.com/justinmk/config/>Justinmk(holy...)</a>, <a href=http://bilalquadri.com/blog/2014/03/02/harmonizing-with-vi-nature/>Bilal Quadri</a> and numerous other people slowly throughout this journey.
