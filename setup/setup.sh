@@ -31,7 +31,11 @@ else
 
     #apply the changes to the current shell instance!
     #(this is why you ought to run source $DOT_FILES/setup/setup.sh and not just sh $DOT_FILES/setup/setup.sh)
-    source ~/.bashrc
+    if [ ! -n $BASH_VERSION ]; then
+        source $DOT_FILES/.bashrc
+    elif [ ! -n $ZSH_VERSION ]; then
+        source $DOT_FILES/.zshrc
+    fi
 
 
     # make the development folder and checkout some stuff
