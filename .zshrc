@@ -1,3 +1,5 @@
+source $DOT_FILES/.shellrc
+
 autoload -U promptinit && promptinit
 autoload -U colors && colors
 setopt PROMPT_SUBST
