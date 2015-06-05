@@ -27,7 +27,7 @@ alias rec='cd "${DROPBOX_PATH}/food/recipes"'
 #relative navigation:
 L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
 R="../"
-for _ in  {1..7}
+for n in  {1..7}
 do
     alias $L="cd $R"
     L="$L."
