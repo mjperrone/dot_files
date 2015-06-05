@@ -10,6 +10,7 @@ alias eba='vi $DOT_FILES/.bash_aliases'
 alias ebs='vi $DOT_FILES/.bash_secrets'
 alias ebf='vi $DOT_FILES/.bash_functions'
 alias ev='vi $DOT_FILES/.vimrc'
+alias ez='vi $DOT_FILES/.zshrc'
 
 #reset configs fast:
 alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
