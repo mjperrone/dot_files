@@ -37,5 +37,6 @@ else
     mkdir ~/Development/
     git clone https://github.com/altercation/solarized.git ~/Development/solarized
 
+    # set up vim to install it's packages (see .vimrc where this is defined)
     vim -c ":call InstallVundle() | q | q"
 fi
