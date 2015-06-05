@@ -9,13 +9,7 @@ fi
 if [ -f $DOT_FILES/completion/completionrc ]; then
     source $DOT_FILES/completion/completionrc
 fi
-for f in .bash_secrets .bash_aliases .bash_functions .bash_colors .bash_prompt .git_functions .bash_path
-do
-    if [ -f $DOT_FILES/$f ]; then
-        source $DOT_FILES/$f
-    fi
-done
-
+source $DOT_FILES/.shellrc
 
 #bash settings
 export HISTFILESIZE=30000 #store 30k of bash command history, you know, in case
@@ -25,7 +19,9 @@ shopt -s cmdhist #multiline saved as one line
 shopt -s cdspell #autocorrect typos in path names when using cd
 shopt -s checkwinsize  #checks window size after each command, saves formatting madness
 shopt -s dotglob # includes .* files in *
-#bash >=4.0 #shopt -s globstar #** is directory-recursive filename expansion
+if [ "${BASH_VERSINFO[0]}" -ge 4 ]; then
+    shopt -s globstar #** is directory-recursive filename expansion
+fi
 complete -cf sudo man
 
 #virtualenv stuff
