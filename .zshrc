@@ -11,6 +11,9 @@ setopt EXTENDED_HISTORY #save time and run time length
 
 setopt GLOB_DOTS # includes .* files in *
 
+setopt completeinword # tab complete from the front of a word
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
+
 autoload -U promptinit && promptinit
 autoload -U colors && colors
 setopt PROMPT_SUBST
