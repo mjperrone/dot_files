@@ -26,8 +26,8 @@ else
     done
     ln -s $DOT_FILES/.bashrc ~/.bash_profile #make .bash_profile+.bashrc the same
     # the difference is documented at http://www.joshstaiger.org/archives/2005/07/bash_profile_vs.html, but I want both to do the same thing
-    ln -s $DOT_FILE/.vim ~/.nvim
-    ln -s $DOT_FILE/.vimrc ~/.nvimrc
+    ln -s $DOT_FILES/.vim ~/.nvim
+    ln -s $DOT_FILES/.vimrc ~/.nvimrc
 
     #apply the changes to the current shell instance!
     #(this is why you ought to run source $DOT_FILES/setup/setup.sh and not just sh $DOT_FILES/setup/setup.sh)
