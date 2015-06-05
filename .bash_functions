@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 pinfo () { #path info
     echo -e "${_red}path: ${_reset}$PATH" | sed -e "s/:\//  \//g"
     echo -e "${_red}pythonpath:  ${_reset}$PYTHONPATH"
@@ -6,6 +7,11 @@ pinfo () { #path info
     echo -e "${_red}infopath:  ${_reset}$INFOPATH"
 }
 
+#postgres defaults
+export PGPORT=5432
+export PGHOST=localhost
+unset PGUSER
+unset PGPASSWORD
 function pginfo () { #postgres info
     echo -e "${_red}PGHOST: ${_reset}$PGHOST"
     echo -e "${_red}PGPORT: ${_reset}$PGPORT"
