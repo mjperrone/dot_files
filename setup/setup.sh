@@ -35,8 +35,11 @@ else
 
 
     # make the development folder and checkout some stuff
-    mkdir ~/Development/
-    git clone https://github.com/altercation/solarized.git ~/Development/solarized
+    mkdir -p ~/Development/
+    if [ ! -d ~/Development/solarized ]; then
+        git clone https://github.com/altercation/solarized.git ~/Development/solarized
+    fi
+
 
     # set up vim to install it's packages (see .vimrc where this is defined)
     vim -c ":call InstallVundle() | q | q"

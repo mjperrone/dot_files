@@ -10,7 +10,7 @@ if !exists('*InstallVundle')
     fun! InstallVundle()
         echo "Installing Vundle..."
         silent! call mkdir(expand("~/.vim/bundle", 1), 'p')
-        silent! !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+        silent! !if [ ! -d !/.vim/bundle/Vundle.vim ]; then; git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim; fi
         redraw!
         source $MYVIMRC
         PluginInstall
