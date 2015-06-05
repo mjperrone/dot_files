@@ -25,7 +25,9 @@ shopt -s cmdhist #multiline saved as one line
 shopt -s cdspell #autocorrect typos in path names when using cd
 shopt -s checkwinsize  #checks window size after each command, saves formatting madness
 shopt -s dotglob # includes .* files in *
-#bash >=4.0 #shopt -s globstar #** is directory-recursive filename expansion
+if [ "${BASH_VERSINFO[0]}" -ge 4 ]; then
+    shopt -s globstar #** is directory-recursive filename expansion
+fi
 complete -cf sudo man
 
 #virtualenv stuff
