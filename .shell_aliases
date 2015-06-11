@@ -6,11 +6,15 @@ alias today='date +"%b_%d_%Y"'
 
 #edit configs fast:
 alias eb='vi $DOT_FILES/.bashrc'
-alias eba='vi $DOT_FILES/.bash_aliases'
-alias ebs='vi $DOT_FILES/.bash_secrets'
-alias ebf='vi $DOT_FILES/.bash_functions'
+alias eba='vi $DOT_FILES/.shell_aliases'
+alias esa='vi $DOT_FILES/.shell_aliases'
+alias ebs='vi $DOT_FILES/.shell_secrets'
+alias ess='vi $DOT_FILES/.shell_secrets'
+alias ebf='vi $DOT_FILES/.shell_functions'
+alias esf='vi $DOT_FILES/.shell_functions'
 alias ez='vi $DOT_FILES/.zshrc'
 alias ev='vi $DOT_FILES/.vimrc'
+alias et='vi $DOT_FILES/.tmux.conf'
 
 #reset configs fast:
 alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
