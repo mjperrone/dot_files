@@ -11,6 +11,7 @@ setopt EXTENDED_HISTORY #save time and run time length
 
 setopt GLOB_DOTS # includes .* files in *
 
+autoload -U compinit && compinit
 setopt completeinword # tab complete from the front of a word
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
 
@@ -20,7 +21,7 @@ setopt PROMPT_SUBST
 
 
 PROMPT="%? %{$fg[white]%}%D{%H:%M:%S} %{$fg[cyan]%}%n%{$fg[white]%}@%{$fg[yellow]%}%m%{$reset_color%}:%{$fg[blue]%}%~ %{$reset_color%}\$(get_git_branch) $ "
-#time name@location:~/working/dir (branch)$
+#stauscCdeOfPreviousCommand time name@location:~/working/dir (branch)$
 
 export HISTSIZE=30000
 export SAVEHIST=30000
