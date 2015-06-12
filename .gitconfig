@@ -1,6 +1,5 @@
 [user]
 	name = Mike Perrone
-	email = mike.j.perrone@gmail.com
 [alias]
     st = status
     dc = diff --cached
