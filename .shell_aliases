@@ -18,6 +18,7 @@ alias et='vi $DOT_FILES/.tmux.conf'
 
 #reset configs fast:
 alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
+alias sz='source $DOT_FILES/.zshrc; echo source $DOT_FILES/.zshrc'
 
 #go places:
 alias drop='cd "${DROPBOX_PATH}"'
