@@ -19,7 +19,7 @@ function pginfo () { #postgres info
 }
 
 ip () { #print external ip address
-    curl -s "http://checkip.dyndns.org:8245/" | awk '{ print $6 }' | sed '/^$/d; s/^[ ]*//g; s/[ ]*$//g; s/<.*>//g'
+    dig +short myip.opendns.com @resolver1.opendns.com
 }
 
 fakefile () { #make a file of x MB
