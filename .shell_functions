@@ -21,6 +21,9 @@ function pginfo () { #postgres info
 ip () { #print external ip address
     dig +short myip.opendns.com @resolver1.opendns.com
 }
+lip () { #print internal ip address
+    ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
+}
 
 fakefile () { #make a file of x MB
     perl -e "print '0' x 1024 x 1024 x $1" > "$1-MB-fake-file.txt"
