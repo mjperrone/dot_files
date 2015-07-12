@@ -26,3 +26,6 @@ PROMPT="%? %{$fg[white]%}%D{%H:%M:%S} %{$fg[cyan]%}%n%{$fg[white]%}@%{$fg[yellow
 export HISTSIZE=30000
 export SAVEHIST=30000
 export HISTFILE=~/.bash_history #TODO
+
+
+bindkey "^?" backward-delete-char # Allow backspace to delete stuff in prompt insert mode
