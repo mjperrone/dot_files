@@ -79,6 +79,12 @@ alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
 alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app; qq' #locks screen (and exits) on mac only
 alias beep='say "done running command" && tput bel' #second part makes notification on mac
 
+
+#tmux:
+alias tn='tmux new -s'
+alias tl='tmux list-sessions'
+alias ta='tmux attach-session -t'
+
 #abbreviations
 alias hist='history'
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
