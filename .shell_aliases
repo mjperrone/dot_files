@@ -23,7 +23,6 @@ alias sz='source $DOT_FILES/.zshrc; echo source $DOT_FILES/.zshrc'
 #go places:
 alias drop='cd "${DROPBOX_PATH}"'
 alias dev='cd ~/Development'
-alias ax='cd ~/Development/averagexkcd'
 alias dot='cd $DOT_FILES'
 alias note='cd "${DROPBOX_PATH}/Notes"'
 alias notes='note'
