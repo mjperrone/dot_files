@@ -8,7 +8,7 @@ else
     mkdir $OLD_DOT_FILES
 
     # save old dot files
-    for f in .shellrc .shell_profile .bash_prompt .shell_colors .inputrc .editrc .vimrc .vrapperrc .bash_history .gitconfig .gitignore_global .zshrc
+    for f in .shellrc .shell_profile .bash_prompt .shell_colors .inputrc .editrc .vimrc .vrapperrc .bash_history .gitconfig .gitignore_global .zshrc .agignore
     do
         if [ -e ~/$f ]; then
             mv ~/$f $OLD_DOT_FILES/$f
@@ -20,7 +20,7 @@ else
 
     # link everything to the relevant file in $DOT_FILES
     # this is the interface with the programs expecting config files
-    for f in .shellrc .inputrc .editrc .vimrc .vrapperrc .gitconfig .gitignore_global .vim .zshrc .tmux.conf
+    for f in .shellrc .inputrc .editrc .vimrc .vrapperrc .gitconfig .gitignore_global .vim .zshrc .tmux.conf .agignore
     do
         ln -s $DOT_FILES/$f ~/$f
     done
