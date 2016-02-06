@@ -46,6 +46,9 @@ call vundle#begin()
     Plugin 'guns/xterm-color-table.vim'
 " Highlight rgb hex codes in their color
     Plugin 'lilydjwg/colorizer'
+" Golang stuff
+    Plugin 'fatih/vim-go'
+    let g:go_fmt_command = "goimports"
 call vundle#end()
 " end vundle }}}}
 
