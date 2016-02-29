@@ -59,3 +59,4 @@ todo
   up automatically
 * factor DOT_FILES into .shell_path (and find a better name for that file) for
   Path-y and Env-y config
+* name tmux sessions by default, numbered or whatever
