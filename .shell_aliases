@@ -49,7 +49,7 @@ if [ "$(uname)" = 'Linux' ] ; then
 elif [ "$(uname)" = 'Darwin' ] ; then
     alias ls='ls -FG' #default color + directory flags
 fi
-alias l='ls -la' #detailed ls
+alias l='ls -lah' #detailed ls
 alias l.='ls -ld .*' #only hidden stuff
 alias ld='command ls -daG */' #non-hidden directories
 alias ld.='command ls -daG .*/' #hidden directories
