@@ -61,3 +61,4 @@ todo
   Path-y and Env-y config
 * name tmux sessions by default, numbered or whatever
 * run tmux/screen automatically upon sshing into things
+* ssh-agent set up properly
