@@ -38,6 +38,9 @@ defaults write ~/Library/Preferences/.GlobalPreferences CGDisableCursorLocationM
 # shhhhhhhhhh on startup.
 sudo nvram SystemAudioVolume=" "
 
+# show the dock after hovering for 2 whole seconds cuz fuck the dock.
+defaults write com.apple.Dock autohide-delay -float 2 && killall Dock
+
 sudo easy_install pip
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew tap neovim/homebrew-neovim
