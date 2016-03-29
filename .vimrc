@@ -22,8 +22,8 @@ call vundle#begin()
     Plugin 'gmarik/Vundle.vim'
 " Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
     Plugin 'justinmk/vim-sneak'
-" markdown preview (in browser)
-    Plugin 'suan/vim-instant-markdown'
+" Markdown preview (in browser)
+    Plugin 'JamshedVesuna/vim-markdown-preview'
 " Python suite
     Plugin 'klen/python-mode'
 " fuzzy file searching
