@@ -13,7 +13,7 @@ export PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin
 
 export PATH=$PATH:$GOBIN
 
-export EDITOR="vi"
+export EDITOR="nvim"
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
 
 #postgres defaults

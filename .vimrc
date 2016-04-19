@@ -157,15 +157,6 @@ nnoremap <Leader>D "_D
 nnoremap <Leader>C "_C
 nnoremap <Leader>c "_c
 nnoremap <Leader>x "_x
-if has("unix")
-    let uname = system('uname')
-    if uname =~ 'Darwin'
-        "copy selected text in visual mode to mac system clipboard
-        vmap <leader>c "my :call system("pbcopy", @m)<CR><CR>
-        "paste from clipboard without having to do :set paste i <cmd>v
-        map <leader>p :r!pbpaste<CR>
-    endif
-endif
 "I like for mark jumping to go to the row AND the column, and the apostrophe
 "is easier to reach, so I'll swap those
 nnoremap ' `
@@ -233,3 +224,7 @@ nnoremap gp `[v`]
 
 nnoremap <leader>r :RainbowParenthesesToggle<cr>
 let g:instant_markdown_slow = 1 "don't write teh markdown until save
+
+set clipboard+=unnamedplus "use system clipboard for registerless copys and deletes
+map <leader>p "*p
+map <leader>P "*P
