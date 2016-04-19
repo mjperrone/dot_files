@@ -70,15 +70,6 @@ highlight_yellow () { #* * * * yellow
 
 gri () { grep -r -i "$*" .; } #search for the parameter here, recursively, case-insensitively
 
-#todo help:
-td(){
-    cat "$DROPBOX_PATH"**/todo.txt | highlight_red \\-\\-.*  | highlight_yellow \\*\\*\\*.*
-    cat "$DROPBOX_PATH/**/todo.txt" > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
-}
-etd(){
-    vi "$DROPBOX_PATH/**/todo.txt" #edit todo lists
-    cat "$DROPBOX_PATH/**/todo.txt" > ~/Dropbox/todo.txt #so I can read the current todo on my phone!
-}
 decode() {
     echo "$1" | base64 --decode | pjson
 }
