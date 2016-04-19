@@ -60,7 +60,6 @@ todo
 * factor DOT_FILES into .shell_path (and find a better name for that file) for
   Path-y and Env-y config
 * name tmux sessions by default, numbered or whatever
-* run tmux/screen automatically upon sshing into things
 * make vimdiff usable
 * set a python virtualenv up, and rbenv too while you're at it
 * autopep8 on save

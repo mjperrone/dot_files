@@ -83,3 +83,8 @@ cd() {
         builtin cd "$*"
     fi
 }
+
+ssht() {
+    # run tmux immediately upon sshing into things
+    ssh -t $@ tmux
+}
