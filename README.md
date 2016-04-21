@@ -63,3 +63,4 @@ todo
 * make vimdiff usable
 * set a python virtualenv up, and rbenv too while you're at it
 * autopep8 on save
+* iterm3 - json saved profiles
