@@ -22,8 +22,8 @@ call vundle#begin()
     Plugin 'gmarik/Vundle.vim'
 " Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
     Plugin 'justinmk/vim-sneak'
-" Markdown preview (in browser)
-    Plugin 'JamshedVesuna/vim-markdown-preview'
+" markdown preview (in browser)
+    Plugin 'suan/vim-instant-markdown'
 " Python suite
     Plugin 'klen/python-mode'
 " fuzzy file searching
@@ -49,6 +49,8 @@ call vundle#begin()
 " Golang stuff
     Plugin 'fatih/vim-go'
     let g:go_fmt_command = "goimports"
+" Run autopep8 on the file on save
+    Plugin 'tell-k/vim-autopep8'
 call vundle#end()
 " end vundle }}}}
 
