@@ -52,7 +52,7 @@ brew install tmux
 brew cask install clipmenu # clipboard history Kreygasm
 brew cask install iterm2
 
-cp $DOT_FILES/setup/iterm_profiles.json "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm_profiles.json
+ln -s $DOT_FILES/iterm_profiles.json "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm_profiles.json"
 
 echo "run `open Development/solarized/iterm2-colors-solarized/Solarized\ Dark.itermcolors` then Preferences>Profile>Colors>Load Presets..."
 open location "http://iterm2.com/downloads.html"
