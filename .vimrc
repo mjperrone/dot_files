@@ -26,6 +26,8 @@ call vundle#begin()
     Plugin 'suan/vim-instant-markdown'
 " Python suite
     Plugin 'klen/python-mode'
+" Sort python imports
+    Plugin 'fisadev/vim-isort'
 " fuzzy file searching
     Plugin 'kien/ctrlp.vim'
 " ag integration
@@ -230,3 +232,4 @@ let g:instant_markdown_slow = 1 "don't write teh markdown until save
 set clipboard+=unnamedplus "use system clipboard for registerless copys and deletes
 map <leader>p "*p
 map <leader>P "*P
+autocmd BufWritePre *.py Isort
