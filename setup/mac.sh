@@ -42,6 +42,7 @@ sudo nvram SystemAudioVolume=" "
 defaults write com.apple.Dock autohide-delay -float 2 && killall Dock
 
 sudo easy_install pip
+pip install isort
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew tap neovim/homebrew-neovim
 brew install --HEAD neovim
