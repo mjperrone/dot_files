@@ -1,4 +1,4 @@
-for f in .shell_secrets .shell_aliases .shell_functions .shell_colors .bash_prompt .git_functions .shell_path
+for f in .shell_path .shell_secrets .shell_aliases .shell_functions .shell_colors .bash_prompt .git_functions
 do
     if [ -f $DOT_FILES/$f ]; then
         source $DOT_FILES/$f
