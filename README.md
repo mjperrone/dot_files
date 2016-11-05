@@ -54,7 +54,6 @@ todo
 =========
 * fully flesh out the .bash_directory_history idea (saving WHERE a command was run along the actual command, so better replication of old commands is possible)
 * make sure everything is compatible with ubuntu and somewhat with windows8(doesn't work on ubuntu because it won't source ~/.bashrc when its a link)
-* zsh plz
 * default args to the setup script allowing different $DOT_FILES dirs to be set
   up automatically
 * factor DOT_FILES into .shell_path (and find a better name for that file) for
@@ -64,3 +63,7 @@ todo
 * set a python virtualenv up, and rbenv too while you're at it
 * autopep8 on save
 * iterm3 - json saved profiles
+* make the setup scripts be idempotent, maybe also junk the old_bash_files
+  thing, I'll never do this on someone else's computer and then revert, that's
+silly af.
+* fix `k` aliases in zsh
