@@ -76,6 +76,7 @@ alias space='du -ks ./* | sort -n'
 alias intersect="grep -xF -f" #set intersection of two files, linewise
 alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
 alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app; qq' #locks screen (and exits) on mac only
+alias lk='lock'
 alias beep='say "done running command" && tput bel' #second part makes notification on mac
 
 
