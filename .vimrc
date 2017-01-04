@@ -23,7 +23,9 @@ call vundle#begin()
 " Vim-Sneak- the bridge between 'f' and '/'; two character multi-line search.
     Plugin 'justinmk/vim-sneak'
 " markdown preview (in browser)
-    Plugin 'suan/vim-instant-markdown'
+    Plugin 'JamshedVesuna/vim-markdown-preview'
+    let vim_markdown_preview_toggle=2
+    let vim_markdown_preview_github=1
 " Python suite
     Plugin 'klen/python-mode'
 " Sort python imports
@@ -218,9 +220,6 @@ let g:pymode_lint_on_fly = 0 "pylint while editing
 " jedi-vim config stuff follows: https://github.com/davidhalter/jedi-vim
 let g:jedi#rename_command = "<leader>cn"
 
-" Temp settings; testing them out or transient needs:
-" no background on the gutter
-let g:instant_markdown_slow = 1 "dont try to compile the markdownupon every change
 
 if !exists('g:loaded_matchit')
     runtime! macros/matchit.vim
