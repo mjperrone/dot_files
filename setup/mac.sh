@@ -25,11 +25,8 @@ tell application "System Events" to set the autohide of the dock preferences to 
 # un-hide bottom dock bar instantly; no animation
 defaults write com.apple.dock autohide-time-modifier -int 0
 
-# un-hide bottom dock bar after 4 seconds of hovering over the bottom; I rarely
-# use it and it takes up screen real estate
-defaults write com.apple.Dock autohide-delay -float 0
-
-# restart dock to propogate the changes:
+# show the dock after hovering for 2 whole seconds cuz fuck the dock.
+defaults write com.apple.Dock autohide-delay -float 2
 killall Dock
 
 # don't make the cursor big when you shake the mouse a bit
@@ -38,12 +35,10 @@ defaults write ~/Library/Preferences/.GlobalPreferences CGDisableCursorLocationM
 # shhhhhhhhhh on startup.
 sudo nvram SystemAudioVolume=" "
 
-# show the dock after hovering for 2 whole seconds cuz fuck the dock.
-defaults write com.apple.Dock autohide-delay -float 2 && killall Dock
 
 sudo easy_install pip
 pip install isort
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew tap neovim/homebrew-neovim
 brew install --HEAD neovim
 brew install ag
