@@ -88,3 +88,15 @@ ssht() {
     # run tmux immediately upon sshing into things
     ssh -t $@ tmux
 }
+
+listening() {
+    lsof -i :$1 | grep LISTEN
+}
+
+listeningkill() {
+    pid=$(listening $1 | awk '{print $2}')
+    echo "killing $pid..."
+    kill $pid
+    echo "ded."
+}
+
