@@ -212,6 +212,8 @@ let g:ackhighlight = 1
 " E231 = missing whitespace after ,;:
 let g:pymode_link = 0 "just use syntastic for this job
 let g:pymode_lint_ignore = "E501,E231"
+let g:pep8_ignore="E501,E231"
+let g:syntastic_python_flake8_args='--ignore=E501'
 let g:pymode_folding = 0 "don't fold code
 let g:pymode_rope = 0 "don't use rope (because I like jedi-vim better)
 let g:pymode_lint_on_fly = 0 "pylint while editing
@@ -233,3 +235,4 @@ set clipboard+=unnamedplus "use system clipboard for registerless copys and dele
 map <leader>p "*p
 map <leader>P "*P
 autocmd BufWritePre *.py Isort
+nnoremap c "_c
