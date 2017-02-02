@@ -1,5 +1,3 @@
-#!/user/bin/zsh bash
-
 export DOT_FILES=~/dot_files
 
 #TODO: completionrc?
@@ -10,6 +8,7 @@ setopt INC_APPEND_HISTORY #after every command instead of on exit
 setopt EXTENDED_HISTORY #save time and run time length
 
 setopt GLOB_DOTS # includes .* files in *
+setopt extended_glob # uses zsh's extended globa syntax
 
 autoload -U compinit && compinit
 setopt completeinword # tab complete from the front of a word
