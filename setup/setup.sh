@@ -6,7 +6,7 @@ export OLD_DOT_FILES=~/old_dot_files
 
 # link everything to the relevant file in $DOT_FILES
 # this is the interface with the programs expecting config files
-for f in .shellrc .inputrc .editrc .vimrc .vrapperrc .gitconfig .gitignore_global .vim .zshrc .tmux.conf .ignore
+for f in .shellrc .inputrc .editrc .vimrc .vrapperrc .gitconfig .gitignore_global .vim .zshrc .tmux.conf .ignore .psqlrc
 do
     ln -s $DOT_FILES/$f ~/$f
 done
