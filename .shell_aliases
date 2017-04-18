@@ -61,8 +61,7 @@ alias lf.='ls -ap | grep -v "/$" | grep "^\."' #hidden files
 alias grep='grep --exclude-dir=".svn" --color -I' #be colorful and ignore binary files and svn directories
 alias egrep='egrep --color -I'
 alias fgrep='fgrep --color -I'
-alias ack='ack --pager="less -R"'
-alias ag='ag -i --pager="less -R" --path-to-agignore=~/.agignore'
+alias ag='ag -i --pager="less -R" --ignore-dir=_vendor/ --ignore-dir=Godeps/ --ignore-dir=node_modules/'
 
 #tools:
 alias pjson='python $DOT_FILES/python_helpers/pprint-jl' #pretty print json
