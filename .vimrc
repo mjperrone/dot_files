@@ -35,7 +35,8 @@ call vundle#begin()
 " ag integration
     Plugin 'rking/ag.vim'
 " Syntax checker for loads of languages
-    Plugin 'scrooloose/syntastic'
+    Plugin 'vim-syntastic/syntastic'
+    let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
 " Ruby on Rails suite
     Plugin 'tpope/vim-rails'
 " Makes coding in LISP much easier.
