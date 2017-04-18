@@ -1,4 +1,5 @@
 set history=200 "number of exec commands saved
+au BufEnter /private/tmp/crontab.* setl backupcopy=yes "http://vim.wikia.com/wiki/Editing_crontab
 
 
 " BEGIN Vundle
