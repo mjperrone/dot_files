@@ -1,0 +1,4 @@
+-- Pretty prompt (docs https://www.postgresql.org/docs/9.3/static/app-psql.html#APP-PSQL-PROMPTING )
+\set PROMPT1 '%[%033[1;37m%]%`date +%H:%M:%S` %[%033[1;35m%]%n%[%033[1;37m%]@%[%033[0;31m%]%M%[%033[1;37m%]%R%# %[%033[0m%]'
+-- colorless version:
+-- \set PROMPT1 '%`date +%H:%M:%S` %n@%M%R%# '

@@ -7,6 +7,7 @@ alias today='date +"%b_%d_%Y"'
 #edit configs fast:
 alias eb='$EDITOR $DOT_FILES/.bashrc'
 alias eba='$EDITOR $DOT_FILES/.shell_aliases'
+alias ebp='$EDITOR $DOT_FILES/.shell_path'
 alias esa='$EDITOR $DOT_FILES/.shell_aliases'
 alias ebs='$EDITOR $DOT_FILES/.shell_secrets'
 alias ess='$EDITOR $DOT_FILES/.shell_secrets'
@@ -60,8 +61,7 @@ alias lf.='ls -ap | grep -v "/$" | grep "^\."' #hidden files
 alias grep='grep --exclude-dir=".svn" --color -I' #be colorful and ignore binary files and svn directories
 alias egrep='egrep --color -I'
 alias fgrep='fgrep --color -I'
-alias ack='ack --pager="less -R"'
-alias ag='ag -i --pager="less -R" --path-to-agignore=~/.agignore'
+alias ag='ag -i --pager="less -R" --ignore-dir=_vendor/ --ignore-dir=Godeps/ --ignore-dir=node_modules/'
 
 #tools:
 alias pjson='python $DOT_FILES/python_helpers/pprint-jl' #pretty print json
