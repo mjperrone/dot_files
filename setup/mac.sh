@@ -44,6 +44,7 @@ brew install --HEAD neovim
 brew install ag
 brew install reattach-to-user-namespace # for allowing tmux to copy into system clipboard
 brew install tmux
+brew install zsh
 
 brew cask install clipmenu # clipboard history Kreygasm
 brew cask install iterm2
