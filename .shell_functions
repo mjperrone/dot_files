@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 pinfo () { #path info
-    echo -e "${_red}PATH: ${_reset}$PATH" | tr ":" "\n"
+    echo -e "${_red}PATH:${_reset}$PATH" | tr ":" "\n"
     echo -e "${_red}PYTHONPATH:  ${_reset}$PYTHONPATH"
     echo -e "${_red}MANPATh:  ${_reset}$MANPATH"
     echo -e "${_red}INFOPATH:  ${_reset}$INFOPATH"

@@ -42,12 +42,15 @@ pip install isort
 brew tap neovim/homebrew-neovim
 brew install --HEAD neovim
 brew install ag
-brew install reattach-to-user-namespace # for allowing tmux to copy into system clipboard
+brew install reattach-to-user-namespace --with-wrap-pbcopy-and-pbpaste # for allowing tmux to copy into system clipboard
 brew install tmux
 brew install zsh
 
 brew cask install clipmenu # clipboard history Kreygasm
 brew cask install iterm2
+brew cask install shiftit
+
+
 
 ln -s $DOT_FILES/iterm_profiles.json "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm_profiles.json"
 
