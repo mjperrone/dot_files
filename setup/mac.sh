@@ -49,6 +49,7 @@ brew install zsh
 brew cask install clipmenu # clipboard history Kreygasm
 brew cask install iterm2
 brew cask install shiftit
+brew cask install brightness
 
 
 
