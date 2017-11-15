@@ -15,6 +15,8 @@ ln -s $DOT_FILES/.bashrc ~/.bash_profile #make .bash_profile+.bashrc the same
 ln -s $DOT_FILES/.vim ~/.nvim
 mkdir -p ~/.config/nvim/
 ln -s $DOT_FILES/.vimrc ~/.config/nvim/init.vim
+mkdir -p ~/.ipython/profile_default/
+ln -s $DOT_FILES/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 
 #apply the changes to the current shell instance!
 #(this is why you ought to run source $DOT_FILES/setup/setup.sh and not just sh $DOT_FILES/setup/setup.sh)
