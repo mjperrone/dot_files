@@ -37,7 +37,7 @@ sudo nvram SystemAudioVolume=" "
 
 
 sudo easy_install pip
-pip install isort
+pip install isort grip
 # ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew tap neovim/homebrew-neovim
 brew install --HEAD neovim

@@ -25,7 +25,7 @@ call vundle#begin()
     Plugin 'justinmk/vim-sneak'
 " markdown preview (in browser)
     Plugin 'JamshedVesuna/vim-markdown-preview'
-    let vim_markdown_preview_toggle=2
+    let vim_markdown_preview_toggle=0
     let vim_markdown_preview_github=1
 " Python suite
     Plugin 'klen/python-mode'
