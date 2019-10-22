@@ -27,3 +27,6 @@ mkdir -p ~/code/external/altercation/
 if [ ! -d ~/code/external/altercation/solarized ]; then
     git clone https://github.com/altercation/solarized.git ~/code/external/altercation/solarized
 fi
+
+# make zsh default
+chsh -s /bin/zsh

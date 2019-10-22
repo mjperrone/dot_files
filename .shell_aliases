@@ -59,7 +59,7 @@ alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'" #print out t
 alias space='du -ks ./* | sort -n'
 alias intersect="grep -xF -f" #set intersection of two files, linewise
 alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
-alias lk='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app; qq' #locks screen (and exits) on mac only
+alias lk='pmset displaysleepnow; qq' #locks screen (and exits) on mac only
 alias beep='say "done running command" && tput bel' #second part makes notification on mac
 
 #tmux:

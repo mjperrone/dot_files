@@ -66,7 +66,7 @@ apm install vim-mode-plus
 
 ln -s $DOT_FILES/iterm_profiles.json "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm_profiles.json"
 
-echo "run `open Development/solarized/iterm2-colors-solarized/Solarized\ Dark.itermcolors` then Preferences>Profile>Colors>Load Presets..."
+echo "run `open ~/code/external/altercation/solarized/iterm2-colors-solarized/Solarized\ Dark.itermcolors` then Preferences>Profile>Colors>Load Presets..."
 open location "http://iterm2.com/downloads.html"
 
 
