@@ -1,4 +1,4 @@
-export DOT_FILES=~/dot_files
+export DOT_FILES=/Users/mperrone/code/mjperrone/dot_files
 
 #TODO: completionrc?
 source $DOT_FILES/.shellrc

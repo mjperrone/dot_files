@@ -1,7 +1,5 @@
 # Set PATHs and related variables
 
-export DOT_FILES=~/dot_files
-
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 
@@ -13,7 +11,7 @@ export PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin
 
 export PATH=$PATH:$GOBIN
 
-export EDITOR="nvim"
+export EDITOR="vim"
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
 
 #postgres defaults

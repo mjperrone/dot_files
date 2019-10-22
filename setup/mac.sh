@@ -36,24 +36,39 @@ defaults write ~/Library/Preferences/.GlobalPreferences CGDisableCursorLocationM
 sudo nvram SystemAudioVolume=" "
 
 
-sudo easy_install pip
-pip install isort grip
-# ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew tap neovim/homebrew-neovim
-brew install --HEAD neovim
-brew install ag
-brew install reattach-to-user-namespace --with-wrap-pbcopy-and-pbpaste # for allowing tmux to copy into system clipboard
+# Show battery percent and volume in menu bar
+sudo defaults write com.apple.menuextra.battery ShowPercent YES
+defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreServices/Menu Extras/Volume.menu"
+
+
+# 24hr clock with date in the menu bar
+defaults write com.apple.menuextra.clock DateFormat -string 'EEE MMM d  H:mm'
+
+
+mkdir -p ~/code
+mkdir -p ~/files/Downloads
+mkdir -p ~/files/Documents
+mkdir -p ~/files/Photos
+mkdir -p ~/files/Screenshots
+defaults write com.apple.screencapture location ~/files/Screenshots
+
+
 brew install tmux
 brew install zsh
+brew install ag
 
 brew cask install clipmenu # clipboard history Kreygasm
 brew cask install iterm2
-brew cask install shiftit
-brew cask install brightness
+brew cask install atom
 
+apm install vim-mode-plus
 
 
 ln -s $DOT_FILES/iterm_profiles.json "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm_profiles.json"
 
 echo "run `open Development/solarized/iterm2-colors-solarized/Solarized\ Dark.itermcolors` then Preferences>Profile>Colors>Load Presets..."
 open location "http://iterm2.com/downloads.html"
+
+
+# Manual
+# Change chrome default download locatoin
