@@ -1,9 +1,0 @@
-if [ -f $DOT_FILES/completion/git.completion.bash ]; then
-    source $DOT_FILES/completion/git.completion.bash
-fi
-if [ -f $DOT_FILES/completion/ssh.completion.bash ]; then
-    source $DOT_FILES/completion/ssh.completion.bash
-fi
-if [ -f $DOT_FILES/completion/pip.completion.bash ]; then
-    source $DOT_FILES/completion/pip.completion.bash
-fi
