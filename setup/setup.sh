@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 export DOT_FILES=~/dot_files
-export OLD_DOT_FILES=~/old_dot_files
 
 
 # link everything to the relevant file in $DOT_FILES

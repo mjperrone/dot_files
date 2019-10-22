@@ -1,8 +1,6 @@
-for f in .shell_path .shell_secrets .shell_aliases .shell_functions .shell_colors .bash_prompt .git_functions
+for f in .shell_path .shell_colors .shell_functions .shell_secrets .shell_aliases .bash_prompt .git_functions
 do
     if [ -f $DOT_FILES/$f ]; then
         source $DOT_FILES/$f
     fi
 done
-
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi

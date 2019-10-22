@@ -6,12 +6,9 @@ alias today='date +"%b_%d_%Y"'
 
 #edit configs fast:
 alias eb='$EDITOR $DOT_FILES/.bashrc'
-alias eba='$EDITOR $DOT_FILES/.shell_aliases'
-alias ebp='$EDITOR $DOT_FILES/.shell_path'
 alias esa='$EDITOR $DOT_FILES/.shell_aliases'
 alias ebs='$EDITOR $DOT_FILES/.shell_secrets'
 alias ess='$EDITOR $DOT_FILES/.shell_secrets'
-alias ebf='$EDITOR $DOT_FILES/.shell_functions'
 alias esf='$EDITOR $DOT_FILES/.shell_functions'
 alias ez='$EDITOR $DOT_FILES/.zshrc'
 alias ev='$EDITOR $DOT_FILES/.vimrc'
@@ -22,13 +19,7 @@ alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
 alias sz='source $DOT_FILES/.zshrc; echo source $DOT_FILES/.zshrc'
 
 #go places:
-alias drop='cd "${DROPBOX_PATH}"'
-alias dev='cd ~/Development'
 alias dot='cd $DOT_FILES'
-alias note='cd "${DROPBOX_PATH}/Notes"'
-alias notes='note'
-alias food='cd "${DROPBOX_PATH}/food"'
-alias rec='cd "${DROPBOX_PATH}/food/recipes"'
 
 #relative navigation:
 L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
@@ -52,21 +43,14 @@ elif [ "$(uname)" = 'Darwin' ] ; then
 fi
 alias l='ls -lah' #detailed ls
 alias l.='ls -ld .*' #only hidden stuff
-alias ld='command ls -daG */' #non-hidden directories
-alias ld.='command ls -daG .*/' #hidden directories
-alias lf='ls -p | grep -v "/$"' #non-hidden files
-alias lf.='ls -ap | grep -v "/$" | grep "^\."' #hidden files
 
 #grep:
-alias grep='grep --exclude-dir=".svn" --color -I' #be colorful and ignore binary files and svn directories
-alias egrep='egrep --color -I'
-alias fgrep='fgrep --color -I'
+alias grep='grep --color -I' #be colorful and ignore binary files and svn directories
 alias ag='ag -i --pager="less -R" --ignore-dir=_vendor/ --ignore-dir=Godeps/ --ignore-dir=node_modules/'
 
 #tools:
 alias pjson='python $DOT_FILES/python_helpers/pprint-jl' #pretty print json
 alias csv='python $DOT_FILES/python_helpers/csvcolumn.py' #split csvs
-alias email='python $DOT_FILES/python_helpers/sendemail.py' #used to pipe to an email
 alias trim="sed -e 's/^ *//g' -e 's/ *$//g'" #remove trailing and leading whitespace
 alias count='sort | uniq -c | sort -n' #count how many times things appear
 alias len='wc -l | trim' #how many lines given in stdin
@@ -75,11 +59,8 @@ alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'" #print out t
 alias space='du -ks ./* | sort -n'
 alias intersect="grep -xF -f" #set intersection of two files, linewise
 alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
-alias lock='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app; qq' #locks screen (and exits) on mac only
-alias lk='lock'
+alias lk='open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app; qq' #locks screen (and exits) on mac only
 alias beep='say "done running command" && tput bel' #second part makes notification on mac
-alias b=brightness
-
 
 #tmux:
 alias tn='tmux new -s'
@@ -99,21 +80,4 @@ alias k='fc -s' # since I have vi mode, if I forget to hit ESC and hit k-enter,
 alias kk='fc -s -2' # and so on...
 alias kkk='fc -s -3'
 
-#for ben:
-alias ben='set -o emacs'
-
-#for eliot:
-alias cls='clear;ls'
-alias cl='clear;l'
-#for puneet:
-alias dir='ls -l'
-#for george and http://xkcd.com/530/  mac only...
-alias stfu="osascript -e 'set volume output muted true'"
-alias pumpitup="osascript -e 'set volume 10'"
-
-#fun:
-alias fucking='sudo'
-alias lol='l'
-alias gg='telnet towel.blinkenlights.nl' #Star Wars: A New Hope. In ascii art.
-
-alias write='$EDITOR "$DROPBOX_PATH/Notes/random/$(today).txt"'
+alias mute="osascript -e 'set volume output muted true'"

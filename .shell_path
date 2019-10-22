@@ -1,4 +1,4 @@
-#pathy stuff:
+# Set PATHs and related variables
 
 export DOT_FILES=~/dot_files
 
