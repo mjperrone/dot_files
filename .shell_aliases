@@ -20,6 +20,7 @@ alias sz='source $DOT_FILES/.zshrc; echo source $DOT_FILES/.zshrc'
 
 #go places:
 alias dot='cd $DOT_FILES'
+alias notes='cd ~/code/mjperrone/notes/'
 
 #relative navigation:
 L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc

@@ -62,6 +62,7 @@ brew cask install iterm2
 brew cask install atom
 
 apm install vim-mode-plus
+apm install sync-on-save
 
 
 ln -s $DOT_FILES/iterm_profiles.json "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm_profiles.json"
