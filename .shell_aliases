@@ -71,7 +71,7 @@ alias ta='tmux attach-session -t'
 alias hist='history'
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
 alias qq='exit' #I use this all the time. ALL THE TIME.
-alias vi='nvim'
+alias vi='vim'
 
 #spell check:
 alias ci='vi'

@@ -1,6 +1,9 @@
-for f in .shell_path .shell_colors .shell_functions .shell_secrets .shell_aliases .bash_prompt .git_functions
+for f in .shell_path .shell_colors .shell_functions .shell_aliases .git_functions
 do
     if [ -f $DOT_FILES/$f ]; then
         source $DOT_FILES/$f
+    else
+        echo $DOT_FILES/$f doesnt exist
     fi
 done
+source ~/.shell_secrets

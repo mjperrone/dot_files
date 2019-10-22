@@ -1,17 +1,12 @@
 #!/usr/bin/env bash
 
-export DOT_FILES=~/dot_files
+export DOT_FILES=/Users/mperrone/code/mjperrone/dot_files
 
 #trigger all those other dot files!
 if [ -f /etc/bashrc ]; then
     source /etc/bashrc
 fi
-if [ -f $DOT_FILES/completion/completionrc ]; then
-    source $DOT_FILES/completion/completionrc
-fi
 source $DOT_FILES/.shellrc
-source $DOT_FILE/.bash_prompt
-
 
 # bash settings
 
