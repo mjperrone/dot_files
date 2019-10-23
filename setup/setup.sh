@@ -11,6 +11,9 @@ do
 done
 mkdir -p ~/.hammerspoon/
 ln -s $DOT_FILES/init.lua ~/.hammerspoon/init.lua
+ln -s $DOT_FILES/config.cson ~/.atom/config.cson
+
+
 ln -s $DOT_FILES/.bashrc ~/.bash_profile #make .bash_profile+.bashrc the same
 # the difference is documented at http://www.joshstaiger.org/archives/2005/07/bash_profile_vs.html, but I want both to do the same thing
 mkdir -p ~/.ipython/profile_default/
