@@ -1,0 +1,9 @@
+"*":
+  core:
+    telemetryConsent: "no"
+  "exception-reporting":
+    userId: "65fed786-4f1c-47cf-b04b-fe465e4fb596"
+  "vim-mode-plus":
+    keymapYToYankToLastCharacterOfLine: true
+  welcome:
+    showOnStartup: false
