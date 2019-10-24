@@ -60,10 +60,12 @@ brew install ag
 brew cask install clipmenu # clipboard history Kreygasm
 brew cask install iterm2
 brew cask install atom
+brew cask install postman
 
 apm install vim-mode-plus
 apm install ex-mode
-apm install sync-on-save
+®pm install sync-on-save
+®pm install goto-definition
 
 ln -s $DOT_FILES/iterm_profiles.json "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm_profiles.json"
 

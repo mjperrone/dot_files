@@ -1,0 +1,1 @@
+{"input":{"deleteIds":[],"insertModifiers":[{"bookingDateRangeEnd":"2019-10-25T00:00:00.000Z","bookingDateRangeStart":"2019-10-21T00:00:00.000Z","creatorId":"73934b40-7fc3-4b29-82f2-083194decac2","location":"SAN_ANTONIO_TX","locationDropoff":"HOUSTON_TX","locationType":"LANE","modifier":-0.04,"modifierType":"BETA","stopType":"PICKUP","truckType":"DRY_VAN"}]}}
