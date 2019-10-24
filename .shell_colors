@@ -1,6 +1,6 @@
 #!/bin/bash
 # see examples at the bottom
-# may have to wrap those in \[ \] sometimes. not sure why. see .bash_prompt
+# may have to wrap those in \[ \] if you want the shell to ignore the color codes when determining the length of the shell
 
 # Primary color names
 export _black="\033[0;30m"

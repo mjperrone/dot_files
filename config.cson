@@ -1,6 +1,9 @@
 "*":
   core:
     telemetryConsent: "no"
+  editor:
+    fontSize: 12
+    scrollPastEnd: true
   "exception-reporting":
     userId: "65fed786-4f1c-47cf-b04b-fe465e4fb596"
   "vim-mode-plus":
