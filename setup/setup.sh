@@ -35,3 +35,5 @@ fi
 
 # make zsh default shell
 chsh -s /bin/zsh
+
+ln -s ~/code/mjperrone/talon_community ~/.talon/user/community
