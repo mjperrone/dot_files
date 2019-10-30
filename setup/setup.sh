@@ -12,6 +12,7 @@ done
 mkdir -p ~/.hammerspoon/
 ln -s $DOT_FILES/init.lua ~/.hammerspoon/init.lua
 ln -s $DOT_FILES/config.cson ~/.atom/config.cson
+ln -s $DOT_FILES/keymap.cson ~/.atom/keymap.cson
 
 
 ln -s $DOT_FILES/.bashrc ~/.bash_profile #make .bash_profile+.bashrc the same
