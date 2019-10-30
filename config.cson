@@ -1,11 +1,15 @@
 "*":
+  "autocomplete-plus":
+    confirmCompletion: "tab"
   core:
     telemetryConsent: "no"
   editor:
-    fontSize: 12
+    fontSize: 15
     scrollPastEnd: true
   "exception-reporting":
     userId: "65fed786-4f1c-47cf-b04b-fe465e4fb596"
+  "tree-view":
+    hideVcsIgnoredFiles: true
   "vim-mode-plus":
     keymapYToYankToLastCharacterOfLine: true
   welcome:
