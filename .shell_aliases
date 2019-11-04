@@ -50,8 +50,6 @@ alias grep='grep --color -I' #be colorful and ignore binary files and svn direct
 alias ag='ag -i --pager="less -R" --ignore-dir=_vendor/ --ignore-dir=Godeps/ --ignore-dir=node_modules/'
 
 #tools:
-alias pjson='python $DOT_FILES/python_helpers/pprint-jl' #pretty print json
-alias csv='python $DOT_FILES/python_helpers/csvcolumn.py' #split csvs
 alias trim="sed -e 's/^ *//g' -e 's/ *$//g'" #remove trailing and leading whitespace
 alias count='sort | uniq -c | sort -n' #count how many times things appear
 alias len='wc -l | trim' #how many lines given in stdin

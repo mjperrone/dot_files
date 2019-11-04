@@ -30,3 +30,11 @@
 # If you are unfamiliar with CSON, you can read more about it in the
 # Atom Flight Manual:
 # http://flight-manual.atom.io/using-atom/sections/basic-customization/#configuring-with-cson
+
+'atom-text-editor.vim-mode-plus.normal-mode':
+  "' .": 'goto-last-edit:back'
+  'Q': 'vim-mode-plus-macros:apply-macro'
+
+'atom-text-editor:not([mini]).typescript-editor.vim-mode-plus.normal-mode':
+  'g d': 'typescript:go-to-declaration'
+  'g b': 'typescript:return-from-declaration'

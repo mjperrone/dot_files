@@ -56,6 +56,7 @@ defaults write com.apple.screencapture location ~/files/Screenshots
 brew install tmux
 brew install zsh
 brew install ag
+brew install watchman
 
 brew cask install clipmenu # clipboard history Kreygasm
 brew cask install iterm2
@@ -64,9 +65,9 @@ brew cask install postman
 
 apm install vim-mode-plus
 apm install ex-mode
-®pm install sync-on-save
 apm install atom-ide-ui # dependency for atom-typescript
-®pm install atom-typescript
+apm install atom-typescript
+apm install goto-last-edit
 
 ln -s $DOT_FILES/iterm_profiles.json "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm_profiles.json"
 
