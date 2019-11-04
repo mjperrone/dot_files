@@ -1,6 +1,6 @@
+zmodload zsh/zprof
 export DOT_FILES=/Users/mperrone/code/mjperrone/dot_files
 
-#TODO: completionrc?
 source $DOT_FILES/.shellrc
 
 setopt APPEND_HISTORY
@@ -43,3 +43,4 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+zprof

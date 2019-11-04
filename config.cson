@@ -2,6 +2,9 @@
   "autocomplete-plus":
     confirmCompletion: "tab"
   core:
+    packagesWithKeymapsDisabled: [
+      "goto-last-edit"
+    ]
     telemetryConsent: "no"
   editor:
     fontSize: 15
@@ -12,5 +15,6 @@
     hideVcsIgnoredFiles: true
   "vim-mode-plus":
     keymapYToYankToLastCharacterOfLine: true
+    useSmartcaseForSearch: true
   welcome:
     showOnStartup: false
