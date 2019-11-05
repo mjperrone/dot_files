@@ -1,0 +1,13 @@
+[
+  "trigger",
+  "/Users/mperrone/code/mjperrone/notes",
+  {
+    "name": "notes-auto-commit",
+    "expression": [
+      "anyof",
+      ["match", "**/*.md", "wholename"]
+    ],
+    "command": ["/Users/mperrone/code/mjperrone/dot_files/utils/auto-commit.sh"],
+    "append_files": true
+  }
+]
