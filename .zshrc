@@ -1,4 +1,4 @@
-zmodload zsh/zprof
+#zmodload zsh/zprof
 export DOT_FILES=/Users/mperrone/code/mjperrone/dot_files
 
 source $DOT_FILES/.shellrc
@@ -43,4 +43,4 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
-zprof
+#zprof
