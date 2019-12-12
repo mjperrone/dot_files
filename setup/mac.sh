@@ -58,6 +58,7 @@ brew install zsh
 brew install ag
 brew install watchman
 
+watchman watch-project $DOT_FILES/../notes/
 watchman -j < $DOT_FILES/watchman/autocommit-notes.watchman.json
 
 brew cask install clipmenu # clipboard history Kreygasm
