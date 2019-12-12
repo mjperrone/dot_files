@@ -1,21 +1,19 @@
 #!/usr/bin/env bash
 
-export DOT_FILES=/Users/mperrone/code/mjperrone/dot_files
-
 
 # link everything to the relevant file in $DOT_FILES
 # this is the interface with the programs expecting config files
 for f in .shellrc .inputrc .editrc .vimrc .gitconfig .gitignore_global .vim .zshrc .bashrc .tmux.conf .ignore .psqlrc
 do
-    ln -s $DOT_FILES/$f ~/$f
+    ln -f -s $DOT_FILES/$f ~/$f
 done
 mkdir -p ~/.hammerspoon/
-ln -s $DOT_FILES/init.lua ~/.hammerspoon/init.lua
-ln -s $DOT_FILES/config.cson ~/.atom/config.cson
-ln -s $DOT_FILES/keymap.cson ~/.atom/keymap.cson
+ln -f -s $DOT_FILES/init.lua ~/.hammerspoon/init.lua
+ln -f -s $DOT_FILES/config.cson ~/.atom/config.cson
+ln -f -s $DOT_FILES/keymap.cson ~/.atom/keymap.cson
 
 
-ln -s $DOT_FILES/.bashrc ~/.bash_profile #make .bash_profile+.bashrc the same
+ln -f -s $DOT_FILES/.bashrc ~/.bash_profile #make .bash_profile+.bashrc the same
 # the difference is documented at http://www.joshstaiger.org/archives/2005/07/bash_profile_vs.html, but I want both to do the same thing
 mkdir -p ~/.ipython/profile_default/
 
@@ -38,4 +36,4 @@ fi
 chsh -s /bin/zsh
 
 mkdir -p ~/.talon/user/community
-ln -s ~/code/mjperrone/talon_community ~/.talon/user/community
+ln -f -s ~/code/mjperrone/talon_community ~/.talon/user/community
