@@ -34,6 +34,11 @@ if [ ! -d ~/code/external/altercation/solarized ]; then
     git clone https://github.com/altercation/solarized.git ~/code/external/altercation/solarized
 fi
 
+mkdir -p ~/code/external/nathanbuchar/
+if [ ! -d ~/code/external/nathanbuchar/atom-one-dark-terminal ]; then
+    git clone git@github.com:nathanbuchar/atom-one-dark-terminal.git ~/code/external/nathanbuchar/atom-one-dark-terminal
+fi
+
 # make zsh default shell
 chsh -s /bin/zsh
 
