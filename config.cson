@@ -1,13 +1,15 @@
 "*":
   "autocomplete-plus":
     confirmCompletion: "tab"
+  "bracket-matcher":
+    autocompleteBrackets: false
   core:
     packagesWithKeymapsDisabled: [
       "goto-last-edit"
     ]
     telemetryConsent: "no"
   editor:
-    fontSize: 15
+    fontSize: 17
     scrollPastEnd: true
   "exception-reporting":
     userId: "65fed786-4f1c-47cf-b04b-fe465e4fb596"
