@@ -1,7 +1,7 @@
 #!/bin/bash
 
 git pull
-echo $*
+echo "Files changed:" $*
 git add --all
 git commit -am "Changed file $*"
 git push
