@@ -1,0 +1,17 @@
+// Place your key bindings in this file to override the defaults
+// Vscode keybindings at ~/Library/Application\ Support/Code/User/keybindings.json
+[
+    {
+        "key": "ctrl+tab",
+        "command": "workbench.action.nextEditor"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.previousEditor"
+    },
+    { 
+        "key": "ctrl+n", 
+        "command": "explorer.newFile",
+        "when": "explorerViewletFocus"
+    }
+]
