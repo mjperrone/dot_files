@@ -13,5 +13,10 @@
         "key": "ctrl+n", 
         "command": "explorer.newFile",
         "when": "explorerViewletFocus"
+    },
+    {
+        "key": "shift+f12",
+        "command": "references-view.find",
+        "when": "editorHasReferenceProvider"
     }
 ]

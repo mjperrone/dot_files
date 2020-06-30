@@ -7,7 +7,6 @@ alias today='date +"%b_%d_%Y"'
 #edit configs fast:
 alias eb='$EDITOR $DOT_FILES/.bashrc'
 alias esa='$EDITOR $DOT_FILES/.shell_aliases'
-alias ebs='$EDITOR $DOT_FILES/.shell_secrets'
 alias ess='$EDITOR ~/.shell_secrets'
 alias esf='$EDITOR $DOT_FILES/.shell_functions'
 alias ez='$EDITOR $DOT_FILES/.zshrc'
@@ -60,7 +59,7 @@ alias space='du -ks ./* | sort -n'
 alias intersect="grep -xF -f" #set intersection of two files, linewise
 alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
 alias lk='pmset displaysleepnow; qq' #locks screen (and exits) on mac only
-alias beep='say "done running command" && tput bel' #second part makes notification on mac
+alias beep='say "done" && osascript -e "display notification \"All done\" with title \"Done\""'
 
 #tmux:
 alias tn='tmux new -s'
