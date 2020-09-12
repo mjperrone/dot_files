@@ -63,14 +63,15 @@ watchman -j < $DOT_FILES/watchman/autocommit-notes.watchman.json
 
 brew cask install clipmenu # clipboard history Kreygasm
 brew cask install iterm2
-brew cask install atom
 brew cask install postman
+brew cask install hammerstpoon
 
-apm install vim-mode-plus
-apm install ex-mode
-apm install atom-ide-ui # dependency for atom-typescript
-apm install atom-typescript
-apm install goto-last-edit
+#brew cask install atom
+#apm install vim-mode-plus
+#apm install ex-mode
+#apm install atom-ide-ui # dependency for atom-typescript
+#apm install atom-typescript
+#apm install goto-last-edit
 
 ln -s $DOT_FILES/iterm_profiles.json "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm_profiles.json"
 

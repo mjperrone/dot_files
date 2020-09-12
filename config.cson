@@ -4,19 +4,17 @@
   "bracket-matcher":
     autocompleteBrackets: false
   core:
-    packagesWithKeymapsDisabled: [
-      "goto-last-edit"
-    ]
     telemetryConsent: "no"
   editor:
     fontSize: 17
     scrollPastEnd: true
+    themes: [
+      "one-dark-ui"
+      "solarized-dark-syntax"
+    ]
   "exception-reporting":
-    userId: "65fed786-4f1c-47cf-b04b-fe465e4fb596"
+    userId: "49be2ea0-8950-47cb-a664-bd661ae95837"
   "tree-view":
     hideVcsIgnoredFiles: true
-  "vim-mode-plus":
-    keymapYToYankToLastCharacterOfLine: true
-    useSmartcaseForSearch: true
   welcome:
     showOnStartup: false
