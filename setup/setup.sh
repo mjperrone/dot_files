@@ -42,4 +42,4 @@ fi
 chsh -s /bin/zsh
 
 mkdir -p ~/.talon/user/community
-ln -i -s ~/code/mjperrone/talon_community ~/.talon/user/community
+ln -i -s ~/code/external/knausj85/knausj_talon ~/.talon/user/knausj_talon

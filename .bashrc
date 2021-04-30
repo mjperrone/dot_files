@@ -26,3 +26,6 @@ complete -cf sudo man
 # 0 21:24:02 mjperrone@mfa:~  $
 # time name@location:~/working/dir (branch)$
 export PS1="$? \[${_white}\]\t \[${_cyan}\]\u\[${_white}\]@\[${_yellow}\]\h\[${_reset}\]:\[${_blue}\]\w\[${_reset}\] \$(get_git_branch) \\$ "
+
+
+export PATH="$HOME/.poetry/bin:$PATH"
