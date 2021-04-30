@@ -52,7 +52,7 @@ mkdir -p ~/files/Photos
 mkdir -p ~/files/Screenshots
 defaults write com.apple.screencapture location ~/files/Screenshots
 
-
+brew install gh
 brew install tmux
 brew install zsh
 brew install ag

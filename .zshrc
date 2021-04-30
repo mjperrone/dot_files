@@ -44,3 +44,7 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 #zprof
+
+eval $(thefuck --alias)
+
+export PATH="$HOME/.poetry/bin:$PATH"
