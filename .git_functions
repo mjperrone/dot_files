@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 alias lg='git log --graph --pretty=format:'"'"'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"'"' --abbrev-commit'
+alias gpob='git push origin HEAD'
+alias gcob='git checkout -b'
 
 function git_remove_missing_files() {
   git ls-files -d -z | xargs -0 git update-index --remove
