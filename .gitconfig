@@ -15,7 +15,9 @@
     delete = "!del() { git branch -D $1; git push origin :$1; }; del"
 [color]
     ui = true
-[push]
-    default = default
 [core]
     excludesfile = ~/.gitignore_global
+[push]
+    default = simple
+[pull]
+    rebase = false
