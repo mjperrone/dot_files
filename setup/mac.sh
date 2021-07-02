@@ -57,14 +57,15 @@ brew install tmux
 brew install zsh
 brew install ag
 brew install watchman
+brew install thefuck
 
 watchman watch-project $DOT_FILES/../notes/
 watchman -j < $DOT_FILES/watchman/autocommit-notes.watchman.json
 
-brew cask install clipmenu # clipboard history Kreygasm
-brew cask install iterm2
-brew cask install postman
-brew cask install hammerstpoon
+brew install clipmenu # clipboard history Kreygasm
+brew install iterm2
+brew install postman
+brew install hammerspoon
 
 #brew cask install atom
 #apm install vim-mode-plus
