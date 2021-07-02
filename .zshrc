@@ -32,17 +32,6 @@ bindkey "^?" backward-delete-char # Allow backspace to delete stuff in prompt in
 # Do reverse history search with control-R, like in bash
 bindkey "^R" history-incremental-search-backward
 
-# call nvm use automatically whenever you enter a directory that contains an .nvmrc file
-autoload -U add-zsh-hook
-load-nvmrc() {
- if [[ -f .nvmrc && -r .nvmrc ]]; then
-   nvm use >/dev/null
- elif [[ $(nvm version) != $(nvm version default)  ]]; then
-   nvm use default >/dev/null
- fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
 #zprof
 
 eval $(thefuck --alias)
