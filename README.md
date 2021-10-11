@@ -14,7 +14,8 @@ mkdir -p $DOT_FILES
 cd $DOT_FILES/../
 git clone https://github.com/mjperrone/dot_files.git $DOT_FILES
 source $DOT_FILES/setup/setup.sh
-source $DOT_FILES/setup/mac.sh
+source $DOT_FILES/setup/mac_defaults.sh
+source $DOT_FILES/setup/mac_apps.sh
 ```
 
 ## Contents
