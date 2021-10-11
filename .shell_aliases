@@ -1,20 +1,17 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 #uncategorized:
 alias today='date +"%b_%d_%Y"'
 
 
 #edit configs fast:
-alias eb='$EDITOR $DOT_FILES/.bashrc'
 alias esa='$EDITOR $DOT_FILES/.shell_aliases'
 alias ess='$EDITOR ~/.shell_secrets'
 alias esf='$EDITOR $DOT_FILES/.shell_functions'
 alias ez='$EDITOR $DOT_FILES/.zshrc'
 alias ev='$EDITOR $DOT_FILES/.vimrc'
-alias et='$EDITOR $DOT_FILES/.tmux.conf'
 
 #reset configs fast:
-alias sb='source $DOT_FILES/.bashrc; echo source $DOT_FILES/.bashrc'
 alias sz='source $DOT_FILES/.zshrc; echo source $DOT_FILES/.zshrc'
 
 #go places:
@@ -36,18 +33,12 @@ unset R
 
 alias -- -='cd -' #this remaps '-' to 'cd -', don't ask me how
 
-#list:
-if [ "$(uname)" = 'Linux' ] ; then
-    alias ls='ls --color -F'
-elif [ "$(uname)" = 'Darwin' ] ; then
-    alias ls='ls -FG' #default color + directory flags
-fi
+#ls:
 alias l='ls -lah' #detailed ls
 alias l.='ls -ld .*' #only hidden stuff
 
 #grep:
 alias grep='grep --color -I' #be colorful and ignore binary files and svn directories
-alias ag='ag -i --pager="less -R" --ignore-dir=_vendor/ --ignore-dir=Godeps/ --ignore-dir=node_modules/'
 
 #tools:
 alias trim="sed -e 's/^ *//g' -e 's/ *$//g'" #remove trailing and leading whitespace
@@ -61,22 +52,10 @@ alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
 alias lk='pmset displaysleepnow; qq' #locks screen (and exits) on mac only
 alias beep='say "done" && osascript -e "display notification \"All done\" with title \"Done\""'
 
-#tmux:
-alias tn='tmux new -s'
-alias tl='tmux list-sessions'
-alias ta='tmux attach-session -t'
-
 #abbreviations
-alias hist='history'
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
-alias qq='exit' #I use this all the time. ALL THE TIME.
+alias qq='exit'
 alias vi='vim'
 
 #spell check:
 alias ci='vi'
-alias k='fc -s' # since I have vi mode, if I forget to hit ESC and hit k-enter,
-#I expect the last command to run. this does that.
-alias kk='fc -s -2' # and so on...
-alias kkk='fc -s -3'
-
-alias mute="osascript -e 'set volume output muted true'"

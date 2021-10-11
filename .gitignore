@@ -1,8 +1,1 @@
-.bash_directory_history
-.bash_last_directory
 .shell_secrets
-*.pyc
-*.un~
-.netrwhist
-.vim/undodir/*
-.vim/bundle
