@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 git pull
 echo "Files changed:" $*

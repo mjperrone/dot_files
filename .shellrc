@@ -1,4 +1,6 @@
-for f in .shell_path .shell_colors .shell_functions .shell_aliases .git_functions
+#!/bin/zsh
+
+for f in .shell_path .shell_functions .shell_aliases .git_functions
 do
     if [ -f $DOT_FILES/$f ]; then
         source $DOT_FILES/$f
@@ -7,3 +9,5 @@ do
     fi
 done
 source ~/.shell_secrets
+
+eval $(thefuck --alias)

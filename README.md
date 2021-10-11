@@ -5,35 +5,37 @@ My unix dot files
 
 ## Setup
 
-```bash
-#$DOT_FILES can be set in .{bash,zsh}rc, default is `~/dot_files`
+First install git. Then run the following commands to get this repo down and run the setup scripts:
+
+```zsh
+echo 'export DOT_FILES=/Users/mperrone/code/mjperrone/dot_files' > ~/.shell_secrets
+source ~/.shell_secrets
+mkdir -p $DOT_FILES
+cd $DOT_FILES/../
 git clone https://github.com/mjperrone/dot_files.git $DOT_FILES
 source $DOT_FILES/setup/setup.sh
+source $DOT_FILES/setup/mac.sh
 ```
 
-To install all the vim plugins:
+## Contents
 
-```viml
-vim "+call InstallVundle()"
-```
-
-When I'm done, I run:
-
-```bash
-source $DOT_FILES/setup/teardown.sh
-rm -rf $DOT_FILES
-```
-And it's like I was never there!
-
-Structure
-
-* .vimrc is vim config file (includes plugins with vundle)
-* .bashrc and .zshrc have shell specific config for bash and zsh respectively, and also trigger the .shell_* series
-* .shellrc sources all the other shell config files and handles things related to PATH variables, and some general shell config stuff
+* .editrc is the config file for libedit: the line editor of many prompts
+* .git_functions are shell functions that relate to git specifically
+* .gitconfig is the git configuration
+* .gitignore is this project's gitignore file
+* .gitignore_global is the config for the new machine
+* .inputrc is the config file for readline: a line editor of many prompts
+* .psqlrc is the postgres config file
 * .shell_aliases has a bunch of aliases
 * .shell_functions has a bunch of functions
-* python_helpers/ has a few python scripts that are useful to pretend are shell commands
-* .shell_secrets is being ignored by git, because it has secret things like server ips and exploring/creating projects that I only care to run on one machine.
-* .git_functions are shell functions that relate to git specifically
+* .shell_path has PATH related config
+* .shell_secrets is ignored by git but sourced by .shellrc
+* .shellrc is the main entrypoint for custom zsh rc files, sourcing the others
+* .tmux.conf is tmux config
+* .zshrc has zshell specific config and will trigger .shell_rc
+* config.cson has 
+* init.lua is the hammerspoon config
+* keybindings.json is VSCode keybindings config
+* input.json
 * .inputrc is the readline init file
 * setup/ contains the scripts to set up the config files for a new machine

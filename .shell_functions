@@ -1,10 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 pinfo () { # path environment info
     echo -e "${_red}PATH:${_reset}$PATH" | tr ":" "\n"
-    echo -e "${_red}PYTHONPATH:  ${_reset}$PYTHONPATH"
-    echo -e "${_red}MANPATh:  ${_reset}$MANPATH"
-    echo -e "${_red}INFOPATH:  ${_reset}$INFOPATH"
+    echo -e "${_red}PYTHONPATH:${_reset}$PYTHONPATH" | tr ":" "\n"
 }
 
 function pginfo () { # postgres info
@@ -52,7 +50,7 @@ st () {
 }
 
 # if in git repo, return the branch. I currently only use
-#this for the bash prompt, hence the parens.
+#this for the zsh prompt, hence the parens.
 get_git_branch () {
     if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
         printf "(%s)" "$(git rev-parse --abbrev-ref HEAD | tr '\n' ' ' | trim)"
@@ -67,7 +65,7 @@ decode() {
     echo "$1" | base64 --decode | pjson
 }
 
-# I don't know what this does
+# cd to a file goes to its directory
 cd() {
     if [ -f "$*" ]; then
         builtin cd "$(dirname "$*")"
@@ -93,5 +91,13 @@ listeningkill() {
     pid=$(listening $1 | awk '{print $2}')
     echo "killing $pid..."
     kill $pid
+    echo "ded."
+}
+
+# send TERM to the process associated with a port being listened to
+listeningterm() {
+    pid=$(listening $1 | awk '{print $2}')
+    echo "sending TERM (15) to $pid..."
+    kill -15 $pid
     echo "ded."
 }

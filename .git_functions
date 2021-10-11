@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 alias lg='git log --graph --pretty=format:'"'"'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"'"' --abbrev-commit'
 alias gpob='git push origin HEAD'
@@ -44,8 +44,6 @@ function git_info() {
 
 
 function git_stats {
-# including some modifications
-
 if [ -n "$(git symbolic-ref HEAD 2> /dev/null)" ]; then
     echo "Number of commits per author:"
     git --no-pager shortlog -sn --all

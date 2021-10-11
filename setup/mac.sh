@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 #show hidden files in finder
 defaults write com.apple.finder AppleShowAllFiles TRUE
 
@@ -52,6 +54,7 @@ mkdir -p ~/files/Photos
 mkdir -p ~/files/Screenshots
 defaults write com.apple.screencapture location ~/files/Screenshots
 
+/bin/zsh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install gh
 brew install tmux
 brew install zsh
@@ -66,19 +69,3 @@ brew install clipmenu # clipboard history Kreygasm
 brew install iterm2
 brew install postman
 brew install hammerspoon
-
-#brew cask install atom
-#apm install vim-mode-plus
-#apm install ex-mode
-#apm install atom-ide-ui # dependency for atom-typescript
-#apm install atom-typescript
-#apm install goto-last-edit
-
-ln -s $DOT_FILES/iterm_profiles.json "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm_profiles.json"
-
-echo "run `open ~/code/external/altercation/solarized/iterm2-colors-solarized/Solarized\ Dark.itermcolors` then Preferences>Profile>Colors>Load Presets..."
-open location "http://iterm2.com/downloads.html"
-
-
-# Manual
-# Change chrome default download locatoin
