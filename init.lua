@@ -36,3 +36,18 @@ hs.hotkey.bind(mash, 'n', function()
   -- Set the focused window's new frame dimensions
   focusedWindow:setFrame(windowFrame)
 end)
+
+
+local hyper = { "cmd", "alt" }
+
+local applicationHotkeys = {
+  c = 'Google Chrome',
+  s = 'Spotify',
+  v = 'Visual Studio Code',
+  n = 'Firefox',
+}
+for key, app in pairs(applicationHotkeys) do
+  hs.hotkey.bind(hyper, key, function()
+    hs.application.launchOrFocus(app)
+  end)
+end
