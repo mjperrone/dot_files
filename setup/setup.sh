@@ -17,3 +17,4 @@ ln -s -i $DOT_FILES/keybindings.json ~/Library/Application\ Support/Code/User/ke
 #(this is why you ought to run source $DOT_FILES/setup/setup.sh and not just sh $DOT_FILES/setup/setup.sh)
 source $DOT_FILES/.zshrc
 echo 'source $DOT_FILES/.zshrc'
+source $DOT_FILE/setup/vscode.sh
