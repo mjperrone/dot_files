@@ -8,5 +8,10 @@ brew install hammerspoon
 
 brew install --cask notion
 brew install --cask spotify
+brew install --cask firefox
+brew install --cask discord
+brew install --cask signal
+brew install --cask android-file-transfer
+brew install --cask vlc
 
 echo "Open hammerspoon, set it to launch at login, give it accessibility permissions"
