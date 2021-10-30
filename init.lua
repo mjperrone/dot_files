@@ -6,7 +6,14 @@ units = {
   left50        = { x = 0.00, y = 0.00, w = 0.50, h = 1.00 },
   top50         = { x = 0.00, y = 0.00, w = 1.00, h = 0.50 },
   bot50         = { x = 0.00, y = 0.50, w = 1.00, h = 0.50 },
+
+  topleft       = { x = 0.00, y = 0.00, w = 0.50, h = 0.50 },
+  topright      = { x = 0.50, y = 0.00, w = 0.50, h = 0.50 },
+  botleft       = { x = 0.00, y = 0.50, w = 0.50, h = 0.50 },
+  botright      = { x = 0.50, y = 0.50, w = 0.50, h = 0.50 },
+
   maximum       = { x = 0.00, y = 0.00, w = 1.00, h = 1.00 }
+
 }
 
 mash = { 'ctrl', 'option', 'cmd' }
@@ -14,6 +21,11 @@ hs.hotkey.bind(mash, 'l', function() hs.window.focusedWindow():move(units.right5
 hs.hotkey.bind(mash, 'h', function() hs.window.focusedWindow():move(units.left50,     nil, true) end)
 hs.hotkey.bind(mash, 'k', function() hs.window.focusedWindow():move(units.top50,      nil, true) end)
 hs.hotkey.bind(mash, 'j', function() hs.window.focusedWindow():move(units.bot50,      nil, true) end)
+
+hs.hotkey.bind(mash, 'u', function() hs.window.focusedWindow():move(units.topleft,      nil, true) end)
+hs.hotkey.bind(mash, 'i', function() hs.window.focusedWindow():move(units.topright,      nil, true) end)
+hs.hotkey.bind(mash, 'o', function() hs.window.focusedWindow():move(units.botright,      nil, true) end)
+hs.hotkey.bind(mash, 'p', function() hs.window.focusedWindow():move(units.botleft,      nil, true) end)
 
 hs.hotkey.bind(mash, 'm', function() hs.window.focusedWindow():move(units.maximum,    nil, true) end)
 
