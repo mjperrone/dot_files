@@ -49,11 +49,11 @@ hs.hotkey.bind(mash, 'n', function()
   focusedWindow:setFrame(windowFrame)
 end)
 
-function focus_chrome_tab(name)
+function focus_app_tab(app, name)
   return function()
     hs.osascript.javascript([[
     (function() {
-      var brave = Application('Google Chrome');
+      var brave = Application(']] .. app .. [[');
       brave.activate();
       for (win of brave.windows()) {
         var tabIndex =
@@ -68,7 +68,7 @@ function focus_chrome_tab(name)
   end
 end
 
--- hs.hotkey.bind({"alt", "cmd"}, "Left", focus_chrome_tab('.*Inbox.*'));
+-- hs.hotkey.bind({"alt", "cmd"}, "Left", focus_app_tab('Google Chrome', '.*Inbox.*'));
 
 
 local hyper = { "cmd", "alt" }
@@ -77,7 +77,7 @@ local applicationHotkeys = {
   space = 'Google Chrome', -- also need to disable the command alt space mac shortcut to search something in finder
   v = 'Visual Studio Code',
   c = 'Firefox',
-  d = 'Spotify',
+  d = 'Spotify', -- also need to Turn Dock Hiding Off under launchpad in keyboard settings
   f = 'Signal',
 }
 for key, app in pairs(applicationHotkeys) do
@@ -85,3 +85,4 @@ for key, app in pairs(applicationHotkeys) do
     hs.application.launchOrFocus(app)
   end)
 end
+hs.hotkey.bind(hyper, , focus_app_tab('Firefox', '.*Task List.*'));
