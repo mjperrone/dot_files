@@ -56,6 +56,3 @@ alias beep='say "done" && osascript -e "display notification \"All done\" with t
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
 alias qq='exit'
 alias vi='vim'
-
-#spell check:
-alias ci='vi'
