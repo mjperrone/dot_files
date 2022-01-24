@@ -2,6 +2,7 @@
 	name = Mike Perrone
 	email = michael.perrone@convoy.com
 [alias]
+    oldbranches = for-each-ref --sort=-committerdate refs/heads/
     st = status
     dc = diff --cached
     d = diff
