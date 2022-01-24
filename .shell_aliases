@@ -56,3 +56,7 @@ alias beep='say "done" && osascript -e "display notification \"All done\" with t
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
 alias qq='exit'
 alias vi='vim'
+
+# spell check
+alias k='$(fc -ln -1)' # when I'm in insert mode and thought I was in normal mode to go to the previous command, run the last command anyways!
+alias kk='$(fc -ln -2)'
