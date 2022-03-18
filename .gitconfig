@@ -4,6 +4,7 @@
 [alias]
     oldbranches = for-each-ref --sort=-committerdate refs/heads/
     st = status
+    cp = cherry-pick
     dc = diff --cached
     d = diff
     dn = diff --name-only
