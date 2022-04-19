@@ -19,4 +19,4 @@ ln -s -i $DOT_FILES/ipython_config.py ~/.ipython/profile_default/ipython_config.
 #(this is why you ought to run source $DOT_FILES/setup/setup.sh and not just sh $DOT_FILES/setup/setup.sh)
 source $DOT_FILES/.zshrc
 echo 'source $DOT_FILES/.zshrc'
-source $DOT_FILE/setup/vscode.sh
+source $DOT_FILES/setup/vscode.sh
