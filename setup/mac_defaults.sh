@@ -33,6 +33,9 @@ defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreS
 # 24hr clock with date in the menu bar
 defaults write com.apple.menuextra.clock DateFormat -string 'EEE MMM d  H:mm'
 
+# dark mode
+sudo defaults write /Library/Preferences/.GlobalPreferences.plist _HIEnableThemeSwitchHotKey -bool true
+
 
 mkdir -p ~/files/Downloads
 mkdir -p ~/files/Documents
