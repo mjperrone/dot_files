@@ -3,13 +3,15 @@
 	email = michael.perrone@convoy.com
 [alias]
     oldbranches = for-each-ref --sort=-committerdate refs/heads/
+    branches = branch --sort=-committerdate
     st = status
     cp = cherry-pick
+    cherry-pick = "!echo use: git cp"
     dc = diff --cached
-    d = diff
     dn = diff --name-only
     cm = commit -m
     co = checkout
+    checkout = "!echo use git co"
     ap = add -p
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     ri = !sh -c 'git rebase -i `git merge-base master head`'
