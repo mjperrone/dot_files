@@ -6,6 +6,7 @@ brew install tmux
 brew install thefuck
 brew install hammerspoon
 
+brew install --cask caffeine
 brew install --cask spotify
 brew install --cask firefox
 brew install --cask discord

@@ -14,11 +14,6 @@ alias ev='$EDITOR $DOT_FILES/.vimrc'
 #reset configs fast:
 alias sz='source $DOT_FILES/.zshrc; echo source $DOT_FILES/.zshrc'
 
-#go places:
-alias dot='cd $DOT_FILES'
-alias code='cd ~/code/'
-alias notes='cd ~/code/mjperrone/notes/'
-
 #relative navigation:
 L=".." #this remaps '..' to 'cd ..', '...' to 'cd ../..', etc
 R="../"
@@ -56,3 +51,7 @@ alias beep='say "done" && osascript -e "display notification \"All done\" with t
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
 alias qq='exit'
 alias vi='vim'
+
+# spell check
+alias k='$(fc -ln -1)' # when I'm in insert mode and thought I was in normal mode to go to the previous command, run the last command anyways!
+alias kk='$(fc -ln -2)'
