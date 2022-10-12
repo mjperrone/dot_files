@@ -85,4 +85,4 @@ for key, app in pairs(applicationHotkeys) do
     hs.application.launchOrFocus(app)
   end)
 end
-hs.hotkey.bind(hyper, , focus_app_tab('Firefox', '.*Task List.*'));
+-- hs.hotkey.bind(hyper, , focus_app_tab('Firefox', '.*Task List.*'));
