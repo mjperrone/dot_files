@@ -50,7 +50,7 @@ alias chargestats="system_profiler -json SPPowerDataType | jq -r '.SPPowerDataTy
 
 #abbreviations
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
-alias qq='exit'
+alias qq='exit 0'
 alias vi='vim'
 
 # spell check
