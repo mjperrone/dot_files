@@ -2,10 +2,10 @@
 
 alias lg='git log --graph --pretty=format:'"'"'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"'"' --abbrev-commit'
 
-alias gpob='git push origin HEAD'
-alias gcob='git checkout -b'
-alias gcom='git checkout master'
-alias gp='git pull'
+alias gpob='command git push origin HEAD'
+alias gcob='command git checkout -b'
+alias gcom='command git checkout master'
+alias gp='command git pull'
 git () {
   if [ "$1" = "push" ] && [ "$2" = "origin" ] && [ "$3" = "HEAD" ]; then
     echo "Error: Please use the gpob alias for the git push origin HEAD command."
