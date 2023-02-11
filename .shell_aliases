@@ -46,10 +46,11 @@ alias intersect="grep -xF -f" #set intersection of two files, linewise
 alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
 alias lk='pmset displaysleepnow; qq' #locks screen (and exits) on mac only
 alias beep='say "done" && osascript -e "display notification \"All done\" with title \"Done\""'
+alias chargestats="system_profiler -json SPPowerDataType | jq -r '.SPPowerDataType[] | select(._name == \"sppower_ac_charger_information\")'"
 
 #abbreviations
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
-alias qq='exit'
+alias qq='exit 0'
 alias vi='vim'
 
 # spell check

@@ -11,9 +11,9 @@ export HISTFILE=~/.zsh_history
 
 setopt GLOB_DOTS # includes .* files in *
 
-autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
 
+# autoload -U compinit && compinit # comment out bc convoy does this
 autoload -U promptinit && promptinit
 autoload -U colors && colors
 
