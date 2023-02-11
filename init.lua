@@ -2,6 +2,9 @@
 
 hs.window.animationDuration = 0
 units = {
+  left75        = { x = 0.00, y = 0.00, w = 0.75, h = 1.00 },
+  right25       = { x = 0.75, y = 0.00, w = 0.25, h = 1.00 },
+
   right50       = { x = 0.50, y = 0.00, w = 0.50, h = 1.00 },
   left50        = { x = 0.00, y = 0.00, w = 0.50, h = 1.00 },
   top50         = { x = 0.00, y = 0.00, w = 1.00, h = 0.50 },
@@ -17,6 +20,9 @@ units = {
 }
 
 mash = { 'ctrl', 'option', 'cmd' }
+hs.hotkey.bind(mash, '.', function() hs.window.focusedWindow():move(units.right25,    nil, true) end)
+hs.hotkey.bind(mash, ',', function() hs.window.focusedWindow():move(units.left75,    nil, true) end)
+
 hs.hotkey.bind(mash, 'l', function() hs.window.focusedWindow():move(units.right50,    nil, true) end)
 hs.hotkey.bind(mash, 'h', function() hs.window.focusedWindow():move(units.left50,     nil, true) end)
 hs.hotkey.bind(mash, 'k', function() hs.window.focusedWindow():move(units.top50,      nil, true) end)
