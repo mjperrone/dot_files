@@ -6,17 +6,14 @@
     branches = branch --sort=-committerdate
     st = status
     cp = cherry-pick
-    cherry-pick = "!echo use: git cp"
     dc = diff --cached
     dn = diff --name-only
     cm = commit -m
     co = checkout
-    checkout = "!echo use git co"
     ap = add -p
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     ri = !sh -c 'git rebase -i `git merge-base master head`'
     delete = "!del() { git branch -D $1; git push origin :$1; }; del"
-    pull = "!echo use gp"
 [color]
     ui = true
 [core]
