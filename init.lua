@@ -35,6 +35,12 @@ hs.hotkey.bind(mash, 'p', function() hs.window.focusedWindow():move(units.botlef
 
 hs.hotkey.bind(mash, 'm', function() hs.window.focusedWindow():move(units.maximum,    nil, true) end)
 
+hs.hotkey.bind(mash, 'z', function()
+  hs.application.launchOrFocus('Firefox')
+  hs.eventtap.keyStroke({'cmd'}, "t")
+  hs.eventtap.keyStrokes("zk")
+  hs.eventtap.keyStroke({}, "return")
+end)
 
 
 hs.hotkey.bind(mash, 'n', function()
