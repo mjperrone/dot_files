@@ -42,6 +42,13 @@ hs.hotkey.bind(mash, 'z', function()
   hs.eventtap.keyStroke({}, "return")
 end)
 
+hs.hotkey.bind(mash, 't', function()
+  hs.application.launchOrFocus('Firefox')
+  hs.eventtap.keyStroke({'cmd'}, "t")
+  hs.eventtap.keyStrokes("tk")
+  hs.eventtap.keyStroke({}, "return")
+end)
+
 
 hs.hotkey.bind(mash, 'n', function()
   -- Get the focused window, its window frame dimensions, its screen frame dimensions,
