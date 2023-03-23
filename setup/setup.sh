@@ -3,12 +3,17 @@
 # Programs are expecting this config to be in the home directory. We want to store the source
 # of truth in this repo directory, not the home directory, so we link everything up so they
 # can be found there while living here.
-for f in .editrc .gitconfig .gitignore_global .inputrc .psqlrc .tmux.conf .zshrc 
+for f in .editrc .gitconfig .inputrc .psqlrc .tmux.conf .zshrc
 do
     ln -s -i $DOT_FILES/$f ~/$f
 done
 
-# Config that needs to be other than home:
+# XDG root compliant apps (https://xdgbasedirectoryspecification.com/)
+mkdir -p ~/.config/git
+ln -s -i $DOT_FILES/.gitignore_global ~/.config/git/ignore
+ln -s -i $DOT_FILES/.gitconfig ~/.config/git/config
+
+# Config that needs to be other than home or XDG root:
 mkdir -p ~/.hammerspoon/
 ln -s -i $DOT_FILES/init.lua ~/.hammerspoon/init.lua
 ln -s -i $DOT_FILES/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
