@@ -1,6 +1,6 @@
 [user]
 	name = Mike Perrone
-	email = michael.perrone@convoy.com
+	email = mike.j.perrone@gmail.com
 [alias]
     oldbranches = for-each-ref --sort=-committerdate refs/heads/
     branches = branch --sort=-committerdate
