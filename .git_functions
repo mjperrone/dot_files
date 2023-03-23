@@ -2,20 +2,33 @@
 
 alias lg='git log --graph --pretty=format:'"'"'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"'"' --abbrev-commit'
 
+git_main_branch () {
+    git branch | cut -c 3- | grep -E '^master$|^main$'
+}
+
+function gri () {
+  main_branch=$(git_main_branch)
+  echo "main branch is $main_branch"
+  merge_base=$(git merge-base $main_branch HEAD)
+  echo "merge base is $merge_base"
+  git rebase -i $merge_base
+}
+
 alias gpob='command git push origin HEAD'
 alias gcob='command git checkout -b'
-alias gcom='command git checkout master'
+alias gcom='command git checkout $(git_main_branch)'
 alias gp='command git pull'
+
 git () {
   if [ "$1" = "push" ] && [ "$2" = "origin" ] && [ "$3" = "HEAD" ]; then
     echo "Error: Please use the gpob alias for the git push origin HEAD command."
   elif [ "$1" = "checkout" ] && [ "$2" = "-b" ]; then
     echo "Error: Please use the gcob alias for the git checkout -b command."
-  elif [ "$1" = "checkout" ] && [ "$2" = "master" ]; then
-    echo "Error: Please use the gcom alias for the git checkout master command."
+  elif [ "$1" = "checkout" ] && ([ "$2" = "master" ] || [ "$2" = "main" ]); then
+    echo "Error: Please use the gcom alias for the git checkout main/master command."
   elif [ "$1" = "pull" ]; then
     echo "Error: Please use the gp alias for the git pull command."
-  elif [ "$1" = "cherry-picky" ]; then
+  elif [ "$1" = "cherry-pick" ]; then
     echo "Error: Please use the git cp alias for the git pull command."
   else
     command git "$@"
