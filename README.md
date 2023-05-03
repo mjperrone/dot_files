@@ -20,7 +20,7 @@ source $DOT_FILES/setup/mac_apps.sh
 
 ## Contents
 
-* browser/ has the chrome and firefox version of mapping shortcut text to a basic url template like "wiki meta" -> "https://en.wikipedia.org/wiki/Special:Search/meta"
+* browser-shortcuts.html has bookmarks that enable mapping shortcut text to a basic url template like "wiki meta" -> "https://en.wikipedia.org/wiki/Special:Search/meta"
 * .editrc is the config file for libedit: the line editor of many prompts
 * .git_functions are shell functions that relate to git specifically
 * .gitconfig is the git configuration
