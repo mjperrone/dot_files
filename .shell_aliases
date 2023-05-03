@@ -52,6 +52,8 @@ alias chargestats="system_profiler -json SPPowerDataType | jq -r '.SPPowerDataTy
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
 alias qq='exit 0'
 alias vi='vim'
+alias ta='terraform apply'
+alias tp='terraform plan'
 
 # spell check
 alias k='$(fc -ln -1)' # when I'm in insert mode and thought I was in normal mode to go to the previous command, run the last command anyways!
