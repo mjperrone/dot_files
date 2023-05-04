@@ -54,8 +54,17 @@ alias chargestats="system_profiler -json SPPowerDataType | jq -r '.SPPowerDataTy
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
 alias qq='exit 0'
 alias vi='vim'
-alias ta='terraform apply'
-alias tp='terraform plan'
+alias ta='command terraform apply'
+alias tp='command terraform plan'
+terraform () {
+  if [ "$1" = "apply" ] ; then
+    echo "Error: Please use the ta alias for terraform apply."
+  elif [ "$1" = "plan" ] ; then
+    echo "Error: Please use the tp alias for terraform plan."
+  else
+    command terraform "$@"
+  fi
+}
 alias pr='gh pr view --web' #overwrites /usr/bin/pr (https://docs.oracle.com/cd/E19683-01/816-0210/6m6nb7mhu/index.html)
 
 # spell check
