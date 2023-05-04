@@ -18,6 +18,10 @@ redirect();
 function redirect() {
     console.log('redirect in distracting redirect script');
     if (bannedDomains.some(domain => document.location.href.includes(domain))) {
+        if (document.location.href.includes('embed')) {
+            console.log('Ignoring embedded YouTube video');
+            return;
+        }
         if (new Date().getHours() <= 6 && new Date().getHours() >= 0 || new Date().getHours() > 22){
         // if (true) {
             console.log("Redirecting from " + document.location.hostname + " to " + redirectTo);
