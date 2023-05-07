@@ -9,5 +9,3 @@ do
     fi
 done
 source ~/.shell_secrets
-
-eval $(thefuck --alias)
