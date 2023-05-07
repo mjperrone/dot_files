@@ -43,7 +43,5 @@ mkdir -p ~/files/Photos
 mkdir -p ~/files/Screenshots
 defaults write com.apple.screencapture location ~/files/Screenshots
 
-echo 'set the battery percent to show in the menu bar'
-echo 'set the volume control to show in the menu bar'
-echo 'set the bluetooth controls to show in the menu bar'
+echo 'set the battery percent, volume control, and bluetooth to show in the menubar using the control center'
 echo 'set caps lock to escape'
