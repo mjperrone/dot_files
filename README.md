@@ -30,10 +30,10 @@ source $DOT_FILES/setup/mac_apps.sh
 * .psqlrc is the postgres config file
 * .shell_aliases has a bunch of aliases
 * .shell_functions has a bunch of functions
-* .shell_path has PATH related config
+* .shell_exports has PATH related config
 * .shell_secrets is ignored by git but sourced by .shellrc
-* .shellrc is the main entrypoint for custom zsh rc files, sourcing the others
-* .zshrc has zshell specific config and will trigger .shell_rc
+* .shellrc is the main entrypoint shell agnostic config, sourcing many others
+* .zshrc has zshell specific config and will trigger .shellrc
 * init.lua is the hammerspoon config
 * keybindings.json is VSCode keybindings config
 * setup/ contains the scripts to set up the config files for a new machine
