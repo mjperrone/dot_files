@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+# Exports configuration environment variables
+
+export DOT_FILES=/Users/mperrone/code/mjperrone/dot_files
+
+export XDG_CONFIG_HOME=~/.config
+export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc 
+
+export EDITOR="vim"

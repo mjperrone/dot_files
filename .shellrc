@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-for f in .shell_path .shell_functions .shell_aliases .git_functions
+for f in .shell_exports .shell_functions .shell_aliases .git_functions
 do
     if [ -f $DOT_FILES/$f ]; then
         source $DOT_FILES/$f

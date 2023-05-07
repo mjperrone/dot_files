@@ -1,5 +1,0 @@
-#!/bin/zsh
-
-# Set PATHs and related variables
-
-export EDITOR="vim"
