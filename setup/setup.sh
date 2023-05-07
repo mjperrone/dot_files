@@ -2,29 +2,37 @@
 
 source $DOT_FILES/.shell_exports
 
-# Programs are expecting this config to be in the home directory. We want to store the source
-# of truth in this repo directory, not the home directory, so we link everything up so they
-# can be found there while living here.
-for f in .editrc .gitconfig .zshrc
+# The soure of truth are the files in this repo. Software expects config in other places.
+# So we use links to connect the dots.
+
+# Those that have to be in home:
+for f in .editrc .zshrc
 do
     ln -s -i $DOT_FILES/$f ~/$f
 done
 
 # XDG root compliant apps (https://xdgbasedirectoryspecification.com/)
 mkdir -p ~/.config/git
-ln -s -i $DOT_FILES/.gitignore_global ~/.config/git/ignore
-ln -s -i $DOT_FILES/.gitconfig ~/.config/git/config
+ln -s -i $DOT_FILES/.gitignore_global $XDG_CONFIG_HOME/git/ignore
+ln -s -i $DOT_FILES/.gitconfig $XDG_CONFIG_HOME/git/config
 
-# non-XDG compliant but provides a way to override:
+# non-XDG compliant, but works with env vars (see .shell_exports)
 mkdir -p $XDG_CONFIG_HOME/readline
 ln -s -i $DOT_FILES/.inputrc $INPUTRC
-mkdir -p $XDG_CONFIG_HOME/pg
+
 mkdir -p $XDG_STATE_HOME
+
+mkdir -p $XDG_CONFIG_HOME/pg
 ln -s -i $DOT_FILES/.psqlrc $PSQLRC
 
+# Hammerspoon requires this spelcial config: https://github.com/Hammerspoon/hammerspoon/issues/2175
+mkdir $XDG_CONFIG_HOME/hammerspoon
+defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"
+ln -s -i $DOT_FILES/init.lua $XDG_CONFIG_HOME/hammerspoon/init.lua
+
 # Config that needs to be other than home or XDG root:
+
 mkdir -p ~/.hammerspoon/
-ln -s -i $DOT_FILES/init.lua ~/.hammerspoon/init.lua
 ln -s -i $DOT_FILES/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
 
 #apply the changes to the current shell instance!
