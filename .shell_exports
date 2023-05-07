@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+# Exports shell agnostic configuration environment variables
+
+export DOT_FILES=/Users/mperrone/code/mjperrone/dot_files
+
+# Settings XDG env vars to the default locations
+export XDG_CONFIG_HOME=~/.config
+export XDG_STATE_HOME=~/.local/state
+export XDG_DATA_HOME=~/.local/share
+export XDG_CACHE_HOME=~/.cache
+
+# Settings software specific env vars to the XDG locations
+export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc 
+export PSQLRC="$XDG_CONFIG_HOME/pg/psqlrc"
+export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
+
+export EDITOR="vim"
