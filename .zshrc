@@ -22,9 +22,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab
 autoload -U promptinit && promptinit
 autoload -U colors && colors
 
-setopt prompt_subst # allow parameter, command, and arithmetic substitutions in the prompt to allow the git branch
-PROMPT="%? %{$fg[white]%}%D{%H:%M:%S} %{$fg[cyan]%}%n%{$fg[white]%}@%{$fg[yellow]%}%m%{$reset_color%}:%{$fg[blue]%}%~ %{$reset_color%}\$(get_git_branch) $ "
-#stauscCdeOfPreviousCommand time name@location:~/working/dir (branch)$
+eval "$(starship init zsh)"
 
 bindkey "^?" backward-delete-char # Allow backspace to delete stuff in prompt insert mode
 
