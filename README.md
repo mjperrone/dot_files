@@ -33,7 +33,6 @@ source $DOT_FILES/setup/mac_apps.sh
 * .shell_path has PATH related config
 * .shell_secrets is ignored by git but sourced by .shellrc
 * .shellrc is the main entrypoint for custom zsh rc files, sourcing the others
-* .tmux.conf is tmux config
 * .zshrc has zshell specific config and will trigger .shell_rc
 * init.lua is the hammerspoon config
 * ipython_config.py is the config for ipython
