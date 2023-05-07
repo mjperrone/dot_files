@@ -7,9 +7,6 @@ defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 # restart it so it can pick up the new config
 killall Finder
 
-
-tell application "System Events" to set the autohide of the dock preferences to true
-
 # autohide the dock
 defaults write com.apple.dock autohide -bool true
 # un-hide bottom dock bar instantly; no animation
