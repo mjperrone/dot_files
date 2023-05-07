@@ -25,6 +25,9 @@ mkdir -p $XDG_STATE_HOME
 mkdir -p $XDG_CONFIG_HOME/pg
 ln -s -i $DOT_FILES/.psqlrc $PSQLRC
 
+# for zsh HISTFILE, see .zshrc
+mkdir -p $XDG_STATE_HOME"/zsh
+
 # Hammerspoon requires this spelcial config: https://github.com/Hammerspoon/hammerspoon/issues/2175
 mkdir $XDG_CONFIG_HOME/hammerspoon
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "$XDG_CONFIG_HOME/hammerspoon/init.lua"

@@ -12,7 +12,7 @@ setopt INC_APPEND_HISTORY # save after every command instead of on exit
 setopt EXTENDED_HISTORY # save time and run time length
 export HISTSIZE=10000 # commands loaded into memory
 export SAVEHIST=50000 # commands saved in the file
-export HISTFILE=~/.zsh_history
+export HISTFILE="$XDG_STATE_HOME"/zsh/history
 
 setopt GLOB_DOTS # includes .* files in *
 
