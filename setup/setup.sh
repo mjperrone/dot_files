@@ -15,6 +15,7 @@ done
 mkdir -p ~/.config/git
 ln -s -i $DOT_FILES/.gitignore_global $XDG_CONFIG_HOME/git/ignore
 ln -s -i $DOT_FILES/.gitconfig $XDG_CONFIG_HOME/git/config
+ln -s -i $DOT_FILES/starship.toml $XDG_CONFIG_HOME/starship.toml
 
 # non-XDG compliant, but works with env vars (see .shell_exports)
 mkdir -p $XDG_CONFIG_HOME/readline

@@ -1,0 +1,42 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# stauscCdeOfPreviousCommand time name@location:~/working/dir (branch)$
+add_newline = false
+
+format = '$status$time$all$git_branch$git_status\$ '
+
+[status]
+    disabled = false
+    format = '[$status]($style) '
+    recognize_signal_code = false
+    success_symbol = '0'
+    style = 'white'
+    map_symbol = true
+
+[time]
+    disabled = false
+    format = '[$time]($style) '
+    style = 'white'
+
+[line_break]
+    disabled = true
+
+[directory]
+    format = '[$path]($style)[$read_only]($read_only_style) '
+    truncation_length = 5
+    style = 'blue'
+
+[git_branch]
+    format = '[$branch(:$remote_branch)]($style) '
+
+[aws]
+    format = '[($profile )(\($region\) )(\[$duration\] )]($style)'
+    style = 'yellow'
+    region_aliases = { us-west-2 = '' }
+
+[lua]
+    disabled = true
+
+[character]
+    disabled = true
