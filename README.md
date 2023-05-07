@@ -35,6 +35,5 @@ source $DOT_FILES/setup/mac_apps.sh
 * .shellrc is the main entrypoint for custom zsh rc files, sourcing the others
 * .zshrc has zshell specific config and will trigger .shell_rc
 * init.lua is the hammerspoon config
-* ipython_config.py is the config for ipython
 * keybindings.json is VSCode keybindings config
 * setup/ contains the scripts to set up the config files for a new machine

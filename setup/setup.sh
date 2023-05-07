@@ -17,8 +17,6 @@ ln -s -i $DOT_FILES/.gitconfig ~/.config/git/config
 mkdir -p ~/.hammerspoon/
 ln -s -i $DOT_FILES/init.lua ~/.hammerspoon/init.lua
 ln -s -i $DOT_FILES/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
-mkdir -p ~/.ipython/profile_default/
-ln -s -i $DOT_FILES/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 
 #apply the changes to the current shell instance!
 #(this is why you ought to run source $DOT_FILES/setup/setup.sh and not just sh $DOT_FILES/setup/setup.sh)
