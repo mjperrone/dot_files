@@ -2,20 +2,25 @@
 
 My unix dot files
 
-
 ## Setup
 
-First install git. Then run the following commands to get this repo down and run the setup scripts:
+Git is a prerequisite for this dev env setup. Get that, then run the following commands:
 
 ```zsh
-echo 'export DOT_FILES=/Users/mperrone/code/mjperrone/dot_files' > ~/.shell_secrets
-source ~/.shell_secrets
+# install homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+# install ansible
+brew install ansible
+# check out this repo
+DOT_FILES="$HOME/code/mjperrone/dot_files"
 mkdir -p $DOT_FILES
-cd $DOT_FILES/../
 git clone https://github.com/mjperrone/dot_files.git $DOT_FILES
-source $DOT_FILES/setup/setup.sh
-source $DOT_FILES/setup/mac_defaults.sh
-source $DOT_FILES/setup/mac_apps.sh
+```
+
+Then to run the initial setup or to pull in the latest updates, run:
+
+```zsh
+ansible-playbook main.yaml
 ```
 
 ## Contents
@@ -36,4 +41,4 @@ source $DOT_FILES/setup/mac_apps.sh
 * .zshrc has zshell specific config and will trigger .shellrc
 * init.lua is the hammerspoon config
 * keybindings.json is VSCode keybindings config
-* setup/ contains the scripts to set up the config files for a new machine
+* ansible/ contains the config ansible requires to set up these dot files

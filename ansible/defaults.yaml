@@ -1,0 +1,83 @@
+- name: Set OSX config
+  hosts: localhost
+  tasks: 
+  - name: Set hammerspoon config to XDG directory
+    community.general.osx_defaults:
+      domain: org.hammerspoon.Hammerspoon
+      key: MJConfigFile
+      value: "{{ ansible_env.XDG_CONFIG_HOME }}/hammerspoon/init.lua"
+      state: present
+  - name: Show hidden files in Finder
+    community.general.osx_defaults:
+      domain: com.apple.finder
+      key: AppleShowAllFiles
+      type: string
+      value: TRUE
+      state: present
+  - name: Display full POSIX path in Finder window title
+    community.general.osx_defaults:
+      domain: com.apple.finder
+      key: _FXShowPosixPathInTitle
+      type: bool
+      value: true
+      state: present
+  - name: Autohide the Dock
+    community.general.osx_defaults:
+      domain: com.apple.dock
+      key: autohide
+      type: bool
+      value: true
+      state: present
+  - name: Disable dock autohide animation
+    community.general.osx_defaults:
+      domain: com.apple.dock
+      key: autohide-time-modifier
+      type: int
+      value: 0
+      state: present
+  - name: Set dock autohide delay
+    community.general.osx_defaults:
+      domain: com.apple.Dock
+      key: autohide-delay
+      type: float
+      value: 1
+      state: present
+  - name: Use scale effect for minimizing windows to dock
+    community.general.osx_defaults:
+      domain: com.apple.Dock
+      key: mineffect
+      type: string
+      value: scale
+      state: present
+  - name: Disable cursor magnification
+    community.general.osx_defaults:
+      domain: ~/Library/Preferences/.GlobalPreferences
+      key: CGDisableCursorLocationMagnification
+      type: bool
+      value: YES
+      state: present
+  - name: Set clock format in menu bar
+    community.general.osx_defaults:
+      domain: com.apple.menuextra.clock
+      key: DateFormat
+      type: string
+      value: 'EEE MMM d  H:mm'
+      state: present
+  - name: Enable dark mode
+    become: yes
+    community.general.osx_defaults:
+      domain: /Library/Preferences/.GlobalPreferences.plist
+      key: _HIEnableThemeSwitchHotKey
+      type: bool
+      value: true
+      state: present
+  - name: Set Screenshots location
+    community.general.osx_defaults:
+      domain: com.apple.screencapture
+      key: location
+      type: string
+      value: "~/files/Screenshots"
+      state: present
+  - name: Disable startup chime
+    command: nvram SystemAudioVolume=" "
+    become: yes
