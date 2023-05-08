@@ -23,6 +23,12 @@ Then to run the initial setup or to pull in the latest updates, run:
 ansible-playbook main.yaml
 ```
 
+There are also a few manual steps to take:
+
+- Open hammerspoon, set it to launch at login, give it accessibility permissions
+- Set the battery percent, volume control, and bluetooth to show in the menubar using the control center
+- Set caps lock to escape
+
 ## Contents
 
 * browser-shortcuts.html has bookmarks that enable mapping shortcut text to a basic url template like "wiki meta" -> "https://en.wikipedia.org/wiki/Special:Search/meta"
