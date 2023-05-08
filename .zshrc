@@ -18,7 +18,7 @@ setopt GLOB_DOTS # includes .* files in *
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
 
-# autoload -U compinit && compinit # comment out bc convoy does this
+autoload -U compinit && compinit
 autoload -U promptinit && promptinit
 autoload -U colors && colors
 
