@@ -25,6 +25,3 @@
       - spotify
       - visual-studio-code
       - vlc
-  - name: Instruct manual steps
-    debug:
-      msg: Open hammerspoon, set it to launch at login, give it accessibility permissions
