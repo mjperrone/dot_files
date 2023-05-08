@@ -1,0 +1,30 @@
+- name: Dev setup
+  hosts: localhost
+  tasks:
+  - name: Install brew packages
+    community.general.homebrew:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - gh
+      - starship
+  - name: Install base cask packages
+    community.general.homebrew_cask:
+      name: "{{ item }}"
+      state: present
+      accept_external_apps: true
+    with_items:
+      - android-file-transfer
+      - audacity
+      - caffeine
+      - google-chrome
+      - discord
+      - hammerspoon
+      - firefox
+      - signal
+      - spotify
+      - visual-studio-code
+      - vlc
+  - name: Instruct manual steps
+    debug:
+      msg: Open hammerspoon, set it to launch at login, give it accessibility permissions
