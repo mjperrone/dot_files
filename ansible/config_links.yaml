@@ -1,0 +1,36 @@
+- name: Links playbook
+  hosts: localhost
+  vars:
+    symlink_list:
+      - src: "{{ ansible_env.DOT_FILES }}/.gitignore_global"
+        dest: "{{ ansible_env.XDG_CONFIG_HOME }}/git/ignore"
+      - src: "{{ ansible_env.DOT_FILES }}/.gitconfig"
+        dest: "{{ ansible_env.XDG_CONFIG_HOME }}/git/config"
+      - src: "{{ ansible_env.DOT_FILES }}/starship.toml"
+        dest: "{{ ansible_env.XDG_CONFIG_HOME }}/starship.toml"
+      - src: "{{ ansible_env.DOT_FILES }}/.inputrc"
+        dest: "{{ ansible_env.INPUTRC }}"
+      - src: "{{ ansible_env.DOT_FILES }}/.psqlrc"
+        dest: "{{ ansible_env.PSQLRC }}"
+      - src: "{{ ansible_env.DOT_FILES }}/init.lua"
+        dest: "{{ ansible_env.XDG_CONFIG_HOME }}/hammerspoon/init.lua"
+      - src: "{{ ansible_env.DOT_FILES }}/keybindings.json"
+        dest: "~/Library/Application Support/Code/User/keybindings.json"
+      - src: "{{ ansible_env.DOT_FILES }}/.editrc"
+        dest: "~/.editrc"
+      - src: "{{ ansible_env.DOT_FILES }}/.zshrc"
+        dest: "~/.zshrc"
+  tasks:
+    - name: Ensure directory exists
+      file:
+        path: "{{ item.dest | dirname }}"
+        state: directory
+      loop: "{{ symlink_list }}"
+
+    - name: Create symbolic link
+      file:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        state: link
+        force: yes
+      loop: "{{ symlink_list }}"
