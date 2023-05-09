@@ -7,6 +7,8 @@ source $DOT_FILES/.shellrc
 
 # Then, do zsh specific things.
 
+bindkey -v
+
 setopt APPEND_HISTORY # append instead of replace, all zshells do that
 setopt INC_APPEND_HISTORY # save after every command instead of on exit
 setopt EXTENDED_HISTORY # save time and run time length
