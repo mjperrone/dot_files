@@ -8,4 +8,4 @@ do
         echo $DOT_FILES/$f doesnt exist
     fi
 done
-source ~/.shell_secrets
+source $DOT_FILES/.shell_secrets
