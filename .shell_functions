@@ -101,3 +101,22 @@ listeningterm() {
     kill -15 $pid
     echo "ded."
 }
+
+clone() {
+  if [ -z "$1" ]
+  then
+    echo "Please provide a GitHub URL"
+    return 1
+  fi
+
+  if [[ "$1" =~ (git@github.com:|https:\/\/github.com\/)(.*)\/(.*)(\.git)? ]]; then
+    org=${match[2]}
+    repo=${match[3]}
+  else
+    echo "Invalid GitHub URL"
+    return 1
+  fi
+
+  mkdir -p ~/code/"$org"
+  git clone "https://github.com/$org/$repo.git" ~/code/"$org"/"$repo"
+}
