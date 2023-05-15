@@ -60,11 +60,6 @@ get_git_branch () {
 # search for the parameter here, recursively, case-insensitively
 gri () { grep -r -i "$*" .; }
 
-# base64 decode then json format
-decode() {
-    echo "$1" | base64 --decode | pjson
-}
-
 # cd to a file goes to its directory
 cd() {
     if [ -f "$*" ]; then
