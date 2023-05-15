@@ -1,4 +1,4 @@
--- Hammerspoon config, lives in ~/.hammerspoon/init.lua
+-- Hammerspoon config
 
 hs.window.animationDuration = 0
 units = {
