@@ -71,11 +71,6 @@ cd() {
     fi
 }
 
-# run tmux immediately upon sshing into things
-ssht() {
-    ssh -t $@ tmux
-}
-
 # Show ports that are listening
 listening() {
     lsof -i :$1 | grep LISTEN
