@@ -18,6 +18,7 @@ alias gpob='command git push origin HEAD'
 alias gcob='command git checkout -b'
 alias gcom='command git checkout $(git_main_branch)'
 alias gp='command git pull'
+alias ga='command git add'
 
 git () {
   if [ "$1" = "push" ] && [ "$2" = "origin" ] && [ "$3" = "HEAD" ]; then
@@ -30,6 +31,8 @@ git () {
     echo "Error: Please use the gp alias for the git pull command."
   elif [ "$1" = "cherry-pick" ]; then
     echo "Error: Please use the git cp alias for the git pull command."
+  elif [ "$1" = "add" ]; then
+    echo "Error: Please use the ga alias for the git add command."
   else
     command git "$@"
   fi
