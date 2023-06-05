@@ -19,6 +19,7 @@ alias gcob='command git checkout -b'
 alias gcom='command git checkout $(git_main_branch)'
 alias gp='command git pull'
 alias ga='command git add'
+alias gap='command git add --patch'
 
 git () {
   if [ "$1" = "push" ] && [ "$2" = "origin" ] && [ "$3" = "HEAD" ]; then
