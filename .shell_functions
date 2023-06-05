@@ -99,9 +99,9 @@ clone() {
     return 1
   fi
 
-  if [[ "$1" =~ (git@github.com:|https:\/\/github.com\/)(.*)\/(.*)(\.git)? ]]; then
+  if [[ "$1" =~ "(git@github.com:|https://github.com/)([^/]*)/(.*)(\.git)?" ]]; then
     org=${match[2]}
-    repo=${match[3]}
+    repo=${match[3]%.git}
   else
     echo "Invalid GitHub URL"
     return 1
