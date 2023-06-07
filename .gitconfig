@@ -10,10 +10,10 @@
     dn = diff --name-only
     cm = commit -m
     co = checkout
-    ap = add -p
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     ri = "!echo use gri instead"
-    set-upstream = "!f() { git branch --set-upstream-to=origin/$1 $1; }; f"
+    # set upstream from current branch:
+    set-upstream = "!f() { git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD); }; f"
     delete = "!del() { git branch -D $1; git push origin :$1; }; del"
 [color]
     ui = true
