@@ -3,6 +3,7 @@
 // @version      1
 // @description  Copies the title and URL of a Notion page to the clipboard in a markdown formatted URL
 // @match        https://www.notion.so/*
+// @match        https://*.notion.site/*
 // @grant        GM_setClipboard
 // ==/UserScript==
 
