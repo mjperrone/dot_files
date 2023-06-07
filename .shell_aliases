@@ -60,10 +60,13 @@ alias ti='command terraform init'
 terraform () {
   if [ "$1" = "apply" ] ; then
     echo "Error: Please use the ta alias for terraform apply."
+    exit 1
   elif [ "$1" = "plan" ] ; then
     echo "Error: Please use the tp alias for terraform plan."
+    exit 1
   elif [ "$1" = "init" ] ; then
     echo "Error: Please use the ti alias for terraform init."
+    exit 1
   else
     command terraform "$@"
   fi
