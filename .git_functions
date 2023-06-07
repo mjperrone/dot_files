@@ -24,16 +24,22 @@ alias gap='command git add --patch'
 git () {
   if [ "$1" = "push" ] && [ "$2" = "origin" ] && [ "$3" = "HEAD" ]; then
     echo "Error: Please use the gpob alias for the git push origin HEAD command."
+    exit 1
   elif [ "$1" = "checkout" ] && [ "$2" = "-b" ]; then
     echo "Error: Please use the gcob alias for the git checkout -b command."
+    exit 1
   elif [ "$1" = "checkout" ] && ([ "$2" = "master" ] || [ "$2" = "main" ]); then
     echo "Error: Please use the gcom alias for the git checkout main/master command."
+    exit 1
   elif [ "$1" = "pull" ]; then
     echo "Error: Please use the gp alias for the git pull command."
+    exit 1
   elif [ "$1" = "cherry-pick" ]; then
     echo "Error: Please use the git cp alias for the git pull command."
+    exit 1
   elif [ "$1" = "add" ]; then
     echo "Error: Please use the ga alias for the git add command."
+    exit 1
   else
     command git "$@"
   fi
