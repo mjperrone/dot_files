@@ -1,19 +1,19 @@
 #!/usr/bin/env zsh
 
 pinfo () { # path environment info
-    echo -e "${_red}PATH:${_reset}$PATH" | tr ":" "\n"
-    echo -e "${_red}PYTHONPATH:${_reset}$PYTHONPATH" | tr ":" "\n"
+    echo -e "PATH:${_reset}$PATH" | tr ":" "\n"
+    echo -e "PYTHONPATH:${_reset}$PYTHONPATH" | tr ":" "\n"
 }
 
 function pginfo () { # postgres info
-    echo -e "${_red}PGHOST: ${_reset}$PGHOST"
-    echo -e "${_red}PGPORT: ${_reset}$PGPORT"
-    echo -e "${_red}PGDATABASE: ${_reset}$PGDATABASE"
-    echo -e "${_red}PGUSER: ${_reset}$PGUSER"
+    echo -e "PGHOST: $PGHOST"
+    echo -e "PGPORT: $PGPORT"
+    echo -e "PGDATABASE: $PGDATABASE"
+    echo -e "PGUSER: $PGUSER"
     if [[ -z "$PGPASSWORD" ]]; then
-        echo -e "${_red}PGPASSWORD: ${_reset}<NOT set>"
+        echo -e "PGPASSWORD: <NOT set>"
     else
-        echo -e "${_red}PGPASSWORD: ${_reset}<set>"
+        echo -e "PGPASSWORD: <set>"
     fi
 }
 
