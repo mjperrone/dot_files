@@ -92,6 +92,14 @@ listeningterm() {
     echo "ded."
 }
 
+function gha() {
+    origin=$(git config --get remote.origin.url)
+    base_url="${origin/.git/}"
+    actions_url="$base_url/actions"
+    echo "Opening $actions_url"
+    open "$actions_url"
+}
+
 clone() {
   if [ -z "$1" ]
   then
