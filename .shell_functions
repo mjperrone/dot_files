@@ -92,10 +92,12 @@ listeningterm() {
     echo "ded."
 }
 
-function gha() {
+gha () {
     origin=$(git config --get remote.origin.url)
     base_url="${origin/.git/}"
-    actions_url="$base_url/actions"
+    current_branch=$(git rev-parse --abbrev-ref HEAD)
+    encoded_branch=$(printf %s "$current_branch" | jq -sRr @uri)
+    actions_url="$base_url/actions?query=branch%3A$encoded_branch"
     echo "Opening $actions_url"
     open "$actions_url"
 }
