@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
 pinfo () { # path environment info
-    echo -e "PATH:${_reset}$PATH" | tr ":" "\n"
-    echo -e "PYTHONPATH:${_reset}$PYTHONPATH" | tr ":" "\n"
+    echo -e "PATH:$PATH" | tr ":" "\n"
+    echo -e "PYTHONPATH:$PYTHONPATH" | tr ":" "\n"
 }
 
 function pginfo () { # postgres info
