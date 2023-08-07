@@ -102,21 +102,38 @@ gha () {
     open "$actions_url"
 }
 
+function awsid() {
+    echo "printing the aws account active"
+    aws sts get-caller-identity --output text
+}
+
 clone() {
   if [ -z "$1" ]
   then
-    echo "Please provide a GitHub URL"
+    echo "Please provide a GitHub reop"
     return 1
   fi
 
-  if [[ "$1" =~ "(git@github.com:|https://github.com/)([^/]*)/(.*)(\.git)?" ]]; then
-    org=${match[2]}
-    repo=${match[3]%.git}
+# check if the input is in org/repo format
+  if [[ "$1" =~ ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ ]]; then
+    org=${match[1]}
+    repo=${match[2]}
+  # check if the input is a full URL
+  elif [[ "$1" =~ ^(git@github.com:|https://github.com/)([^/]*)/(.*)(\.git)?$ ]]; then
+    org=${match[3]}
+    repo=${match[4]%.git}
   else
-    echo "Invalid GitHub URL"
+    echo "Invalid input format. Please provide a GitHub URL or a GitHub repo in org/repo format"
     return 1
   fi
 
   mkdir -p ~/code/"$org"
-  git clone "https://github.com/$org/$repo.git" ~/code/"$org"/"$repo"
+  if [ -d ~/code/"$org"/"$repo" ]; then
+
+    echo "Repository already cloned."
+    return 0
+  else
+    git clone "https://github.com/$org/$repo.git" ~/code/"$org"/"$repo"
+  fi
 }
+
