@@ -21,11 +21,17 @@ const SHORTCUT = {
   }
   
   function copyToClipboard() {
-    const title = document.querySelectorAll('.notion-page-block > div.notranslate')[0].textContent.trim();
+    const titleElement = document.querySelectorAll('.notion-page-block > h1.notranslate')[0]
+    const title = titleElement.textContent.trim();
     const pageUrl = window.location.href;
     const markdownUrl = `[${title}](${pageUrl})`;
     console.log(`copying to clipboard: ${markdownUrl}`);
     GM_setClipboard(markdownUrl);
+    setTimeout(function() {
+      console.log(`changing color to green`);
+      titleElement.style.color = 'green';
+    }, 100);
+
   }
   
   document.addEventListener('keydown', handleKeydown);
