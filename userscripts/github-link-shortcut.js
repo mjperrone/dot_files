@@ -40,6 +40,14 @@ const SHORTCUT = {
 
 function quickLinkToClipboard() {
     GM_setClipboard(formatForSlack(), 'PR');
+    const oldColor = document.querySelector('.js-issue-title').style.color;
+    setTimeout(function() {
+      console.log(`changing color to green`);
+      document.querySelector('.js-issue-title').style.color = 'green';
+    }, 100);
+    setTimeout(function() {
+      document.querySelector('.js-issue-title').style.color = oldColor;
+    }, 3000);
 }
 
 document.querySelector('.js-issue-title').addEventListener('click', quickLinkToClipboard);

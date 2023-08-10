@@ -27,10 +27,15 @@ const SHORTCUT = {
     const markdownUrl = `[${title}](${pageUrl})`;
     console.log(`copying to clipboard: ${markdownUrl}`);
     GM_setClipboard(markdownUrl);
+    const oldColor = titleElement.style.color;
     setTimeout(function() {
       console.log(`changing color to green`);
       titleElement.style.color = 'green';
     }, 100);
+    setTimeout(function() {
+      console.log(`changing color back`);
+      titleElement.style.color = oldColor;
+    }, 3000);
 
   }
   
