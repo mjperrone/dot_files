@@ -30,8 +30,8 @@ unset R
 alias -- -='cd -' #this remaps '-' to 'cd -', don't ask me how
 
 #ls:
-alias l='ls -lah' #detailed ls
-alias l.='ls -ld .*' #only hidden stuff
+alias l='ls -lahF' #detailed ls
+alias l.='ls -ldF .*' #only hidden stuff
 
 #grep:
 alias grep='grep --color -I' #be colorful and ignore binary files and svn directories
