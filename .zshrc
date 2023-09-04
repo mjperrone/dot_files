@@ -30,3 +30,6 @@ bindkey "^?" backward-delete-char # Allow backspace to delete stuff in prompt in
 
 # Do reverse history search with control-R, like in bash
 bindkey "^R" history-incremental-search-backward
+
+# Caveat from brew install zsh-autosuggestions:
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
