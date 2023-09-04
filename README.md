@@ -20,6 +20,7 @@ git clone https://github.com/mjperrone/dot_files.git $DOT_FILES
 Then to run the initial setup or to pull in the latest updates, run:
 
 ```zsh
+cd ansible/
 ansible-playbook main.yaml
 ```
 
