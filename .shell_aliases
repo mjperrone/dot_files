@@ -30,8 +30,8 @@ unset R
 alias -- -='cd -' #this remaps '-' to 'cd -', don't ask me how
 
 #ls:
-alias l='ls -lah' #detailed ls
-alias l.='ls -ld .*' #only hidden stuff
+alias l='ls -lahF' #detailed ls
+alias l.='ls -ldF .*' #only hidden stuff
 
 #grep:
 alias grep='grep --color -I' #be colorful and ignore binary files and svn directories
@@ -48,6 +48,7 @@ alias sshl='ssh -L 5555:localhost:5432' #easy ssh tunnel
 alias lk='pmset displaysleepnow; qq' #locks screen (and exits) on mac only
 alias beep='say "done" && osascript -e "display notification \"All done\" with title \"Done\""'
 alias chargestats="system_profiler -json SPPowerDataType | jq -r '.SPPowerDataType[] | select(._name == \"sppower_ac_charger_information\")'"
+alias clone='$DOT_FILES/scripts/clone.py'
 
 #abbreviations
 alias diff='git --no-pager diff --no-index' #default git's colorful diff
