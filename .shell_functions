@@ -92,12 +92,22 @@ listeningterm() {
     echo "ded."
 }
 
-gha () {
+gha () { # open github actions for current branch
     origin=$(git config --get remote.origin.url)
     base_url="${origin/.git/}"
     current_branch=$(git rev-parse --abbrev-ref HEAD)
     encoded_branch=$(printf %s "$current_branch" | jq -sRr @uri)
     actions_url="$base_url/actions?query=branch%3A$encoded_branch"
+    echo "Opening $actions_url"
+    open "$actions_url"
+}
+
+ghar () { # open github actions for most recent run for current branch
+    current_branch=$(git rev-parse --abbrev-ref HEAD)
+    runId=$(gh run list --branch $current_branch --limit 1 --json  databaseId | jq ".[0].databaseId")
+    origin=$(git config --get remote.origin.url)
+    base_url="${origin/.git/}"
+    actions_url="$base_url/actions/runs/$runId"
     echo "Opening $actions_url"
     open "$actions_url"
 }
