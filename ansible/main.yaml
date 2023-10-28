@@ -9,6 +9,8 @@
         - yq
         - zsh-autosuggestions
       state: present
+      update_homebrew: true
+    register: brew_result
   - name: Install brew cask packages
     community.general.homebrew_cask:
       name:
@@ -25,3 +27,10 @@
         - vlc
       state: present
       accept_external_apps: true
+    register: brew_cask_result
+  - name: Print brew changes summary
+    debug:
+      msg: >
+        Brew Summary:
+          Changed Packages: {{ brew_result.changed_pkgs | join(", ") or "None" }}
+          Unchanged Packages: {{ brew_result.unchanged_pkgs | join(", ") or "None" }}
