@@ -13,9 +13,7 @@ from urllib.parse import urlparse
     "koxudaxi/datamodel-code-generator"
     returns tuple (org, repo)
 """
-
-
-def parse_git_url(url):
+def parse_git_url(url) -> tuple[str]:
     path = ""
     if url.startswith("git@"):
         parts = url.split(":")
