@@ -1,36 +1,11 @@
 - name: Dev setup
   hosts: localhost
   tasks:
-  - name: Install brew packages
-    community.general.homebrew:
-      name:
-        - gh
-        - starship
-        - yq
-        - zsh-autosuggestions
-      state: present
-      update_homebrew: true
-    register: brew_result
-  - name: Install brew cask packages
-    community.general.homebrew_cask:
-      name:
-        - android-file-transfer
-        - audacity
-        - caffeine
-        - google-chrome
-        - discord
-        - hammerspoon
-        - firefox
-        - signal
-        - spotify
-        - visual-studio-code
-        - vlc
-      state: present
-      accept_external_apps: true
-    register: brew_cask_result
-  - name: Print brew changes summary
-    debug:
-      msg: >
-        Brew Summary:
-          Changed Packages: {{ brew_result.changed_pkgs | join(", ") or "None" }}
-          Unchanged Packages: {{ brew_result.unchanged_pkgs | join(", ") or "None" }}
+  - name: Brew
+    include_tasks: ./brew.yaml
+  - name: OS X Defaults
+    include_tasks: ./defaults.yaml
+  - name: Create Required Directories
+    include_tasks: ./directories.yaml
+  - name: Set Config Links
+    include_tasks: ./config_links.yaml
