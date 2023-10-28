@@ -12,8 +12,9 @@ bindkey -v
 setopt APPEND_HISTORY # append instead of replace, all zshells do that
 setopt INC_APPEND_HISTORY # save after every command instead of on exit
 setopt EXTENDED_HISTORY # save time and run time length
-export HISTSIZE=10000 # commands loaded into memory
-export SAVEHIST=50000 # commands saved in the file
+setopt HIST_EXPIRE_DUPS_FIRST # expire duplicates first when expiring old history
+export HISTSIZE=10000 # num of commands loaded into memory
+export SAVEHIST=50000 # num of commands saved in the file
 export HISTFILE="$XDG_STATE_HOME"/zsh/history
 
 setopt GLOB_DOTS # includes .* files in *
