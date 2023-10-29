@@ -1,21 +1,17 @@
-- name: Links playbook
-  hosts: localhost
-  vars:
-    directories_to_create:
-      - "~/.config/git"
-      - "{{ ansible_env.XDG_CONFIG_HOME }}/readline"
-      - "{{ ansible_env.XDG_STATE_HOME }}"
-      - "{{ ansible_env.XDG_CONFIG_HOME }}/pg"
-      - "{{ ansible_env.XDG_STATE_HOME }}/zsh"
-      - "{{ ansible_env.XDG_CONFIG_HOME }}/hammerspoon"
-      - "~/files/Downloads"
-      - "~/files/Documents"
-      - "~/files/Photos"
-      - "~/files/Screenshots"
-      - "~/code/vscodeworkspaces"
-  tasks:
-  - name: Create directories
-    file:
-      path: "{{ item }}"
-      state: directory
-    loop: "{{ directories_to_create }}"
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  with_items:
+    - "~/.config/git"
+    - "{{ ansible_env.XDG_CONFIG_HOME }}/readline"
+    - "{{ ansible_env.XDG_STATE_HOME }}"
+    - "{{ ansible_env.XDG_CONFIG_HOME }}/pg"
+    - "{{ ansible_env.XDG_STATE_HOME }}/zsh"
+    - "{{ ansible_env.XDG_CONFIG_HOME }}/hammerspoon"
+    - "~/files/Downloads"
+    - "~/files/Documents"
+    - "~/files/Photos"
+    - "~/files/Screenshots"
+    - "~/code/vscodeworkspaces"
