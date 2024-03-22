@@ -14,6 +14,7 @@
     ri = "!echo use gri instead"
     rc = rebase --continue
     ra = rebase --abort
+    rs = restore --staged
     # set upstream from current branch:
     set-upstream = "!f() { git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD); }; f"
     delete = "!del() { git branch -D $1; git push origin :$1; }; del"
