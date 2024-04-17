@@ -54,7 +54,8 @@ function main() {
   } else if (window.location.href.includes('github.com')) {
     const titleElement = document.querySelector('.js-issue-title');
     const prTitle = titleElement.textContent.trim();
-    const text = window.location.href + ' `' + prTitle + '` ' + getPRLineCounts();
+    const prShort = window.location.href.split('/').slice(2).join('/');
+    const text = `[${prShort}](${window.location.href}): \`${prTitle}\` ${getPRLineCounts()}`;
     copyToClipboard(text);
     colorChangeFeedback(titleElement);
   } else if(window.location.href.includes('atlassian.net')) {
