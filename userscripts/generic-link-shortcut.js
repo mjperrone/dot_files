@@ -16,55 +16,47 @@ function handleKeydown(event) {
   if (event.ctrlKey === SHORTCUT.ctrlKey &&
       event.shiftKey === SHORTCUT.shiftKey &&
       event.code === SHORTCUT.code) {
-      copyToClipboard();
+      main();
   }
 }
-function formatForSlack() {
-	return getURL() + ' `' + getPRTitle() + '` ' + getLineCounts();
-}
 
-function getURL() {
-	return window.location.href;
-}
-
-function getLineCounts() {
+function getPRLineCounts() {
     const addedText = document.querySelector('#diffstat > .color-fg-success').textContent.trim().split(/\s+/).join('/');
     const removedText = document.querySelector('#diffstat > .color-fg-danger').textContent.trim().split(/\s+/).join('/');
-
 	return `(${addedText}, ${removedText})`;
 }
 
-function getPRTitle() {
-	return document.querySelector('.js-issue-title').textContent.trim();
+function colorChangeFeedback(element) {
+  const oldColor = element.style.color;
+  setTimeout(function() {
+    console.log(`changing color to green`);
+    element.style.color = 'green';
+  }, 100);
+  setTimeout(function() {
+    console.log(`changing color back`);
+    element.style.color = oldColor;
+  }, 3000);
 }
 
-function copyToClipboard() {
+function copyToClipboard(textToCopy) {
+  GM_setClipboard(textToCopy, 'PR');
+  console.log(`copied to clipboard: ${textToCopy}`);
+}
+
+function main() {
   if (window.location.href.includes('notion.so') || window.location.href.includes('notion.site')) {
     const titleElement = document.querySelectorAll('.notion-page-block > h1.notranslate')[0]
     const title = titleElement.textContent.trim();
     const pageUrl = window.location.href;
     const markdownUrl = `[${title}](${pageUrl})`;
-    console.log(`copying to clipboard: ${markdownUrl}`);
-    GM_setClipboard(markdownUrl);
-    const oldColor = titleElement.style.color;
-    setTimeout(function() {
-      console.log(`changing color to green`);
-      titleElement.style.color = 'green';
-    }, 100);
-    setTimeout(function() {
-      console.log(`changing color back`);
-      titleElement.style.color = oldColor;
-    }, 3000);
+    copyToClipboard(markdownUrl);
+    colorChangeFeedback(titleElement);
   } else if (window.location.href.includes('github.com')) {
-    GM_setClipboard(formatForSlack(), 'PR');
-    const oldColor = document.querySelector('.js-issue-title').style.color;
-    setTimeout(function() {
-      console.log(`changing color to green`);
-      document.querySelector('.js-issue-title').style.color = 'green';
-    }, 100);
-    setTimeout(function() {
-      document.querySelector('.js-issue-title').style.color = oldColor;
-    }, 3000);
+    const titleElement = document.querySelector('.js-issue-title');
+    const prTitle = titleElement.textContent.trim();
+    const text = window.location.href + ' `' + prTitle + '` ' + getPRLineCounts();
+    copyToClipboard(text);
+    colorChangeFeedback(titleElement);
   } else if(window.location.href.includes('atlassian.net')) {
     const h1s = document.querySelectorAll('h1');
     if (h1s.length !== 1) {
@@ -77,23 +69,19 @@ function copyToClipboard() {
 
     const pageUrl = window.location.href;
     const markdownUrl = `[${jiraId}](${pageUrl}): \`${title}\``;
-    console.log(`copying to clipboard: ${markdownUrl}`);
-    GM_setClipboard(markdownUrl);
-    const oldColor = titleElement.style.color;
-    setTimeout(function() {
-      console.log(`changing color to green`);
-      titleElement.style.color = 'green';
-    }, 100);
-    setTimeout(function() {
-      console.log(`changing color back`);
-      titleElement.style.color = oldColor;
-    }, 3000);
+    copyToClipboard(markdownUrl);
+    colorChangeFeedback(titleElement);
   } else {
     const title = document.title.trim();
     const pageUrl = window.location.href;
     const markdownUrl = `[${title}](${pageUrl})`;
-    console.log(`copying to clipboard: ${markdownUrl}`);
-    GM_setClipboard(markdownUrl);
+    copyToClipboard(markdownUrl);
+    const h1s = document.querySelectorAll('h1');
+    // filter out h1s that have no text content:
+    const h1sWithText = Array.from(h1s).filter(h1 => h1.textContent.trim().length > 0);
+    for (const h1 of h1sWithText) {
+      colorChangeFeedback(h1);
+    }
   }
 }
 
