@@ -72,6 +72,14 @@ function main() {
     const markdownUrl = `[${jiraId}](${pageUrl}): \`${title}\``;
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
+  } else if(window.location.href.includes('docs.google.com')) {
+    // You can't be in the doc body for the keyboard shortcut to work, so click on the header element first
+    const titleElement = document.querySelector('.docs-title-input-label-inner');
+    const title = titleElement.textContent.trim();
+    const pageUrl = window.location.href;
+    const markdownUrl = `[${title}](${pageUrl})`;
+    copyToClipboard(markdownUrl);
+    colorChangeFeedback(titleElement);
   } else {
     const title = document.title.trim();
     const pageUrl = window.location.href;
