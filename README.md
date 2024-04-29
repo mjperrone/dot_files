@@ -49,3 +49,13 @@ There are also a few manual steps to take:
 * init.lua is the hammerspoon config
 * keybindings.json is VSCode keybindings config
 * ansible/ contains the config ansible requires to set up these dot files
+
+## Browser shortcuts
+
+I like being able to type short strings into the address bar to quickly navigate to custom pages or custom searches. This is implemented differently in the different browsers.
+
+In Firefox, you can do this with 'keywords' for bookmarks, and use `%s` as a placeholder for the string substitution. Since they are just bookmarks, you can use the bookmarks manager to import and export them. Go to the bookmarks manager (`shift-command-O`) and select `Import bookmarks from HTML...`.
+
+In Chrome, you can do this with [custom search engines](https://support.google.com/chrome/answer/95426) and use `%s` for the string substitution. Unfortunately they have to be added manually. At the [search engine settings page](chrome://settings/searchEngines) you can add a new search engine with the shortcut as the keyword and the URL as the search string.
+
+[browser-shortcuts.html](browser-shortcuts.html) is an HTML bookmark file which contains a list of browser shortcuts that I use.
