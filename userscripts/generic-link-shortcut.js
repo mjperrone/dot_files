@@ -54,7 +54,7 @@ function main() {
   } else if (window.location.href.includes('github.com')) {
     const titleElement = document.querySelector('.js-issue-title');
     const prTitle = titleElement.textContent.trim();
-    const prShort = window.location.href.split('/').slice(2).join('/');
+    const prShort = window.location.href.split('/').slice(3).join('/');
     const text = `[${prShort}](${window.location.href}): \`${prTitle}\` ${getPRLineCounts()}`;
     copyToClipboard(text);
     colorChangeFeedback(titleElement);
