@@ -112,6 +112,10 @@ ghar () { # open github actions for most recent run for current branch
     open "$actions_url"
 }
 
+ghpr () { # open github pull request for current branch
+    gh pr view --web
+}
+
 function awsid() {
     echo "printing the aws account active"
     aws sts get-caller-identity --output text
