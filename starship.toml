@@ -40,3 +40,12 @@ format = '$status$time$all$git_branch$git_status\$ '
 
 [character]
     disabled = true
+
+[docker_context]
+    disabled = true
+
+[nodejs]
+    symbol = "📜 "
+
+[gcloud]
+    disabled = true
