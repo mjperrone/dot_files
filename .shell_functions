@@ -2,7 +2,6 @@
 
 pinfo () { # path environment info
     echo -e "PATH:$PATH" | tr ":" "\n"
-    echo -e "PYTHONPATH:$PYTHONPATH" | tr ":" "\n"
 }
 
 function pginfo () { # postgres info
