@@ -1,0 +1,74 @@
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Redirecting...</title>
+        <script defer>
+            let redirects = {
+                "amzn": "https://www.amazon.com/s?k={searchTerms}",
+                "asl": "https://www.signasl.org/sign/{searchTerms}",
+                "dd": "https://app.datadoghq.com/apm/home",
+                "ddci": "https://app.datadoghq.com/ci/pipelines?fromUser=false&start=1713300697329&end=1713905497329&paused=false",
+                "ddd": "https://app.datadoghq.com/dashboard/lists?q={searchTerms}",
+                "dde": "https://app.datadoghq.com/event/explorer",
+                "ddl": "https://app.datadoghq.com/logs?query=&agg_m=count&agg_m_source=base&agg_t=count&cols=host%2Cservice&fromUser=true&messageDisplay=inline&refresh_mode=sliding&storage=hot&stream_sort=desc&viz=stream&from_ts=1729710279313&to_ts=1729711179313&live=true",
+                "ddm": "https://app.datadoghq.com/monitors/manage?order=desc",
+                "ddt": "https://app.datadoghq.com/ci/test-services?fromUser=false&view=default-branches&start=1718832916600&end=1721424916600&paused=false",
+                "deploys": "https://app.datadoghq.com/event/explorer?query=%22Control%20Plane%20Deploy%20Succeeded%22%20-customer_name%3A%28testintegration%20OR%20fakeonebusaway%29&cols=&fromUser=true&messageDisplay=expanded-lg&options=&refresh_mode=paused&saved-view-id=3062068&sort=desc&view=all&from_ts=1739385862000&to_ts=1739472262000&live=false",
+                "gem": "https://rubygems.org/gems/{searchTerms}",
+                "gh": "https://github.com/gabledata/{searchTerms}",
+                "gha": "https://github.com/gabledata/product/actions",
+                "gham": "https://github.com/gabledata/product/actions?query=event%3Apush+branch%3Amain",
+                "ghame": "https://github.com/gabledata/product/actions?query=event%3Apush+actor%3Amjperrone",
+                "ghap": "https://github.com/gabledata/product/actions?query=event%3Apush",
+                "ghar": "https://github.com/gabledata/product/actions?query=event%3Apush+branch%3Arelease",
+                "ghaw": "https://github.com/gabledata/product/actions?query=event%3Aworkflow_run",
+                "ghb": "https://github.com/gabledata/product/branches",
+                "ghi": "https://github.com/gabledata/product/issues",
+                "ghp": "https://github.com/gabledata/product",
+                "ghp": "https://github.com/gabledata/product/pulls",
+                "ghr": "https://github.com/gabledata/product/releases",
+                "ghs": "https://github.com/gabledata/product/settings",
+                "ghs": "https://github.com/search?q=org%3Agabledata%20%s&type=code",
+                "go": "https://pkg.go.dev/search?q={searchTerms}",
+                "gt": "https://translate.google.com/#auto/en/{searchTerms}",
+                "maps": "https://www.google.com/maps/search/{searchTerms}",
+                "mypulls": "https://github.com/pulls",
+                "mypulls": "https://github.com/pulls",
+                "mybranches": "https://github.com/gabledata/product/branches/yours",
+                "mypullsc": "https://github.com/pulls?q=is%3Apr+author%3Amjperrone+archived%3Afalse+is%3Aclosed",
+                "mypullsc": "https://github.com/pulls?q=is%3Apr+author%3Amjperrone+archived%3Afalse+is%3Aclosed",
+                "npm": "https://www.npmjs.com/package/{searchTerms}",
+                "oncall": "https://manifest-data.atlassian.net/jira/ops/teams/og-d8a4d30c-4e68-4c0c-a47a-8f971092438d/on-call#74459c5b-99db-416f-8895-ef1b4a91d4f2",
+                "orders": "https://www.amazon.com/gp/your-account/order-history?search={searchTerms}",
+                "pip": "https://pypi.org/search/?q={searchTerms}",
+                "ppulls": "https://github.com/gabledata/product/pulls",
+                "ppullsc": "https://github.com/gabledata/product/pulls?q=is%3Apr+is%3Aclosed",
+                "sg": "https://sourcegraph.com/search?q=context:global+{searchTerms}",
+                "ud": "https://www.urbandictionary.com/define.php?term={searchTerms}",
+                "wiki": "https://en.wikipedia.org/wiki/Special:Search/{searchTerms}",
+                "wolf": "https://www.wolframalpha.com/input/?i={searchTerms}",
+            };
+    
+            window.onload = function () {
+                let params = new URLSearchParams(window.location.search);
+                let tokens = params.get("key").split("?");
+    
+                let key = tokens[0];
+                if (1 == tokens.length) {
+                    let url = redirects[key];
+                    if (url) {
+                        window.location.replace(url);
+                    }
+                } else {
+                    key += "?";
+                    let searchString = tokens[1];
+                    let url = redirects[key];
+                    if (url) {
+                        url = url.replace("{searchTerms}", searchString);
+                        window.location.replace(url);
+                    }
+                }
+            };
+        </script>
+    </head>
+    </html>
