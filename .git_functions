@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 alias lg='git log --graph --pretty=format:'"'"'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"'"' --abbrev-commit'
+alias root='cd $(git rev-parse --show-toplevel)'
 
 git_main_branch () {
     git branch | cut -c 3- | grep -E '^master$|^main$'
@@ -161,4 +162,52 @@ function cleanup-branches() {
 
 	# clean up
 	rm $file
+}
+
+st () {
+    if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+        git status
+    else
+        echo 'not in a git repo'
+    fi
+}
+
+# if in git repo, return the branch. I currently only use
+#this for the zsh prompt, hence the parens.
+get_git_branch () {
+    if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+        printf "(%s)" "$(git rev-parse --abbrev-ref HEAD | tr '\n' ' ' | trim)"
+    fi
+}
+
+ghakill () {
+    gh api \
+        --method POST \
+        -H "Accept: application/vnd.github+json" \
+        -H "X-GitHub-Api-Version: 2022-11-28" \
+        /repos/gabledata/product/actions/runs/$1/force-cancel
+}
+
+gha () { # open github actions for current branch
+    origin=$(git config --get remote.origin.url)
+    base_url="${origin/.git/}"
+    current_branch=$(git rev-parse --abbrev-ref HEAD)
+    encoded_branch=$(printf %s "$current_branch" | jq -sRr @uri)
+    actions_url="$base_url/actions?query=branch%3A$encoded_branch"
+    echo "Opening $actions_url"
+    open "$actions_url"
+}
+
+ghar () { # open github actions for most recent run for current branch
+    current_branch=$(git rev-parse --abbrev-ref HEAD)
+    runId=$(gh run list --branch $current_branch --limit 1 --json  databaseId | jq ".[0].databaseId")
+    origin=$(git config --get remote.origin.url)
+    base_url="${origin/.git/}"
+    actions_url="$base_url/actions/runs/$runId"
+    echo "Opening $actions_url"
+    open "$actions_url"
+}
+
+ghpr () { # open github pull request for current branch
+    gh pr view --web
 }

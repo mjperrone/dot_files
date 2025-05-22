@@ -40,25 +40,6 @@ rep () { # to be able to output stuff to a file that's being used to generate th
     mv "$TMPFILELOCATION" "$1"
 }
 
-st () {
-    if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
-        git status
-    else
-        echo 'not in a git repo'
-    fi
-}
-
-# if in git repo, return the branch. I currently only use
-#this for the zsh prompt, hence the parens.
-get_git_branch () {
-    if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
-        printf "(%s)" "$(git rev-parse --abbrev-ref HEAD | tr '\n' ' ' | trim)"
-    fi
-}
-
-# search for the parameter here, recursively, case-insensitively
-gri () { grep -r -i "$*" .; }
-
 # cd to a file goes to its directory
 cd() {
     if [ -f "$*" ]; then
@@ -91,29 +72,6 @@ listeningterm() {
     echo "ded."
 }
 
-gha () { # open github actions for current branch
-    origin=$(git config --get remote.origin.url)
-    base_url="${origin/.git/}"
-    current_branch=$(git rev-parse --abbrev-ref HEAD)
-    encoded_branch=$(printf %s "$current_branch" | jq -sRr @uri)
-    actions_url="$base_url/actions?query=branch%3A$encoded_branch"
-    echo "Opening $actions_url"
-    open "$actions_url"
-}
-
-ghar () { # open github actions for most recent run for current branch
-    current_branch=$(git rev-parse --abbrev-ref HEAD)
-    runId=$(gh run list --branch $current_branch --limit 1 --json  databaseId | jq ".[0].databaseId")
-    origin=$(git config --get remote.origin.url)
-    base_url="${origin/.git/}"
-    actions_url="$base_url/actions/runs/$runId"
-    echo "Opening $actions_url"
-    open "$actions_url"
-}
-
-ghpr () { # open github pull request for current branch
-    gh pr view --web
-}
 
 function awsid() {
     echo "printing the aws account active"
