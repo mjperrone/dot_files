@@ -180,6 +180,7 @@ get_git_branch () {
     fi
 }
 
+# github actions functions:
 ghakill () {
     gh api \
         --method POST \
