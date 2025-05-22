@@ -2,7 +2,6 @@
 
 #uncategorized:
 alias today='date +"%b_%d_%Y"'
-alias root='cd $(git rev-parse --show-toplevel)'
 
 
 #edit configs fast:
