@@ -59,3 +59,7 @@ In Firefox, you can do this with 'keywords' for bookmarks, and use `%s` as a pla
 In Chrome, you can do this with [custom search engines](https://support.google.com/chrome/answer/95426) and use `%s` for the string substitution. Unfortunately they have to be added manually. At the [search engine settings page](chrome://settings/searchEngines) you can add a new search engine with the shortcut as the keyword and the URL as the search string.
 
 [browser-shortcuts.html](browser-shortcuts.html) is an HTML bookmark file which contains a list of browser shortcuts that I use.
+
+# TODO:
+- consoilidate ansible config into one playbook maybe with multiple roles
+- dont install signal on work computer, so need roles that differentiate between work and personal
