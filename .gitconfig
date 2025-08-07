@@ -1,6 +1,6 @@
 [user]
 	name = Mike Perrone
-	email = mike.j.perrone@gmail.com
+	email = 3848371+mjperrone@users.noreply.github.com
 [alias]
     oldbranches = for-each-ref --sort=-committerdate refs/heads/
     branches = branch --sort=-committerdate
