@@ -33,7 +33,7 @@ alias l='ls -lahF' #detailed ls
 alias l.='ls -ldF .*' #only hidden stuff
 
 #grep:
-alias grep='grep --color -I' #be colorful and ignore binary files and svn directories
+alias grep='grep --color --binary-files=without-match'
 
 #tools:
 alias trim="sed -e 's/^ *//g' -e 's/ *$//g'" #remove trailing and leading whitespace
