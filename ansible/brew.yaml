@@ -4,7 +4,6 @@
       - gh
       - starship
       - yq
-      - zsh-autosuggestions
     state: present
     update_homebrew: true
   register: brew_result
