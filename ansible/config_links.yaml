@@ -19,7 +19,7 @@
     - src: "{{ ansible_env.DOT_FILES }}/.editrc"
       dest: "~/.editrc"
     - src: "{{ ansible_env.DOT_FILES }}/.zshrc"
-      dest: "~/.zshrc"
+      dest: "~/.zshrc.d/70.mjperrone.zshrc"
 - name: Create symbolic link
   ansible.builtin.file:
     src: "{{ item.src }}"
@@ -42,4 +42,4 @@
     - src: "{{ ansible_env.DOT_FILES }}/.editrc"
       dest: "~/.editrc"
     - src: "{{ ansible_env.DOT_FILES }}/.zshrc"
-      dest: "~/.zshrc"
+      dest: "~/.zshrc.d/70.mjperrone.zshrc"
