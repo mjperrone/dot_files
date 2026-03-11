@@ -26,7 +26,6 @@ ansible-playbook main.yaml
 
 There are also a few manual steps to take:
 
-- Open hammerspoon, set it to launch at login, give it accessibility permissions
 - Set the battery percent, volume control, and bluetooth to show in the menubar using the control center
 - Set caps lock to escape
 
@@ -46,7 +45,6 @@ There are also a few manual steps to take:
 * .shell_secrets is ignored by git but sourced by .shellrc
 * .shellrc is the main entrypoint shell agnostic config, sourcing many others
 * .zshrc has zshell specific config and will trigger .shellrc
-* init.lua is the hammerspoon config
 * keybindings.json is VSCode keybindings config
 * ansible/ contains the config ansible requires to set up these dot files
 

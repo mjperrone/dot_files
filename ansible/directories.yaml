@@ -9,7 +9,6 @@
     - "{{ ansible_env.XDG_STATE_HOME }}"
     - "{{ ansible_env.XDG_CONFIG_HOME }}/pg"
     - "{{ ansible_env.XDG_STATE_HOME }}/zsh"
-    - "{{ ansible_env.XDG_CONFIG_HOME }}/hammerspoon"
     - "~/files/Downloads"
     - "~/files/Documents"
     - "~/files/Photos"

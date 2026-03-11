@@ -1,9 +1,4 @@
-- name: Set hammerspoon config to XDG directory
-  community.general.osx_defaults:
-    domain: org.hammerspoon.Hammerspoon
-    key: MJConfigFile
-    value: "{{ ansible_env.XDG_CONFIG_HOME }}/hammerspoon/init.lua"
-    state: present
+
 - name: Show hidden files in Finder
   community.general.osx_defaults:
     domain: com.apple.finder
