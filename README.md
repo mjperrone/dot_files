@@ -56,10 +56,6 @@ I like being able to type short strings into the address bar to quickly navigate
 
 In Firefox, you can do this with 'keywords' for bookmarks, and use `%s` as a placeholder for the string substitution. Since they are just bookmarks, you can use the bookmarks manager to import and export them. Go to the bookmarks manager (`shift-command-O`) and select `Import bookmarks from HTML...`.
 
-In Chrome, you can do this with [custom search engines](https://support.google.com/chrome/answer/95426) and use `%s` for the string substitution. Unfortunately they have to be added manually. At the [search engine settings page](chrome://settings/searchEngines) you can add a new search engine with the shortcut as the keyword and the URL as the search string.
+In Chrome, you can import as bookmsarks as well, but have to go to chrome://settings after and "activate" them.
 
 [browser-shortcuts.html](browser-shortcuts.html) is an HTML bookmark file which contains a list of browser shortcuts that I use.
-
-# TODO:
-- consoilidate ansible config into one playbook maybe with multiple roles
-- dont install signal on work computer, so need roles that differentiate between work and personal
