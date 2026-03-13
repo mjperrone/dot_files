@@ -1,25 +1,38 @@
+- name: Set config link variables
+  ansible.builtin.set_fact:
+    dot_files: "{{ ansible_env.get('DOT_FILES', playbook_dir[:playbook_dir.rfind('/')]) }}"
+    xdg_config_home: "{{ ansible_env.get('XDG_CONFIG_HOME', ansible_user_dir + '/.config') }}"
+    inputrc_path: "{{ ansible_env.get('INPUTRC', ansible_user_dir + '/.inputrc') }}"
+    psqlrc_path: "{{ ansible_env.get('PSQLRC', ansible_user_dir + '/.psqlrc') }}"
+
+- name: Ensure .shell_secrets exists in dot files (for shell startup)
+  ansible.builtin.file:
+    path: "{{ dot_files }}/.shell_secrets"
+    state: touch
+    mode: '0600'
+
 - name: Ensure directory exists
   ansible.builtin.file:
     path: "{{ item.dest | dirname }}"
     state: directory
     mode: '0755'
   loop:
-    - src: "{{ ansible_env.DOT_FILES }}/.gitignore_global"
-      dest: "{{ ansible_env.XDG_CONFIG_HOME }}/git/ignore"
-    - src: "{{ ansible_env.DOT_FILES }}/.gitconfig"
-      dest: "{{ ansible_env.XDG_CONFIG_HOME }}/git/config"
-    - src: "{{ ansible_env.DOT_FILES }}/starship.toml"
-      dest: "{{ ansible_env.XDG_CONFIG_HOME }}/starship.toml"
-    - src: "{{ ansible_env.DOT_FILES }}/.inputrc"
-      dest: "{{ ansible_env.INPUTRC }}"
-    - src: "{{ ansible_env.DOT_FILES }}/.psqlrc"
-      dest: "{{ ansible_env.PSQLRC }}"
-    - src: "{{ ansible_env.DOT_FILES }}/keybindings.json"
+    - src: "{{ dot_files }}/.gitignore_global"
+      dest: "{{ xdg_config_home }}/git/ignore"
+    - src: "{{ dot_files }}/.gitconfig"
+      dest: "{{ xdg_config_home }}/git/config"
+    - src: "{{ dot_files }}/starship.toml"
+      dest: "{{ xdg_config_home }}/starship.toml"
+    - src: "{{ dot_files }}/.inputrc"
+      dest: "{{ inputrc_path }}"
+    - src: "{{ dot_files }}/.psqlrc"
+      dest: "{{ psqlrc_path }}"
+    - src: "{{ dot_files }}/keybindings.json"
       dest: "~/Library/Application Support/Code/User/keybindings.json"
-    - src: "{{ ansible_env.DOT_FILES }}/.editrc"
+    - src: "{{ dot_files }}/.editrc"
       dest: "~/.editrc"
-    - src: "{{ ansible_env.DOT_FILES }}/.zshrc"
-      dest: "~/.zshrc.d/70.mjperrone.zshrc"
+    - src: "{{ dot_files }}/.zshrc"
+      dest: "~/.zshrc.d/70.mjperrone.zsh"
 - name: Create symbolic link
   ansible.builtin.file:
     src: "{{ item.src }}"
@@ -27,19 +40,19 @@
     state: link
     force: true
   loop:
-    - src: "{{ ansible_env.DOT_FILES }}/.gitignore_global"
-      dest: "{{ ansible_env.XDG_CONFIG_HOME }}/git/ignore"
-    - src: "{{ ansible_env.DOT_FILES }}/.gitconfig"
-      dest: "{{ ansible_env.XDG_CONFIG_HOME }}/git/config"
-    - src: "{{ ansible_env.DOT_FILES }}/starship.toml"
-      dest: "{{ ansible_env.XDG_CONFIG_HOME }}/starship.toml"
-    - src: "{{ ansible_env.DOT_FILES }}/.inputrc"
-      dest: "{{ ansible_env.INPUTRC }}"
-    - src: "{{ ansible_env.DOT_FILES }}/.psqlrc"
-      dest: "{{ ansible_env.PSQLRC }}"
-    - src: "{{ ansible_env.DOT_FILES }}/keybindings.json"
+    - src: "{{ dot_files }}/.gitignore_global"
+      dest: "{{ xdg_config_home }}/git/ignore"
+    - src: "{{ dot_files }}/.gitconfig"
+      dest: "{{ xdg_config_home }}/git/config"
+    - src: "{{ dot_files }}/starship.toml"
+      dest: "{{ xdg_config_home }}/starship.toml"
+    - src: "{{ dot_files }}/.inputrc"
+      dest: "{{ inputrc_path }}"
+    - src: "{{ dot_files }}/.psqlrc"
+      dest: "{{ psqlrc_path }}"
+    - src: "{{ dot_files }}/keybindings.json"
       dest: "~/Library/Application Support/Code/User/keybindings.json"
-    - src: "{{ ansible_env.DOT_FILES }}/.editrc"
+    - src: "{{ dot_files }}/.editrc"
       dest: "~/.editrc"
-    - src: "{{ ansible_env.DOT_FILES }}/.zshrc"
-      dest: "~/.zshrc.d/70.mjperrone.zshrc"
+    - src: "{{ dot_files }}/.zshrc"
+      dest: "~/.zshrc.d/70.mjperrone.zsh"
