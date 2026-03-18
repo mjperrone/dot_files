@@ -59,17 +59,7 @@ alias yc='yarn compile'
 alias ta='command terraform apply'
 alias tp='command terraform plan'
 alias ti='command terraform init'
-terraform () {
-  if [ "$1" = "apply" ] ; then
-    echo "Error: Please use the ta alias for terraform apply."
-  elif [ "$1" = "plan" ] ; then
-    echo "Error: Please use the tp alias for terraform plan."
-  elif [ "$1" = "init" ] ; then
-    echo "Error: Please use the ti alias for terraform init."
-  else
-    command terraform "$@"
-  fi
-}
+
 alias pr='gh pr view --web' #overwrites /usr/bin/pr (https://docs.oracle.com/cd/E19683-01/816-0210/6m6nb7mhu/index.html)
 
 # spell check
