@@ -9,6 +9,7 @@
     - "{{ ansible_env.get('XDG_STATE_HOME', ansible_user_dir + '/.local/state') }}"
     - "{{ ansible_env.get('XDG_CONFIG_HOME', ansible_user_dir + '/.config') }}/pg"
     - "{{ ansible_env.get('XDG_STATE_HOME', ansible_user_dir + '/.local/state') }}/zsh"
+    - "{{ ansible_env.get('XDG_CONFIG_HOME', ansible_user_dir + '/.config') }}/hammerspoon"
     - "~/files/Downloads"
     - "~/files/Documents"
     - "~/files/Photos"
