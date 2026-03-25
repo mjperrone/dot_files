@@ -21,9 +21,18 @@ function handleKeydown(event) {
 }
 
 function getPRLineCounts() {
-    const addedText = document.querySelector('#diffstat > .color-fg-success').textContent.trim().split(/\s+/).join('/');
-    const removedText = document.querySelector('#diffstat > .color-fg-danger').textContent.trim().split(/\s+/).join('/');
-	return `(${addedText}, ${removedText})`;
+    let added = 0, removed = 0;
+    for (const el of document.querySelectorAll('.sr-only')) {
+        const match = el.textContent.match(/(\d+) additions? & (\d+) deletions?/);
+        if (match) {
+            added += parseInt(match[1], 10);
+            removed += parseInt(match[2], 10);
+        }
+    }
+    if (added && removed) return `(+${added}/-${removed})`;
+    if (added) return `(+${added})`;
+    if (removed) return `(-${removed})`;
+    return '';
 }
 
 function colorChangeFeedback(element) {
@@ -52,12 +61,18 @@ function main() {
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
   } else if (window.location.href.includes('github.com')) {
-    const titleElement = document.querySelector('.js-issue-title');
-    const prTitle = titleElement.textContent.trim();
+    const titleSelectors = [
+      'h1[data-component="PH_Title"] span',  // 2026 GitHub UI
+      'bdi.markdown-title',                   // 2025 GitHub UI
+      '.js-issue-title',                      // legacy
+    ];
+    const titleElement = titleSelectors.reduce((el, sel) => el || document.querySelector(sel), null);
+    const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
     const prShort = window.location.href.split('/').slice(3).join('/');
-    const text = `[${prShort}](${window.location.href}): \`${prTitle}\` ${getPRLineCounts()}`;
+    const lineCounts = getPRLineCounts();
+    const text = `[${prShort}](${window.location.href}): \`${prTitle}\`${lineCounts ? ' ' + lineCounts : ''}`;
     copyToClipboard(text);
-    colorChangeFeedback(titleElement);
+    if (titleElement) colorChangeFeedback(titleElement);
   } else if(window.location.href.includes('atlassian.net')) {
     const h1s = document.querySelectorAll('h1');
     if (h1s.length !== 1) {
