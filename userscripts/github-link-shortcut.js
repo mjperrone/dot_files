@@ -8,11 +8,20 @@
 // @run-at document-idle
 // ==/UserScript==
 function formatForSlack() {
-	return getURL() + ' `' + getPRTitle() + '` ' + getLineCounts();
+	const url = getURL();
+	return getSlackLink(url) + ' `' + getPRTitle() + '` ' + getLineCounts();
 }
 
 function getURL() {
-	return window.location.href;
+	return window.location.href.replace(/\/(files|changes)(\/?|$).*/, '');
+}
+
+function getSlackLink(url) {
+	const [, org, repo, , number] = new URL(url).pathname.split('/');
+	if (org === 'headway') {
+		return `[${repo}#${number}](${url})`;
+	}
+	return url;
 }
 
 function getLineCounts() {

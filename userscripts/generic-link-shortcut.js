@@ -35,6 +35,16 @@ function getPRLineCounts() {
     return '';
 }
 
+function formatPRTitle(title) {
+  const jiraMatch = title.match(/^\[([A-Z]+-\d+)\]\s*/);
+  if (jiraMatch) {
+    const ticketId = jiraMatch[1];
+    const rest = title.slice(jiraMatch[0].length);
+    return `[${ticketId}](https://findheadway.atlassian.net/browse/${ticketId}) \`${rest}\``;
+  }
+  return `\`${title}\``;
+}
+
 function colorChangeFeedback(element) {
   const oldColor = element.style.color;
   setTimeout(function() {
@@ -68,9 +78,12 @@ function main() {
     ];
     const titleElement = titleSelectors.reduce((el, sel) => el || document.querySelector(sel), null);
     const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
-    const prShort = window.location.href.split('/').slice(3).join('/');
+    const url = window.location.href.replace(/\/(files|changes)(\/?|$).*/, '');
+    const [, org, repo, , number] = new URL(url).pathname.split('/');
+    const linkDisplayText = org === 'headway' ? `${repo}#${number}` : `${org}/${repo}#${number}`;
     const lineCounts = getPRLineCounts();
-    const text = `[${prShort}](${window.location.href}): \`${prTitle}\`${lineCounts ? ' ' + lineCounts : ''}`;
+    const formattedTitle = formatPRTitle(prTitle);
+    const text = `[${linkDisplayText}](${url}): ${formattedTitle}${lineCounts ? ' ' + lineCounts : ''}`;
     copyToClipboard(text);
     if (titleElement) colorChangeFeedback(titleElement);
   } else if(window.location.href.includes('atlassian.net')) {
