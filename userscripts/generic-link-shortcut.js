@@ -38,9 +38,10 @@ function getPRLineCounts() {
 function formatPRTitle(title) {
   const jiraMatch = title.match(/^\[([A-Z]+-\d+)\]\s*/);
   if (jiraMatch) {
-    const ticketId = jiraMatch[1];
+    // const ticketId = jiraMatch[1];
     const rest = title.slice(jiraMatch[0].length);
-    return `[${ticketId}](https://findheadway.atlassian.net/browse/${ticketId}) \`${rest}\``;
+    return `\`${rest}\``;
+    // return `[${ticketId}](https://findheadway.atlassian.net/browse/${ticketId}) \`${rest}\``;
   }
   return `\`${title}\``;
 }
@@ -61,6 +62,20 @@ function copyToClipboard(textToCopy) {
   GM_setClipboard(textToCopy, 'PR');
   console.log(`copied to clipboard: ${textToCopy}`);
 }
+
+function getEddyConvoLink() {
+  const descBody = document.querySelector('.comment-body');
+  if (!descBody) return '';
+  const links = descBody.querySelectorAll('a');
+  for (const link of links) {
+    if (link.textContent.trim() === 'Conversation' &&
+        link.closest('p, div, li')?.textContent.includes('Generated with')) {
+      return link.href;
+    }
+  }
+  return '';
+}
+
 
 function main() {
   if (window.location.href.includes('notion.so') || window.location.href.includes('notion.site')) {
@@ -83,7 +98,10 @@ function main() {
     const linkDisplayText = org === 'headway' ? `${repo}#${number}` : `${org}/${repo}#${number}`;
     const lineCounts = getPRLineCounts();
     const formattedTitle = formatPRTitle(prTitle);
-    const text = `[${linkDisplayText}](${url}): ${formattedTitle}${lineCounts ? ' ' + lineCounts : ''}`;
+    const eddyConvoUrl = getEddyConvoLink();
+    const eddyLink = eddyConvoUrl ? ` [(Eddy Convo)](${eddyConvoUrl})` : '';
+    const text = `[${linkDisplayText}](${url}): ${formattedTitle}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
+
     copyToClipboard(text);
     if (titleElement) colorChangeFeedback(titleElement);
   } else if(window.location.href.includes('atlassian.net')) {
@@ -108,6 +126,17 @@ function main() {
     const markdownUrl = `[${title}](${pageUrl})`;
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
+  } else if(window.location.href.includes('eddy.internal.headway.co/conversations/')) {
+    // Eddy conversation: title is in a rename button (desktop) or a span (read-only viewer)
+    const titleElement =
+      document.querySelector('button[aria-label="Click to rename"]') ||
+      document.querySelector('button[aria-label="Conversation options"] > span') ||
+      document.querySelector('header span.font-semibold');
+    const title = titleElement ? titleElement.textContent.trim() : document.title.trim();
+    const pageUrl = window.location.href;
+    const markdownUrl = `[Eddy: ${title}](${pageUrl})`;
+    copyToClipboard(markdownUrl);
+    if (titleElement) colorChangeFeedback(titleElement);
   } else {
     const title = document.title.trim();
     const pageUrl = window.location.href;
