@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Page title and URL to Markdown URL
-// @version      1
+// @version      3
 // @description  Copies the title and URL of the page to the clipboard in a markdown formatted URL
 // @match        http://*/*
 // @match        https://*/*
@@ -38,10 +38,8 @@ function getPRLineCounts() {
 function formatPRTitle(title) {
   const jiraMatch = title.match(/^\[([A-Z]+-\d+)\]\s*/);
   if (jiraMatch) {
-    // const ticketId = jiraMatch[1];
     const rest = title.slice(jiraMatch[0].length);
     return `\`${rest}\``;
-    // return `[${ticketId}](https://findheadway.atlassian.net/browse/${ticketId}) \`${rest}\``;
   }
   return `\`${title}\``;
 }
@@ -76,16 +74,16 @@ function getEddyConvoLink() {
   return '';
 }
 
-
 function main() {
-  if (window.location.href.includes('notion.so') || window.location.href.includes('notion.site')) {
+  const url = window.location.href;
+
+  if (url.includes('notion.so') || url.includes('notion.site')) {
     const titleElement = document.querySelectorAll('.notion-page-block > h1.notranslate')[0]
     const title = titleElement.textContent.trim();
-    const pageUrl = window.location.href;
-    const markdownUrl = `[${title}](${pageUrl})`;
+    const markdownUrl = `[${title}](${url})`;
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
-  } else if (window.location.href.includes('github.com')) {
+  } else if (url.includes('github.com')) {
     const titleSelectors = [
       'h1[data-component="PH_Title"] span',  // 2026 GitHub UI
       'bdi.markdown-title',                   // 2025 GitHub UI
@@ -93,57 +91,58 @@ function main() {
     ];
     const titleElement = titleSelectors.reduce((el, sel) => el || document.querySelector(sel), null);
     const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
-    const url = window.location.href.replace(/\/(files|changes)(\/?|$).*/, '');
-    const [, org, repo, , number] = new URL(url).pathname.split('/');
+    const cleanUrl = url.replace(/\/(files|changes)(\/?|$).*/, '');
+    const [, org, repo, , number] = new URL(cleanUrl).pathname.split('/');
     const linkDisplayText = org === 'headway' ? `${repo}#${number}` : `${org}/${repo}#${number}`;
     const lineCounts = getPRLineCounts();
     const formattedTitle = formatPRTitle(prTitle);
     const eddyConvoUrl = getEddyConvoLink();
     const eddyLink = eddyConvoUrl ? ` [(Eddy Convo)](${eddyConvoUrl})` : '';
-    const text = `[${linkDisplayText}](${url}): ${formattedTitle}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
+    const text = `[${linkDisplayText}](${cleanUrl}): ${formattedTitle}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
 
     copyToClipboard(text);
     if (titleElement) colorChangeFeedback(titleElement);
-  } else if(window.location.href.includes('atlassian.net')) {
+  } else if (url.includes('atlassian.net') && url.includes('/wiki/')) {
+    // Confluence page — title lives in a textarea inside the editor title container
+    const titleElement = document.querySelector('[data-testid="editor-title-container"] textarea');
+    const title = titleElement.value.trim();
+    const markdownUrl = `[${title}](${url})`;
+    copyToClipboard(markdownUrl);
+    colorChangeFeedback(titleElement);
+  } else if (url.includes('atlassian.net')) {
+    // Jira ticket
     const h1s = document.querySelectorAll('h1');
     if (h1s.length !== 1) {
       console.log(`expected 1 h1, found ${h1s.length}, aborting jira link shortcut creation.`);
       return;
     }
     const titleElement = h1s[0];
-    const jiraId = window.location.href.split('/').pop();
+    const jiraId = url.split('/').pop();
     const title = titleElement.textContent.trim();
 
-    const pageUrl = window.location.href;
-    const markdownUrl = `[${jiraId}](${pageUrl}): \`${title}\``;
+    const markdownUrl = `[${jiraId}](${url}): \`${title}\``;
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
-  } else if(window.location.href.includes('docs.google.com')) {
-    // You can't be in the doc body for the keyboard shortcut to work, so click on the header element first
+  } else if (url.includes('docs.google.com')) {
     const titleElement = document.querySelector('.docs-title-input-label-inner');
     const title = titleElement.textContent.trim();
-    const pageUrl = window.location.href;
-    const markdownUrl = `[${title}](${pageUrl})`;
+    const markdownUrl = `[${title}](${url})`;
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
-  } else if(window.location.href.includes('eddy.internal.headway.co/conversations/')) {
-    // Eddy conversation: title is in a rename button (desktop) or a span (read-only viewer)
+  } else if (url.includes('eddy.internal.headway.co/conversations/')) {
     const titleElement =
       document.querySelector('button[aria-label="Click to rename"]') ||
       document.querySelector('button[aria-label="Conversation options"] > span') ||
       document.querySelector('header span.font-semibold');
     const title = titleElement ? titleElement.textContent.trim() : document.title.trim();
-    const pageUrl = window.location.href;
-    const markdownUrl = `[Eddy: ${title}](${pageUrl})`;
+    const markdownUrl = `[Eddy: ${title}](${url})`;
     copyToClipboard(markdownUrl);
     if (titleElement) colorChangeFeedback(titleElement);
   } else {
     const title = document.title.trim();
-    const pageUrl = window.location.href;
-    const markdownUrl = `[${title}](${pageUrl})`;
+    const markdownUrl = `[${title}](${url})`;
     copyToClipboard(markdownUrl);
     const h1s = document.querySelectorAll('h1');
-    // filter out h1s that have no text content:
     const h1sWithText = Array.from(h1s).filter(h1 => h1.textContent.trim().length > 0);
     for (const h1 of h1sWithText) {
       colorChangeFeedback(h1);
