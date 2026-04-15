@@ -92,16 +92,15 @@ function main() {
     const titleElement = titleSelectors.reduce((el, sel) => el || document.querySelector(sel), null);
     const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
     const cleanUrl = url.replace(/\/(files|changes)(\/?|$).*/, '');
-    const [, org, repo, , number] = new URL(cleanUrl).pathname.split('/');
-    const linkDisplayText = org === 'headway' ? `${repo}#${number}` : `${org}/${repo}#${number}`;
-    const lineCounts = getPRLineCounts();
-    const formattedTitle = formatPRTitle(prTitle);
-    const eddyConvoUrl = getEddyConvoLink();
-    const eddyLink = eddyConvoUrl ? ` [(Eddy Convo)](${eddyConvoUrl})` : '';
-    const text = `[${linkDisplayText}](${cleanUrl}): ${formattedTitle}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
 
-    copyToClipboard(text);
-    if (titleElement) colorChangeFeedback(titleElement);
+    // If on files/changes page, redirect to summary and auto-copy after load
+    if (url !== cleanUrl) {
+      sessionStorage.setItem('pendingPRCopy', '1');
+      window.location.href = cleanUrl;
+      return;
+    }
+
+    githubCopy(titleElement, prTitle, cleanUrl);
   } else if (url.includes('atlassian.net') && url.includes('/wiki/')) {
     // Confluence page — title lives in a textarea inside the editor title container
     const titleElement = document.querySelector('[data-testid="editor-title-container"] textarea');
@@ -150,4 +149,32 @@ function main() {
   }
 }
 
+function githubCopy(titleElement, prTitle, cleanUrl) {
+  const [, org, repo, , number] = new URL(cleanUrl).pathname.split('/');
+  const linkDisplayText = org === 'headway' ? `${repo}#${number}` : `${org}/${repo}#${number}`;
+  const lineCounts = getPRLineCounts();
+  const formattedTitle = formatPRTitle(prTitle);
+  const eddyConvoUrl = getEddyConvoLink();
+  const eddyLink = eddyConvoUrl ? ` [(Eddy Convo)](${eddyConvoUrl})` : '';
+  const text = `[${linkDisplayText}](${cleanUrl}): ${formattedTitle}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
+
+  copyToClipboard(text);
+  if (titleElement) colorChangeFeedback(titleElement);
+}
+
 document.addEventListener('keydown', handleKeydown);
+
+if (sessionStorage.getItem('pendingPRCopy')) {
+  sessionStorage.removeItem('pendingPRCopy');
+  const url = window.location.href;
+  if (url.includes('github.com')) {
+    const titleSelectors = [
+      'h1[data-component="PH_Title"] span',
+      'bdi.markdown-title',
+      '.js-issue-title',
+    ];
+    const titleElement = titleSelectors.reduce((el, sel) => el || document.querySelector(sel), null);
+    const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
+    githubCopy(titleElement, prTitle, url);
+  }
+}
