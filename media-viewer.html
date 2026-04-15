@@ -49,14 +49,21 @@
     z-index: 50;
   }
 
-  #toolbar label { font-size: 13px; color: #aaa; }
-
-  #columns {
-    width: 140px;
-    accent-color: #6af;
+  .col-btn {
+    background: #333;
+    color: #ccc;
+    border: 1px solid #555;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
   }
 
-  #columns-val { font-size: 13px; color: #888; min-width: 24px; }
+  .col-btn:hover { background: #444; color: #fff; }
+
+  #columns-val { font-size: 13px; color: #888; min-width: 16px; text-align: center; }
 
   #file-count { font-size: 13px; color: #666; margin-left: auto; }
 
@@ -214,9 +221,9 @@
 </div>
 
 <div id="toolbar">
-  <label for="columns">Columns:</label>
-  <input type="range" id="columns" min="2" max="20" value="5">
+  <button class="col-btn" id="col-minus">&minus;</button>
   <span id="columns-val">5</span>
+  <button class="col-btn" id="col-plus">+</button>
   <span id="file-count"></span>
   <button id="change-folder-btn" style="background:#333;color:#ccc;border:1px solid #555;padding:3px 10px;border-radius:4px;font-size:13px;cursor:pointer;">Change folder</button>
 </div>
@@ -262,9 +269,9 @@ const dirInput   = document.getElementById('dir-input');
 const picker     = document.getElementById('picker');
 const toolbar    = document.getElementById('toolbar');
 const grid       = document.getElementById('grid');
-const columns    = document.getElementById('columns');
 const columnsVal = document.getElementById('columns-val');
 const fileCount  = document.getElementById('file-count');
+let colCount = 5;
 
 function loadFiles(fileList) {
   const files = Array.from(fileList)
@@ -295,12 +302,12 @@ dirInput.addEventListener('change', () => loadFiles(dirInput.files));
 
 // --- configurable columns ---
 
-columns.addEventListener('input', applyColumns);
+document.getElementById('col-minus').addEventListener('click', () => { if (colCount > 1) { colCount--; applyColumns(); } });
+document.getElementById('col-plus').addEventListener('click', () => { colCount++; applyColumns(); });
 
 function applyColumns() {
-  const cols = parseInt(columns.value, 10);
-  columnsVal.textContent = cols;
-  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  columnsVal.textContent = colCount;
+  grid.style.gridTemplateColumns = `repeat(${colCount}, 1fr)`;
 }
 
 // --- grid ---
