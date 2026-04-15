@@ -230,7 +230,7 @@
 <div id="picker">
   <button id="pick-btn">Choose media folder</button>
   <p>Supports jpg, png, gif, webp, bmp, mp4, webm, mov, avi, mkv, ogv</p>
-  <p id="picker-status" style="color:#666; font-size:13px;"></p>
+  <input type="file" id="dir-input" webkitdirectory multiple hidden>
 </div>
 
 <div id="toolbar">
@@ -276,65 +276,23 @@ let items = [];
 let current = -1;
 let fitMode = 'fit'; // 'fit' or 'fill'
 
-// --- IndexedDB for persisting directory handle ---
-
-function openDB() {
-  return new Promise((resolve, reject) => {
-    const req = indexedDB.open('media-viewer', 1);
-    req.onupgradeneeded = () => req.result.createObjectStore('state');
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
-  });
-}
-
-async function saveHandle(handle) {
-  const db = await openDB();
-  const tx = db.transaction('state', 'readwrite');
-  tx.objectStore('state').put(handle, 'dirHandle');
-  return new Promise((resolve, reject) => {
-    tx.oncomplete = resolve;
-    tx.onerror = () => reject(tx.error);
-  });
-}
-
-async function loadHandle() {
-  const db = await openDB();
-  const tx = db.transaction('state', 'readonly');
-  const req = tx.objectStore('state').get('dirHandle');
-  return new Promise((resolve, reject) => {
-    req.onsuccess = () => resolve(req.result || null);
-    req.onerror = () => reject(req.error);
-  });
-}
-
 // --- elements ---
 
-const pickBtn      = document.getElementById('pick-btn');
-const pickerStatus = document.getElementById('picker-status');
-const picker       = document.getElementById('picker');
-const toolbar      = document.getElementById('toolbar');
-const grid         = document.getElementById('grid');
-const density      = document.getElementById('density');
-const fileCount    = document.getElementById('file-count');
+const pickBtn    = document.getElementById('pick-btn');
+const dirInput   = document.getElementById('dir-input');
+const picker     = document.getElementById('picker');
+const toolbar    = document.getElementById('toolbar');
+const grid       = document.getElementById('grid');
+const density    = document.getElementById('density');
+const fileCount  = document.getElementById('file-count');
 
-async function pickFolder() {
-  const handle = await window.showDirectoryPicker();
-  await saveHandle(handle);
-  await loadFromHandle(handle);
-}
-
-async function loadFromHandle(handle) {
-  const files = [];
-  for await (const entry of handle.values()) {
-    if (entry.kind !== 'file' || !mediaType(entry.name)) continue;
-    const file = await entry.getFile();
-    files.push(file);
-  }
-  files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+function loadFiles(fileList) {
+  const files = Array.from(fileList)
+    .filter(f => mediaType(f.name))
+    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
 
   if (!files.length) { alert('No supported media files found.'); return; }
 
-  // revoke old URLs
   items.forEach(it => URL.revokeObjectURL(it.url));
 
   items = files.map(f => ({
@@ -351,22 +309,9 @@ async function loadFromHandle(handle) {
   buildGrid();
 }
 
-pickBtn.addEventListener('click', pickFolder);
-document.getElementById('change-folder-btn').addEventListener('click', pickFolder);
-
-// --- auto-load last folder on page load ---
-
-(async () => {
-  const handle = await loadHandle().catch(() => null);
-  if (!handle) return;
-  pickerStatus.textContent = 'Restoring last folder...';
-  const perm = await handle.requestPermission({ mode: 'read' }).catch(() => 'denied');
-  if (perm !== 'granted') {
-    pickerStatus.textContent = 'Permission denied — click button to pick again.';
-    return;
-  }
-  await loadFromHandle(handle);
-})();
+pickBtn.addEventListener('click', () => dirInput.click());
+document.getElementById('change-folder-btn').addEventListener('click', () => dirInput.click());
+dirInput.addEventListener('change', () => loadFiles(dirInput.files));
 
 // --- preview mode cycling ---
 
