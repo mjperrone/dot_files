@@ -68,7 +68,7 @@
     display: none;
     padding: 12px;
     gap: 8px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(5, 1fr);
   }
 
   .thumb {
@@ -219,14 +219,13 @@
 </div>
 
 <div id="toolbar">
-  <label for="show-count">Show:</label>
-  <select id="show-count">
-    <option value="0" selected>All</option>
-    <option value="20">20</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-    <option value="200">200</option>
-    <option value="500">500</option>
+  <label for="density">Density:</label>
+  <select id="density">
+    <option value="12">Small</option>
+    <option value="24" selected>Medium</option>
+    <option value="48">Dense</option>
+    <option value="80">Very dense</option>
+    <option value="150">Max</option>
   </select>
   <span id="file-count"></span>
 </div>
@@ -261,8 +260,7 @@ function mediaType(name) {
   return null;
 }
 
-let allItems = [];  // full sorted list
-let items = [];     // currently visible subset (for grid + lightbox nav)
+let items = [];
 let current = -1;
 let fitMode = 'fit'; // 'fit' or 'fill'
 
@@ -273,7 +271,7 @@ const dirInput   = document.getElementById('dir-input');
 const picker     = document.getElementById('picker');
 const toolbar    = document.getElementById('toolbar');
 const grid       = document.getElementById('grid');
-const showCount  = document.getElementById('show-count');
+const density    = document.getElementById('density');
 const fileCount  = document.getElementById('file-count');
 
 pickBtn.addEventListener('click', () => dirInput.click());
@@ -285,7 +283,7 @@ dirInput.addEventListener('change', () => {
 
   if (!files.length) { alert('No supported media files found.'); return; }
 
-  allItems = files.map(f => ({
+  items = files.map(f => ({
     file: f,
     url: URL.createObjectURL(f),
     type: mediaType(f.name),
@@ -294,20 +292,24 @@ dirInput.addEventListener('change', () => {
   picker.style.display = 'none';
   toolbar.style.display = 'flex';
   grid.style.display = 'grid';
-  applyLimit();
+  fileCount.textContent = `${items.length} files`;
+  applyDensity();
+  buildGrid();
 });
 
-// --- configurable count ---
+// --- configurable density ---
 
-showCount.addEventListener('change', applyLimit);
+density.addEventListener('change', applyDensity);
+window.addEventListener('resize', () => { if (items.length) applyDensity(); });
 
-function applyLimit() {
-  const limit = parseInt(showCount.value, 10);
-  items = limit > 0 ? allItems.slice(0, limit) : allItems.slice();
-  fileCount.textContent = items.length === allItems.length
-    ? `${allItems.length} files`
-    : `${items.length} of ${allItems.length} files`;
-  buildGrid();
+function applyDensity() {
+  const target = parseInt(density.value, 10);
+  // compute columns so that ~target items fit in the viewport
+  const vw = window.innerWidth;
+  const vh = window.innerHeight - 45; // subtract toolbar height
+  const aspect = vw / vh;
+  const cols = Math.max(2, Math.round(Math.sqrt(target * aspect)));
+  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 }
 
 // --- grid ---
