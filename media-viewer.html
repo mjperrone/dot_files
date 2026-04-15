@@ -58,6 +58,18 @@
 
   #density-val { font-size: 13px; color: #888; min-width: 24px; }
 
+  #preview-mode-btn {
+    background: #333;
+    color: #ccc;
+    border: 1px solid #555;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  #preview-mode-btn:hover { background: #444; color: #fff; }
+
   #file-count { font-size: 13px; color: #666; margin-left: auto; }
 
   /* ---------- grid ---------- */
@@ -78,11 +90,18 @@
     background: #222;
   }
 
-  .thumb img, .thumb canvas {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
+  .thumb img, .thumb canvas { display: block; }
+
+  #grid.preview-contain .thumb img, #grid.preview-contain .thumb canvas {
+    width: 100%; height: 100%; object-fit: contain;
+  }
+
+  #grid.preview-cover .thumb img, #grid.preview-cover .thumb canvas {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  #grid.preview-stretch .thumb img, #grid.preview-stretch .thumb canvas {
+    width: 100%; height: 100%; object-fit: fill;
   }
 
   .thumb:hover { outline: 2px solid #6af; outline-offset: -2px; }
@@ -220,10 +239,11 @@
   <label for="density">Density:</label>
   <input type="range" id="density" min="4" max="200" value="24">
   <span id="density-val">24</span>
+  <button id="preview-mode-btn">Contain</button>
   <span id="file-count"></span>
 </div>
 
-<div id="grid"></div>
+<div id="grid" class="preview-contain"></div>
 
 <div id="lightbox">
   <div id="lb-top">
@@ -288,6 +308,21 @@ dirInput.addEventListener('change', () => {
   fileCount.textContent = `${items.length} files`;
   applyDensity();
   buildGrid();
+});
+
+// --- preview mode cycling ---
+
+const previewModes = ['contain', 'cover', 'stretch'];
+const previewLabels = { contain: 'Contain', cover: 'Cover', stretch: 'Stretch' };
+let previewModeIdx = 0;
+const previewBtn = document.getElementById('preview-mode-btn');
+
+previewBtn.addEventListener('click', () => {
+  previewModeIdx = (previewModeIdx + 1) % previewModes.length;
+  const mode = previewModes[previewModeIdx];
+  grid.className = `preview-${mode}`;
+  grid.style.display = 'grid';
+  previewBtn.textContent = previewLabels[mode];
 });
 
 // --- configurable density ---
