@@ -51,14 +51,12 @@
 
   #toolbar label { font-size: 13px; color: #aaa; }
 
-  #toolbar select {
-    background: #333;
-    color: #eee;
-    border: 1px solid #555;
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 13px;
+  #density {
+    width: 140px;
+    accent-color: #6af;
   }
+
+  #density-val { font-size: 13px; color: #888; min-width: 24px; }
 
   #file-count { font-size: 13px; color: #666; margin-left: auto; }
 
@@ -220,13 +218,8 @@
 
 <div id="toolbar">
   <label for="density">Density:</label>
-  <select id="density">
-    <option value="12">Small</option>
-    <option value="24" selected>Medium</option>
-    <option value="48">Dense</option>
-    <option value="80">Very dense</option>
-    <option value="150">Max</option>
-  </select>
+  <input type="range" id="density" min="4" max="200" value="24">
+  <span id="density-val">24</span>
   <span id="file-count"></span>
 </div>
 
@@ -299,11 +292,13 @@ dirInput.addEventListener('change', () => {
 
 // --- configurable density ---
 
-density.addEventListener('change', applyDensity);
+const densityVal = document.getElementById('density-val');
+density.addEventListener('input', applyDensity);
 window.addEventListener('resize', () => { if (items.length) applyDensity(); });
 
 function applyDensity() {
   const target = parseInt(density.value, 10);
+  densityVal.textContent = target;
   // compute columns so that ~target items fit in the viewport
   const vw = window.innerWidth;
   const vh = window.innerHeight - 45; // subtract toolbar height
