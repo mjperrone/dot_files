@@ -1,0 +1,23 @@
+media-viewer.html
+  7f3b063b5b0624fd 305-306
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "19d37cffb3ced7ea7aa758830516f5f1e3f1f571",
+  "prompts": {
+    "7f3b063b5b0624fd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "646bf647-4f61-45c4-ba1b-ae9ee0b749f4",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Mike Perrone",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
