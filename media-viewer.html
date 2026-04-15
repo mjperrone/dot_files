@@ -302,8 +302,8 @@ dirInput.addEventListener('change', () => loadFiles(dirInput.files));
 
 // --- configurable columns ---
 
-document.getElementById('col-minus').addEventListener('click', () => { if (colCount > 1) { colCount--; applyColumns(); } });
-document.getElementById('col-plus').addEventListener('click', () => { colCount++; applyColumns(); });
+document.getElementById('col-minus').addEventListener('click', () => { colCount++; applyColumns(); });
+document.getElementById('col-plus').addEventListener('click', () => { if (colCount > 1) { colCount--; applyColumns(); } });
 
 function applyColumns() {
   columnsVal.textContent = colCount;
