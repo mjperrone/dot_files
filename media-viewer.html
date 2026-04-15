@@ -416,6 +416,8 @@ document.getElementById('lb-close').addEventListener('click', closeLightbox);
 
 // keyboard
 document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowUp')   { if (colCount > 1) { colCount--; applyColumns(); } e.preventDefault(); return; }
+  if (e.key === 'ArrowDown') { colCount++; applyColumns(); e.preventDefault(); return; }
   if (current === -1) return;
   if (e.key === 'ArrowLeft')  { navigate(-1); e.preventDefault(); }
   if (e.key === 'ArrowRight') { navigate(1);  e.preventDefault(); }
