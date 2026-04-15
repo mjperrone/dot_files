@@ -51,24 +51,12 @@
 
   #toolbar label { font-size: 13px; color: #aaa; }
 
-  #density {
+  #columns {
     width: 140px;
     accent-color: #6af;
   }
 
-  #density-val { font-size: 13px; color: #888; min-width: 24px; }
-
-  #preview-mode-btn {
-    background: #333;
-    color: #ccc;
-    border: 1px solid #555;
-    padding: 3px 10px;
-    border-radius: 4px;
-    font-size: 13px;
-    cursor: pointer;
-  }
-
-  #preview-mode-btn:hover { background: #444; color: #fff; }
+  #columns-val { font-size: 13px; color: #888; min-width: 24px; }
 
   #file-count { font-size: 13px; color: #666; margin-left: auto; }
 
@@ -90,16 +78,8 @@
     background: #222;
   }
 
-  .thumb img, .thumb canvas { display: block; }
-
-  #grid.preview-cover .thumb { aspect-ratio: 1; }
-  #grid.preview-cover .thumb img, #grid.preview-cover .thumb canvas {
-    width: 100%; height: 100%; object-fit: cover;
-  }
-
-  #grid.preview-natural .thumb { aspect-ratio: auto; }
-  #grid.preview-natural .thumb img, #grid.preview-natural .thumb canvas {
-    width: 100%; height: auto; object-fit: contain;
+  .thumb img, .thumb canvas {
+    width: 100%; height: 100%; object-fit: cover; display: block;
   }
 
   .thumb:hover { outline: 2px solid #6af; outline-offset: -2px; }
@@ -234,15 +214,14 @@
 </div>
 
 <div id="toolbar">
-  <label for="density">Density:</label>
-  <input type="range" id="density" min="4" max="200" value="24">
-  <span id="density-val">24</span>
-  <button id="preview-mode-btn">Cover</button>
+  <label for="columns">Columns:</label>
+  <input type="range" id="columns" min="2" max="20" value="5">
+  <span id="columns-val">5</span>
   <span id="file-count"></span>
   <button id="change-folder-btn" style="background:#333;color:#ccc;border:1px solid #555;padding:3px 10px;border-radius:4px;font-size:13px;cursor:pointer;">Change folder</button>
 </div>
 
-<div id="grid" class="preview-cover"></div>
+<div id="grid"></div>
 
 <div id="lightbox">
   <div id="lb-top">
@@ -283,7 +262,8 @@ const dirInput   = document.getElementById('dir-input');
 const picker     = document.getElementById('picker');
 const toolbar    = document.getElementById('toolbar');
 const grid       = document.getElementById('grid');
-const density    = document.getElementById('density');
+const columns    = document.getElementById('columns');
+const columnsVal = document.getElementById('columns-val');
 const fileCount  = document.getElementById('file-count');
 
 function loadFiles(fileList) {
@@ -305,7 +285,7 @@ function loadFiles(fileList) {
   toolbar.style.display = 'flex';
   grid.style.display = 'grid';
   fileCount.textContent = `${items.length} files`;
-  applyDensity();
+  applyColumns();
   buildGrid();
 }
 
@@ -313,32 +293,13 @@ pickBtn.addEventListener('click', () => dirInput.click());
 document.getElementById('change-folder-btn').addEventListener('click', () => dirInput.click());
 dirInput.addEventListener('change', () => loadFiles(dirInput.files));
 
-// --- preview mode cycling ---
+// --- configurable columns ---
 
-let previewMode = 'cover';
-const previewBtn = document.getElementById('preview-mode-btn');
+columns.addEventListener('input', applyColumns);
 
-previewBtn.addEventListener('click', () => {
-  previewMode = previewMode === 'cover' ? 'natural' : 'cover';
-  grid.className = `preview-${previewMode}`;
-  grid.style.display = 'grid';
-  previewBtn.textContent = previewMode === 'cover' ? 'Cover' : 'Natural';
-});
-
-// --- configurable density ---
-
-const densityVal = document.getElementById('density-val');
-density.addEventListener('input', applyDensity);
-window.addEventListener('resize', () => { if (items.length) applyDensity(); });
-
-function applyDensity() {
-  const target = parseInt(density.value, 10);
-  densityVal.textContent = target;
-  // compute columns so that ~target items fit in the viewport
-  const vw = window.innerWidth;
-  const vh = window.innerHeight - 45; // subtract toolbar height
-  const aspect = vw / vh;
-  const cols = Math.max(2, Math.round(Math.sqrt(target * aspect)));
+function applyColumns() {
+  const cols = parseInt(columns.value, 10);
+  columnsVal.textContent = cols;
   grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 }
 
