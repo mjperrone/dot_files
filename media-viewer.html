@@ -33,8 +33,34 @@
   }
 
   #picker button:hover { background: #444; border-color: #888; }
-
   #picker p { color: #888; font-size: 14px; }
+
+  /* ---------- toolbar ---------- */
+
+  #toolbar {
+    display: none;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    background: #222;
+    border-bottom: 1px solid #333;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  #toolbar label { font-size: 13px; color: #aaa; }
+
+  #toolbar select {
+    background: #333;
+    color: #eee;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+
+  #file-count { font-size: 13px; color: #666; margin-left: auto; }
 
   /* ---------- grid ---------- */
 
@@ -42,7 +68,6 @@
     display: none;
     padding: 12px;
     gap: 8px;
-    display: none;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 
@@ -60,19 +85,6 @@
     height: 100%;
     object-fit: cover;
     display: block;
-  }
-
-  .thumb .badge {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    background: rgba(0,0,0,.7);
-    color: #ccc;
-    font-size: 11px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    pointer-events: none;
   }
 
   .thumb:hover { outline: 2px solid #6af; outline-offset: -2px; }
@@ -99,10 +111,18 @@
     height: 100%;
   }
 
-  #lightbox img, #lightbox video {
+  #lightbox .media-wrap.fit img,
+  #lightbox .media-wrap.fit video {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+  }
+
+  #lightbox .media-wrap.fill img,
+  #lightbox .media-wrap.fill video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   /* click zones */
@@ -111,18 +131,56 @@
     top: 0;
     bottom: 0;
     z-index: 10;
-    cursor: pointer;
   }
 
   .zone-left  { left: 0; width: 33.33%; cursor: w-resize; }
   .zone-right { right: 0; width: 33.33%; cursor: e-resize; }
 
-  /* close button */
+  /* top bar */
+  #lb-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    gap: 16px;
+    pointer-events: none;
+  }
+
+  #lb-top > * { pointer-events: auto; }
+
+  #lb-filename {
+    background: rgba(0,0,0,.55);
+    padding: 4px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    color: #aaa;
+    max-width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #lb-mode-toggle {
+    background: rgba(0,0,0,.6);
+    color: #ccc;
+    border: 1px solid rgba(255,255,255,.15);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  #lb-mode-toggle:hover { background: rgba(255,255,255,.15); color: #fff; }
+
   #lb-close {
     position: absolute;
-    top: 12px;
     right: 16px;
-    z-index: 20;
     background: rgba(0,0,0,.6);
     color: #ccc;
     border: none;
@@ -150,25 +208,6 @@
     color: #aaa;
     pointer-events: none;
   }
-
-  /* filename */
-  #lb-filename {
-    position: absolute;
-    top: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 20;
-    background: rgba(0,0,0,.55);
-    padding: 4px 14px;
-    border-radius: 12px;
-    font-size: 13px;
-    color: #aaa;
-    pointer-events: none;
-    max-width: 70%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 </style>
 </head>
 <body>
@@ -179,14 +218,30 @@
   <input type="file" id="dir-input" webkitdirectory multiple hidden>
 </div>
 
+<div id="toolbar">
+  <label for="show-count">Show:</label>
+  <select id="show-count">
+    <option value="0" selected>All</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    <option value="200">200</option>
+    <option value="500">500</option>
+  </select>
+  <span id="file-count"></span>
+</div>
+
 <div id="grid"></div>
 
 <div id="lightbox">
-  <button id="lb-close">&times;</button>
-  <div id="lb-filename"></div>
+  <div id="lb-top">
+    <span id="lb-filename"></span>
+    <button id="lb-mode-toggle">Fill</button>
+    <button id="lb-close">&times;</button>
+  </div>
   <div class="zone zone-left" id="zone-left"></div>
   <div class="zone zone-right" id="zone-right"></div>
-  <div class="media-wrap" id="media-wrap"></div>
+  <div class="media-wrap fit" id="media-wrap"></div>
   <div id="lb-counter"></div>
 </div>
 
@@ -206,15 +261,20 @@ function mediaType(name) {
   return null;
 }
 
-let items = [];   // { file, url, type, thumbUrl? }
+let allItems = [];  // full sorted list
+let items = [];     // currently visible subset (for grid + lightbox nav)
 let current = -1;
+let fitMode = 'fit'; // 'fit' or 'fill'
 
-// --- directory picker ---
+// --- elements ---
 
-const pickBtn  = document.getElementById('pick-btn');
-const dirInput = document.getElementById('dir-input');
-const picker   = document.getElementById('picker');
-const grid     = document.getElementById('grid');
+const pickBtn    = document.getElementById('pick-btn');
+const dirInput   = document.getElementById('dir-input');
+const picker     = document.getElementById('picker');
+const toolbar    = document.getElementById('toolbar');
+const grid       = document.getElementById('grid');
+const showCount  = document.getElementById('show-count');
+const fileCount  = document.getElementById('file-count');
 
 pickBtn.addEventListener('click', () => dirInput.click());
 
@@ -225,16 +285,30 @@ dirInput.addEventListener('change', () => {
 
   if (!files.length) { alert('No supported media files found.'); return; }
 
-  items = files.map(f => ({
+  allItems = files.map(f => ({
     file: f,
     url: URL.createObjectURL(f),
     type: mediaType(f.name),
   }));
 
   picker.style.display = 'none';
+  toolbar.style.display = 'flex';
   grid.style.display = 'grid';
-  buildGrid();
+  applyLimit();
 });
+
+// --- configurable count ---
+
+showCount.addEventListener('change', applyLimit);
+
+function applyLimit() {
+  const limit = parseInt(showCount.value, 10);
+  items = limit > 0 ? allItems.slice(0, limit) : allItems.slice();
+  fileCount.textContent = items.length === allItems.length
+    ? `${allItems.length} files`
+    : `${items.length} of ${allItems.length} files`;
+  buildGrid();
+}
 
 // --- grid ---
 
@@ -251,16 +325,10 @@ function buildGrid() {
       img.loading = 'lazy';
       cell.appendChild(img);
     } else {
-      // video: grab a frame via canvas
       const canvas = document.createElement('canvas');
       cell.appendChild(canvas);
       grabVideoThumb(item.url, canvas);
     }
-
-    const badge = document.createElement('span');
-    badge.className = 'badge';
-    badge.textContent = ext(item.file.name);
-    cell.appendChild(badge);
 
     grid.appendChild(cell);
   });
@@ -283,10 +351,11 @@ function grabVideoThumb(url, canvas) {
 
 // --- lightbox ---
 
-const lightbox  = document.getElementById('lightbox');
-const mediaWrap = document.getElementById('media-wrap');
-const lbCounter = document.getElementById('lb-counter');
-const lbName    = document.getElementById('lb-filename');
+const lightbox    = document.getElementById('lightbox');
+const mediaWrap   = document.getElementById('media-wrap');
+const lbCounter   = document.getElementById('lb-counter');
+const lbName      = document.getElementById('lb-filename');
+const modeToggle  = document.getElementById('lb-mode-toggle');
 
 function openLightbox(index) {
   current = index;
@@ -327,6 +396,19 @@ function navigate(delta) {
   showItem();
 }
 
+// --- fit/fill toggle ---
+
+function setMode(mode) {
+  fitMode = mode;
+  mediaWrap.classList.remove('fit', 'fill');
+  mediaWrap.classList.add(mode);
+  modeToggle.textContent = mode === 'fit' ? 'Fill' : 'Fit';
+}
+
+modeToggle.addEventListener('click', () => {
+  setMode(fitMode === 'fit' ? 'fill' : 'fit');
+});
+
 // click zones
 document.getElementById('zone-left').addEventListener('click', () => navigate(-1));
 document.getElementById('zone-right').addEventListener('click', () => navigate(1));
@@ -338,6 +420,11 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft')  { navigate(-1); e.preventDefault(); }
   if (e.key === 'ArrowRight') { navigate(1);  e.preventDefault(); }
   if (e.key === 'Escape')     { closeLightbox(); e.preventDefault(); }
+  if (e.key === 'f')          { setMode(fitMode === 'fit' ? 'fill' : 'fit'); }
+  if (e.key === 'm') {
+    const vid = mediaWrap.querySelector('video');
+    if (vid) vid.muted = !vid.muted;
+  }
 });
 </script>
 </body>
