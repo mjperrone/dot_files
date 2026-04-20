@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Page title and URL to Markdown URL
-// @version      3
+// @version      4
 // @description  Copies the title and URL of the page to the clipboard in a markdown formatted URL
 // @match        http://*/*
 // @match        https://*/*
 // @grant        GM_setClipboard
+// @run-at       document-start
 // ==/UserScript==
 
 const SHORTCUT = {
@@ -16,19 +17,24 @@ function handleKeydown(event) {
   if (event.ctrlKey === SHORTCUT.ctrlKey &&
       event.shiftKey === SHORTCUT.shiftKey &&
       event.code === SHORTCUT.code) {
+      console.log('[link-shortcut] shortcut captured on', window.location.href);
       main();
   }
 }
 
 function getPRLineCounts() {
     let added = 0, removed = 0;
-    for (const el of document.querySelectorAll('.sr-only')) {
+    let matchCount = 0;
+    const srOnlyEls = document.querySelectorAll('.sr-only');
+    for (const el of srOnlyEls) {
         const match = el.textContent.match(/(\d+) additions? & (\d+) deletions?/);
         if (match) {
+            matchCount++;
             added += parseInt(match[1], 10);
             removed += parseInt(match[2], 10);
         }
     }
+    console.log(`[link-shortcut] line counts: scanned ${srOnlyEls.length} .sr-only els, matched ${matchCount}, added=${added} removed=${removed}`);
     if (added && removed) return `(+${added}/-${removed})`;
     if (added) return `(+${added})`;
     if (removed) return `(-${removed})`;
@@ -58,7 +64,7 @@ function colorChangeFeedback(element) {
 
 function copyToClipboard(textToCopy) {
   GM_setClipboard(textToCopy, 'PR');
-  console.log(`copied to clipboard: ${textToCopy}`);
+  console.log(`[link-shortcut] copied to clipboard: ${textToCopy}`);
 }
 
 function getEddyConvoLink() {
@@ -89,12 +95,15 @@ function main() {
       'bdi.markdown-title',                   // 2025 GitHub UI
       '.js-issue-title',                      // legacy
     ];
-    const titleElement = titleSelectors.reduce((el, sel) => el || document.querySelector(sel), null);
+    const matchedSelector = titleSelectors.find(sel => document.querySelector(sel));
+    const titleElement = matchedSelector ? document.querySelector(matchedSelector) : null;
+    console.log(`[link-shortcut] github title selector matched: ${matchedSelector || 'NONE (falling back to document.title)'}`);
     const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
     const cleanUrl = url.replace(/\/(files|changes)(\/?|$).*/, '');
 
     // If on files/changes page, redirect to summary and auto-copy after load
     if (url !== cleanUrl) {
+      console.log(`[link-shortcut] redirecting to summary page: ${cleanUrl}`);
       sessionStorage.setItem('pendingPRCopy', '1');
       window.location.href = cleanUrl;
       return;
@@ -158,23 +167,34 @@ function githubCopy(titleElement, prTitle, cleanUrl) {
   const eddyLink = eddyConvoUrl ? ` [(Eddy Convo)](${eddyConvoUrl})` : '';
   const text = `[${linkDisplayText}](${cleanUrl}): ${formattedTitle}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
 
+  console.log(`[link-shortcut] githubCopy: title="${prTitle}" lineCounts="${lineCounts}" eddy="${eddyConvoUrl || 'none'}"`);
   copyToClipboard(text);
   if (titleElement) colorChangeFeedback(titleElement);
 }
 
-document.addEventListener('keydown', handleKeydown);
+console.log('[link-shortcut] loaded on', window.location.href, 'readyState=', document.readyState);
+window.addEventListener('keydown', handleKeydown, { capture: true });
 
-if (sessionStorage.getItem('pendingPRCopy')) {
+function runPendingPRCopy() {
+  if (!sessionStorage.getItem('pendingPRCopy')) return;
+  console.log('[link-shortcut] pendingPRCopy flag found, auto-copying after redirect');
   sessionStorage.removeItem('pendingPRCopy');
   const url = window.location.href;
-  if (url.includes('github.com')) {
-    const titleSelectors = [
-      'h1[data-component="PH_Title"] span',
-      'bdi.markdown-title',
-      '.js-issue-title',
-    ];
-    const titleElement = titleSelectors.reduce((el, sel) => el || document.querySelector(sel), null);
-    const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
-    githubCopy(titleElement, prTitle, url);
-  }
+  if (!url.includes('github.com')) return;
+  const titleSelectors = [
+    'h1[data-component="PH_Title"] span',
+    'bdi.markdown-title',
+    '.js-issue-title',
+  ];
+  const matchedSelector = titleSelectors.find(sel => document.querySelector(sel));
+  const titleElement = matchedSelector ? document.querySelector(matchedSelector) : null;
+  console.log(`[link-shortcut] post-redirect github title selector matched: ${matchedSelector || 'NONE'}`);
+  const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
+  githubCopy(titleElement, prTitle, url);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', runPendingPRCopy, { once: true });
+} else {
+  runPendingPRCopy();
 }
