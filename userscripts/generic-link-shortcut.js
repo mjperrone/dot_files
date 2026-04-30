@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Page title and URL to Markdown URL
-// @version      4
+// @version      6
 // @description  Copies the title and URL of the page to the clipboard in a markdown formatted URL
 // @match        http://*/*
 // @match        https://*/*
@@ -13,6 +13,12 @@ const SHORTCUT = {
   shiftKey: true,
   code: 'KeyC'
 };
+
+/** Backslash-escape [] and () so titles are safe inside Markdown [text](url) link text. */
+function escapeMarkdownLinkTitle(text) {
+  return text.replace(/[\[\]()]/g, '\\$&');
+}
+
 function handleKeydown(event) {
   if (event.ctrlKey === SHORTCUT.ctrlKey &&
       event.shiftKey === SHORTCUT.shiftKey &&
@@ -80,13 +86,78 @@ function getEddyConvoLink() {
   return '';
 }
 
+function isLinearAppUrl(url) {
+  try {
+    const { hostname } = new URL(url);
+    return hostname === 'linear.app';
+  } catch {
+    return false;
+  }
+}
+
+/** Path segment immediately after `segment` (e.g. "issue", "project"). */
+function linearPathSegmentAfter(url, segment) {
+  try {
+    const parts = new URL(url).pathname.split('/').filter(Boolean);
+    const i = parts.indexOf(segment);
+    return i >= 0 ? (parts[i + 1] || '') : '';
+  } catch {
+    return '';
+  }
+}
+
+function linearTitleFromDocumentTitle() {
+  return document.title
+    .replace(/\s*[·•]\s*Linear.*$/i, '')
+    .replace(/\s*\|\s*Linear.*$/i, '')
+    .trim();
+}
+
+function getLinearTitleElement() {
+  const selectors = ['main h1', '[role="main"] h1', 'article h1'];
+  for (const sel of selectors) {
+    const el = document.querySelector(sel);
+    if (!el) continue;
+    const text = (el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement
+      ? el.value
+      : el.textContent).trim();
+    if (text) return el;
+  }
+  const h1s = document.querySelectorAll('h1');
+  for (const h1 of h1s) {
+    const t = h1.textContent.trim();
+    if (t.length > 0 && t.length < 500) return h1;
+  }
+  return null;
+}
+
+function linearTitleText(titleElement) {
+  if (!titleElement) return linearTitleFromDocumentTitle();
+  if (titleElement instanceof HTMLTextAreaElement || titleElement instanceof HTMLInputElement) {
+    return titleElement.value.trim();
+  }
+  return titleElement.textContent.trim();
+}
+
+/** Human issue id (e.g. ENG-123) from URL path or leading document title. */
+function linearIssueDisplayId(url) {
+  const fromPath = linearPathSegmentAfter(url, 'issue');
+  if (/^[A-Z]{2,10}-\d+$/i.test(fromPath)) return fromPath;
+  const fromTitle = document.title.match(/^([A-Z]{2,10}-\d+)\b/);
+  if (fromTitle) return fromTitle[1];
+  if (fromPath && !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(fromPath)) {
+    return fromPath;
+  }
+  return '';
+}
+
 function main() {
   const url = window.location.href;
 
   if (url.includes('notion.so') || url.includes('notion.site')) {
     const titleElement = document.querySelectorAll('.notion-page-block > h1.notranslate')[0]
     const title = titleElement.textContent.trim();
-    const markdownUrl = `[${title}](${url})`;
+    const markdownUrl = `[${escapeMarkdownLinkTitle(title)}](${url})`;
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
   } else if (url.includes('github.com')) {
@@ -114,7 +185,7 @@ function main() {
     // Confluence page — title lives in a textarea inside the editor title container
     const titleElement = document.querySelector('[data-testid="editor-title-container"] textarea');
     const title = titleElement.value.trim();
-    const markdownUrl = `[${title}](${url})`;
+    const markdownUrl = `[${escapeMarkdownLinkTitle(title)}](${url})`;
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
   } else if (url.includes('atlassian.net')) {
@@ -131,10 +202,25 @@ function main() {
     const markdownUrl = `[${jiraId}](${url}): \`${title}\``;
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
+  } else if (isLinearAppUrl(url) && url.includes('/issue/')) {
+    const titleElement = getLinearTitleElement();
+    const title = linearTitleText(titleElement);
+    const issueId = linearIssueDisplayId(url);
+    const markdownUrl = issueId
+      ? `[${issueId}](${url}): \`${title}\``
+      : `[${escapeMarkdownLinkTitle(title)}](${url})`;
+    copyToClipboard(markdownUrl);
+    if (titleElement) colorChangeFeedback(titleElement);
+  } else if (isLinearAppUrl(url) && url.includes('/project/')) {
+    const titleElement = getLinearTitleElement();
+    const title = linearTitleText(titleElement);
+    const markdownUrl = `[${escapeMarkdownLinkTitle(title)}](${url})`;
+    copyToClipboard(markdownUrl);
+    if (titleElement) colorChangeFeedback(titleElement);
   } else if (url.includes('docs.google.com')) {
     const titleElement = document.querySelector('.docs-title-input-label-inner');
     const title = titleElement.textContent.trim();
-    const markdownUrl = `[${title}](${url})`;
+    const markdownUrl = `[${escapeMarkdownLinkTitle(title)}](${url})`;
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
   } else if (url.includes('eddy.internal.headway.co/conversations/')) {
@@ -143,12 +229,12 @@ function main() {
       document.querySelector('button[aria-label="Conversation options"] > span') ||
       document.querySelector('header span.font-semibold');
     const title = titleElement ? titleElement.textContent.trim() : document.title.trim();
-    const markdownUrl = `[Eddy: ${title}](${url})`;
+    const markdownUrl = `[:eddy:: ${escapeMarkdownLinkTitle(title)}](${url})`;
     copyToClipboard(markdownUrl);
     if (titleElement) colorChangeFeedback(titleElement);
   } else {
     const title = document.title.trim();
-    const markdownUrl = `[${title}](${url})`;
+    const markdownUrl = `[${escapeMarkdownLinkTitle(title)}](${url})`;
     copyToClipboard(markdownUrl);
     const h1s = document.querySelectorAll('h1');
     const h1sWithText = Array.from(h1s).filter(h1 => h1.textContent.trim().length > 0);
