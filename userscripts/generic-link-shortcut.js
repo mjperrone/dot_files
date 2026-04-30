@@ -14,6 +14,9 @@ const SHORTCUT = {
   code: 'KeyC'
 };
 
+/** Shown before the title in markdown for Eddy artifact links (e.g. Slack custom emoji). */
+const EDIFACT_ICON = ':edifact::';
+
 /** Backslash-escape [] and () so titles are safe inside Markdown [text](url) link text. */
 function escapeMarkdownLinkTitle(text) {
   return text.replace(/[\[\]()]/g, '\\$&');
@@ -230,6 +233,43 @@ function main() {
       document.querySelector('header span.font-semibold');
     const title = titleElement ? titleElement.textContent.trim() : document.title.trim();
     const markdownUrl = `[:eddy:: ${escapeMarkdownLinkTitle(title)}](${url})`;
+    copyToClipboard(markdownUrl);
+    if (titleElement) colorChangeFeedback(titleElement);
+  } else if (url.includes('eddy.internal.headway.co/artifacts/')) {
+    // Eddy artifact page — prefer the title rendered *inside* the artifact (e.g. the
+    // <title> or first <h1> of the inline HTML) over the artifact's filename.
+    // The artifact iframe is sandboxed without allow-same-origin, so we can't read
+    // contentDocument — but the `srcdoc` attribute set by the host page is still
+    // readable from the parent, so we parse it with DOMParser.
+    let title = null;
+    let titleElement = null;
+    const iframe = document.querySelector('iframe[data-artifact-iframe]');
+    if (iframe && iframe.srcdoc) {
+      try {
+        const doc = new DOMParser().parseFromString(iframe.srcdoc, 'text/html');
+        const inner =
+          doc.querySelector('title')?.textContent?.trim() ||
+          doc.querySelector('h1')?.textContent?.trim() ||
+          doc.querySelector('h2')?.textContent?.trim();
+        if (inner) {
+          title = inner;
+          titleElement = iframe;
+        }
+      } catch (e) {
+        console.log('[link-shortcut] failed to parse iframe srcdoc:', e);
+      }
+    }
+    // Fallbacks for non-HTML artifacts: page-shell <h1> (filename) → document.title.
+    if (!title) {
+      titleElement =
+        document.querySelector('h1.truncate') ||
+        document.querySelector('main h1') ||
+        document.querySelector('h1');
+      title = titleElement
+        ? titleElement.textContent.trim()
+        : document.title.trim().replace(/\s*[-–]\s*Eddy\s*$/, '');
+    }
+    const markdownUrl = `[${EDIFACT_ICON} ${escapeMarkdownLinkTitle(title)}](${url})`;
     copyToClipboard(markdownUrl);
     if (titleElement) colorChangeFeedback(titleElement);
   } else {
