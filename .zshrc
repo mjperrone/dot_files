@@ -29,3 +29,7 @@ bindkey "^?" backward-delete-char # Allow backspace to delete stuff in prompt in
 
 # Do reverse history search with control-R, like in bash
 bindkey "^R" history-incremental-search-backward
+
+export PATH="$HOME/.local/bin:$PATH"
+
+. "$HOME/.local/share/../bin/env"
