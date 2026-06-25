@@ -1,0 +1,61 @@
+{
+  // Source of truth for AI-assisted Raycast preference iteration.
+  // Raycast stores most command, extension, and AI chat state in encrypted SQLite
+  // files under ~/Library/Application Support/com.raycast.macos, so those are not
+  // suitable for source control. Keep only portable, non-secret preferences here.
+  "app": {
+    "globalHotkey": "Command-49",
+    "preferredWindowMode": "default",
+    "followSystemAppearance": true,
+    "useHyperKeyIcon": false
+  },
+
+  "onboarding": {
+    "completed": true,
+    "raycastShortcuts": ["Esc"],
+    "completedTaskIdentifiers": ["installFirstExtension", "quicklinks"]
+  },
+
+  "permissions": {
+    "foldersRead": [
+      "/Users/mperrone/Desktop",
+      "/Users/mperrone/Documents",
+      "/Users/mperrone/Downloads",
+      "cloudStorage",
+      "removableVolumes"
+    ]
+  },
+
+  "store": {
+    "everInstalledExtensionIds": [
+      "4d342edf-4371-498e-8ead-a424d65f933f",
+      "6caa8a8c-97f5-4538-ad53-f8da9d21775c",
+      "c0c9423a-7014-481e-8bb9-44c4c6df53be"
+    ],
+    "termsAccepted": true
+  },
+
+  "ai": {
+    "hasSeenQuickAI": true,
+    "notes": [
+      "AI model metadata, chat IDs, and extension state are intentionally omitted because they are generated Raycast runtime state.",
+      "If we want declarative AI defaults later, add them here as desired-state fields rather than copying opaque plist blobs."
+    ]
+  },
+
+  "scriptCommands": {
+    "directories": ["raycast/scripts"],
+    "shortcuts": {
+      "Jump: Gmail Inbox": "Hyper-G"
+    }
+  },
+
+  "notTracked": [
+    "analytics identifiers",
+    "PostHog queue/state",
+    "encrypted SQLite databases",
+    "window positions",
+    "last update timestamps",
+    "opaque binary plist blobs"
+  ]
+}
