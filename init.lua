@@ -68,53 +68,173 @@ local function maybeNudgeForDictation(event)
 end
 
 dictationNudge.eventtap = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, maybeNudgeForDictation):start()
-units = {
-  left75        = { x = 0.00, y = 0.00, w = 0.75, h = 1.00 },
-  right25       = { x = 0.75, y = 0.00, w = 0.25, h = 1.00 },
 
-  right50       = { x = 0.50, y = 0.00, w = 0.50, h = 1.00 },
-  left50        = { x = 0.00, y = 0.00, w = 0.50, h = 1.00 },
-  top50         = { x = 0.00, y = 0.00, w = 1.00, h = 0.50 },
-  bot50         = { x = 0.00, y = 0.50, w = 1.00, h = 0.50 },
-
-  topleft       = { x = 0.00, y = 0.00, w = 0.50, h = 0.50 },
-  topright      = { x = 0.50, y = 0.00, w = 0.50, h = 0.50 },
-  botleft       = { x = 0.00, y = 0.50, w = 0.50, h = 0.50 },
-  botright      = { x = 0.50, y = 0.50, w = 0.50, h = 0.50 },
-
-  maximum       = { x = 0.00, y = 0.00, w = 1.00, h = 1.00 }
-
+local ratios = {
+  side = { 0.50, 0.67, 0.75, 0.25, 0.33 },
+  vertical = { 0.50, 0.67, 0.75 },
+  corner = { 0.50, 0.67 },
 }
 
+local function unit(position, ratio)
+  if position == 'left' then
+    return { x = 0.00, y = 0.00, w = ratio, h = 1.00 }
+  elseif position == 'right' then
+    return { x = 1.00 - ratio, y = 0.00, w = ratio, h = 1.00 }
+  elseif position == 'top' then
+    return { x = 0.00, y = 0.00, w = 1.00, h = ratio }
+  elseif position == 'bottom' then
+    return { x = 0.00, y = 1.00 - ratio, w = 1.00, h = ratio }
+  elseif position == 'topleft' then
+    return { x = 0.00, y = 0.00, w = ratio, h = ratio }
+  elseif position == 'topright' then
+    return { x = 1.00 - ratio, y = 0.00, w = ratio, h = ratio }
+  elseif position == 'bottomleft' then
+    return { x = 0.00, y = 1.00 - ratio, w = ratio, h = ratio }
+  elseif position == 'bottomright' then
+    return { x = 1.00 - ratio, y = 1.00 - ratio, w = ratio, h = ratio }
+  end
+end
+
+local function nearlyEqual(a, b)
+  return math.abs(a - b) < 0.01
+end
+
+local function sameUnit(a, b)
+  return nearlyEqual(a.x, b.x) and nearlyEqual(a.y, b.y) and nearlyEqual(a.w, b.w) and nearlyEqual(a.h, b.h)
+end
+
+local function currentUnit(window)
+  local frame = window:frame()
+  local screenFrame = window:screen():frame()
+
+  return {
+    x = (frame.x - screenFrame.x) / screenFrame.w,
+    y = (frame.y - screenFrame.y) / screenFrame.h,
+    w = frame.w / screenFrame.w,
+    h = frame.h / screenFrame.h,
+  }
+end
+
+local function bindCycle(mods, key, position, cycleRatios)
+  hs.hotkey.bind(mods, key, function()
+    local window = hs.window.focusedWindow()
+    if not window then return end
+
+    local activeUnit = currentUnit(window)
+    local nextIndex = 1
+    for index, ratio in ipairs(cycleRatios) do
+      if sameUnit(activeUnit, unit(position, ratio)) then
+        nextIndex = (index % #cycleRatios) + 1
+        break
+      end
+    end
+
+    window:move(unit(position, cycleRatios[nextIndex]), nil, true)
+  end)
+end
+
+local maximum = { x = 0.00, y = 0.00, w = 1.00, h = 1.00 }
+local resizeStep = 0.15
+
+local function moveFocusedWindow(targetUnit)
+  local window = hs.window.focusedWindow()
+  if window then window:move(targetUnit, nil, true) end
+end
+
+local function resizeSnappedWindow(delta)
+  local window = hs.window.focusedWindow()
+  if not window then return end
+
+  local activeUnit = currentUnit(window)
+  local targetUnit = nil
+
+  if sameUnit(activeUnit, maximum) and delta > 0 then
+    targetUnit = {
+      x = resizeStep,
+      y = activeUnit.y,
+      w = 1.00 - resizeStep,
+      h = activeUnit.h,
+    }
+  elseif nearlyEqual(activeUnit.x, 0.00) then
+    targetUnit = {
+      x = 0.00,
+      y = activeUnit.y,
+      w = math.max(resizeStep, math.min(1.00, activeUnit.w + delta)),
+      h = activeUnit.h,
+    }
+  elseif nearlyEqual(activeUnit.x + activeUnit.w, 1.00) then
+    local nextWidth = math.max(resizeStep, math.min(1.00, activeUnit.w - delta))
+    targetUnit = {
+      x = 1.00 - nextWidth,
+      y = activeUnit.y,
+      w = nextWidth,
+      h = activeUnit.h,
+    }
+  end
+
+  if targetUnit then window:move(targetUnit, nil, true) end
+end
+
 mash = { 'ctrl', 'option', 'cmd' }
-hs.hotkey.bind(mash, '.', function() hs.window.focusedWindow():move(units.right25,    nil, true) end)
-hs.hotkey.bind(mash, ',', function() hs.window.focusedWindow():move(units.left75,    nil, true) end)
+hs.hotkey.bind(mash, 'l', function() moveFocusedWindow(unit('right', 0.50)) end)
+hs.hotkey.bind(mash, 'h', function() moveFocusedWindow(unit('left', 0.50)) end)
+hs.hotkey.bind(mash, '.', function() resizeSnappedWindow(resizeStep) end)
+hs.hotkey.bind(mash, ',', function() resizeSnappedWindow(-resizeStep) end)
+bindCycle(mash, 'k', 'top', ratios.vertical)
+bindCycle(mash, 'j', 'bottom', ratios.vertical)
 
-hs.hotkey.bind(mash, 'l', function() hs.window.focusedWindow():move(units.right50,    nil, true) end)
-hs.hotkey.bind(mash, 'h', function() hs.window.focusedWindow():move(units.left50,     nil, true) end)
-hs.hotkey.bind(mash, 'k', function() hs.window.focusedWindow():move(units.top50,      nil, true) end)
-hs.hotkey.bind(mash, 'j', function() hs.window.focusedWindow():move(units.bot50,      nil, true) end)
+bindCycle(mash, 'u', 'topleft', ratios.corner)
+hs.hotkey.bind(mash, 'i', function() hs.application.launchOrFocus('Linear') end)
+bindCycle(mash, 'o', 'bottomright', ratios.corner)
+bindCycle(mash, 'p', 'bottomleft', ratios.corner)
 
-hs.hotkey.bind(mash, 'u', function() hs.window.focusedWindow():move(units.topleft,      nil, true) end)
-hs.hotkey.bind(mash, 'i', function() hs.window.focusedWindow():move(units.topright,      nil, true) end)
-hs.hotkey.bind(mash, 'o', function() hs.window.focusedWindow():move(units.botright,      nil, true) end)
-hs.hotkey.bind(mash, 'p', function() hs.window.focusedWindow():move(units.botleft,      nil, true) end)
-
-hs.hotkey.bind(mash, 'm', function() hs.window.focusedWindow():move(units.maximum,    nil, true) end)
-
-hs.hotkey.bind(mash, 'z', function()
-  hs.application.launchOrFocus('Firefox')
-  hs.eventtap.keyStroke({'cmd'}, "t")
-  hs.eventtap.keyStrokes("zk")
-  hs.eventtap.keyStroke({}, "return")
+hs.hotkey.bind(mash, 'm', function()
+  local window = hs.window.focusedWindow()
+  if window then window:move(maximum, nil, true) end
 end)
 
-hs.hotkey.bind(mash, 't', function()
-  hs.application.launchOrFocus('Firefox')
-  hs.eventtap.keyStroke({'cmd'}, "t")
-  hs.eventtap.keyStrokes("tk")
-  hs.eventtap.keyStroke({}, "return")
-end)
+
+local function logVivaldiShortcut(message)
+  hs.printf('[vivaldi-shortcuts] %s', message)
+end
+
+local function focusVivaldiWorkspaceTab(label, workspace, tab)
+  logVivaldiShortcut(string.format('%s requested; target workspace=%s tab=%s', label, workspace, tab or 'none'))
+
+  hs.application.launchOrFocus('Vivaldi')
+  logVivaldiShortcut('Called hs.application.launchOrFocus("Vivaldi")')
+
+  hs.timer.doAfter(0.05, function()
+    logVivaldiShortcut(string.format('Sending Vivaldi workspace shortcut ctrl+shift+%s', workspace))
+    hs.eventtap.keyStroke({ 'ctrl', 'shift' }, tostring(workspace))
+
+    if tab then
+      hs.timer.doAfter(0.05, function()
+        logVivaldiShortcut(string.format('Sending Vivaldi tab shortcut cmd+%s', tab))
+        hs.eventtap.keyStroke({ 'cmd' }, tostring(tab))
+      end)
+    else
+      logVivaldiShortcut(string.format('%s is workspace-only; skipping tab shortcut', label))
+    end
+  end)
+end
+
+local vivaldiShortcuts = {
+  { key = 'g', label = 'Gmail', workspace = 2, tab = 1 },
+  { key = 's', label = 'SMS', workspace = 2, tab = 3 },
+  { key = 'y', label = 'Jellyfin', workspace = 3, tab = 2 },
+  { key = 'v', label = 'Video workspace', workspace = 3 },
+  { key = 'b', label = 'Airbnb workspace', workspace = 4 },
+  { key = '4', label = 'Money', workspace = 5 },
+  { key = 'd', label = 'DayZ', workspace = 6 },
+}
+
+for _, shortcut in ipairs(vivaldiShortcuts) do
+  hs.hotkey.bind(mash, shortcut.key, function()
+    logVivaldiShortcut(string.format('Global shortcut ctrl+option+cmd+%s fired', shortcut.key))
+    focusVivaldiWorkspaceTab(shortcut.label, shortcut.workspace, shortcut.tab)
+  end)
+end
 
 
 hs.hotkey.bind(mash, 'n', function()
@@ -155,20 +275,3 @@ function focus_app_tab(app, name)
 end
 
 -- hs.hotkey.bind({"alt", "cmd"}, "Left", focus_app_tab('Google Chrome', '.*Inbox.*'));
-
-
-local hyper = { "cmd", "alt" }
-
-local applicationHotkeys = {
-  space = 'Google Chrome', -- also need to disable the command alt space mac shortcut to search something in finder
-  v = 'Visual Studio Code',
-  c = 'Firefox',
-  d = 'Spotify', -- also need to Turn Dock Hiding Off under launchpad in keyboard settings
-  f = 'Signal',
-}
-for key, app in pairs(applicationHotkeys) do
-  hs.hotkey.bind(hyper, key, function()
-    hs.application.launchOrFocus(app)
-  end)
-end
--- hs.hotkey.bind(hyper, , focus_app_tab('Firefox', '.*Task List.*'));
