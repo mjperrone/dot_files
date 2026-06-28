@@ -1,6 +1,73 @@
 -- Hammerspoon config
 
 hs.window.animationDuration = 0
+
+dictationNudge = {
+  enabled = true,
+  threshold = 25,
+  windowSeconds = 90,
+  cooldownSeconds = 30 * 60,
+  typed = 0,
+  windowStartedAt = 0,
+  lastShownAt = 0,
+}
+
+local textEntryKeys = {
+  space = true,
+  ['return'] = true,
+  tab = true,
+}
+
+for char = string.byte('a'), string.byte('z') do
+  textEntryKeys[string.char(char)] = true
+end
+
+for digit = 0, 9 do
+  textEntryKeys[tostring(digit)] = true
+end
+
+for _, key in ipairs({ '-', '=', '[', ']', '\\', ';', "'", ',', '.', '/', '`' }) do
+  textEntryKeys[key] = true
+end
+
+local function maybeNudgeForDictation(event)
+  if not dictationNudge.enabled then
+    return false
+  end
+
+  local flags = event:getFlags()
+  if flags.cmd or flags.ctrl or flags.alt or flags.fn then
+    return false
+  end
+
+  local key = hs.keycodes.map[event:getKeyCode()]
+  if not textEntryKeys[key] then
+    return false
+  end
+
+  local now = hs.timer.secondsSinceEpoch()
+  if now - dictationNudge.windowStartedAt > dictationNudge.windowSeconds then
+    dictationNudge.typed = 0
+    dictationNudge.windowStartedAt = now
+  end
+
+  if dictationNudge.windowStartedAt == 0 then
+    dictationNudge.windowStartedAt = now
+  end
+
+  dictationNudge.typed = dictationNudge.typed + 1
+
+  if dictationNudge.typed >= dictationNudge.threshold and now - dictationNudge.lastShownAt > dictationNudge.cooldownSeconds then
+    dictationNudge.lastShownAt = now
+    dictationNudge.typed = 0
+    dictationNudge.windowStartedAt = now
+    hs.alert.show('press fn to dictate', 3)
+  end
+
+  return false
+end
+
+dictationNudge.eventtap = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, maybeNudgeForDictation):start()
 units = {
   left75        = { x = 0.00, y = 0.00, w = 0.75, h = 1.00 },
   right25       = { x = 0.75, y = 0.00, w = 0.25, h = 1.00 },
