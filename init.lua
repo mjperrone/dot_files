@@ -2,6 +2,57 @@
 
 hs.window.animationDuration = 0
 
+opencodeStatus = {
+  url = 'http://127.0.0.1:4097',
+  isRunning = false,
+  lastCheckedAt = nil,
+  menubar = hs.menubar.new(),
+}
+
+local function setOpencodeMenuTitle()
+  if not opencodeStatus.menubar then return end
+
+  if opencodeStatus.isRunning then
+    opencodeStatus.menubar:setTitle('OC')
+  else
+    opencodeStatus.menubar:setTitle(hs.styledtext.new('OC', {
+      color = { red = 1, green = 0.18, blue = 0.18, alpha = 1 },
+    }))
+  end
+end
+
+local function updateOpencodeMenu()
+  if not opencodeStatus.menubar then return end
+
+  local status = opencodeStatus.isRunning and 'running' or 'not running'
+  local lastChecked = opencodeStatus.lastCheckedAt and os.date('%H:%M:%S', opencodeStatus.lastCheckedAt) or 'never'
+  opencodeStatus.menubar:setTooltip('OpenCode local server is ' .. status)
+  opencodeStatus.menubar:setMenu({
+    { title = 'OpenCode server is ' .. status, disabled = true },
+    { title = 'Last checked: ' .. lastChecked, disabled = true },
+    { title = '-' },
+    { title = 'Open local OpenCode', fn = function() hs.urlevent.openURL(opencodeStatus.url) end },
+    { title = 'Copy local URL', fn = function() hs.pasteboard.setContents(opencodeStatus.url) end },
+    { title = '-' },
+    { title = 'Refresh status', fn = function() checkOpencodeStatus() end },
+    { title = 'Reload Hammerspoon', fn = function() hs.reload() end },
+  })
+end
+
+function checkOpencodeStatus()
+  hs.http.asyncGet(opencodeStatus.url, nil, function(status)
+    opencodeStatus.isRunning = status ~= nil and status >= 200 and status < 500
+    opencodeStatus.lastCheckedAt = os.time()
+    setOpencodeMenuTitle()
+    updateOpencodeMenu()
+  end)
+end
+
+setOpencodeMenuTitle()
+updateOpencodeMenu()
+checkOpencodeStatus()
+opencodeStatus.timer = hs.timer.doEvery(5, checkOpencodeStatus)
+
 dictationNudge = {
   enabled = true,
   threshold = 25,
@@ -134,7 +185,7 @@ local function bindCycle(mods, key, position, cycleRatios)
 end
 
 local maximum = { x = 0.00, y = 0.00, w = 1.00, h = 1.00 }
-local resizeStep = 0.15
+local resizeStep = 0.10
 
 local function addResizeEdge(edges, edge)
   if edge < -0.01 or edge > 1.01 then return end
@@ -193,9 +244,6 @@ local function nextResizeEdgeFromEdges(edges, currentEdge, direction, minEdge, m
 end
 
 local function nextResizeEdge(window, currentEdge, direction, minEdge, maxEdge)
-  local windowEdge = nextResizeEdgeFromEdges(resizeEdgesForWindow(window, false), currentEdge, direction, minEdge, maxEdge)
-  if not nearlyEqual(windowEdge, currentEdge) then return windowEdge end
-
   return nextResizeEdgeFromEdges(resizeEdgesForWindow(window, true), currentEdge, direction, minEdge, maxEdge)
 end
 
@@ -257,9 +305,10 @@ bindCycle(mash, 'k', 'top', ratios.vertical)
 bindCycle(mash, 'j', 'bottom', ratios.vertical)
 
 bindCycle(mash, 'u', 'topleft', ratios.corner)
-hs.hotkey.bind(mash, 'i', function() hs.application.launchOrFocus('Linear') end)
+bindCycle(mash, 'i', 'topright', ratios.corner)
 bindCycle(mash, 'o', 'bottomright', ratios.corner)
 bindCycle(mash, 'p', 'bottomleft', ratios.corner)
+hs.hotkey.bind(mash, 't', function() hs.application.launchOrFocus('Linear') end)
 
 hs.hotkey.bind(mash, 'm', function()
   local window = hs.window.focusedWindow()
