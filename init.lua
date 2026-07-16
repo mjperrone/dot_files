@@ -135,34 +135,6 @@ end
 
 local maximum = { x = 0.00, y = 0.00, w = 1.00, h = 1.00 }
 local resizeStep = 0.15
-local resizeDebugLogPath = '/tmp/hammerspoon-resize-debug.log'
-
-local function formatUnit(windowUnit)
-  if not windowUnit then return 'nil' end
-  return string.format('{x=%.4f,y=%.4f,w=%.4f,h=%.4f}', windowUnit.x, windowUnit.y, windowUnit.w, windowUnit.h)
-end
-
-local function formatFrame(frame)
-  return string.format('{x=%.0f,y=%.0f,w=%.0f,h=%.0f}', frame.x, frame.y, frame.w, frame.h)
-end
-
-local function windowName(window)
-  local app = window:application()
-  local appName = app and app:name() or 'unknown app'
-  local title = window:title() or ''
-  return string.format('%s "%s"', appName, title)
-end
-
-local function logResizeDebug(message)
-  local line = string.format('[%s] %s', os.date('%Y-%m-%d %H:%M:%S'), message)
-  hs.printf('[resize-debug] %s', message)
-
-  local file = io.open(resizeDebugLogPath, 'a')
-  if file then
-    file:write(line .. '\n')
-    file:close()
-  end
-end
 
 local function addResizeEdge(edges, edge)
   if edge < -0.01 or edge > 1.01 then return end
@@ -222,45 +194,9 @@ end
 
 local function nextResizeEdge(window, currentEdge, direction, minEdge, maxEdge)
   local windowEdge = nextResizeEdgeFromEdges(resizeEdgesForWindow(window, false), currentEdge, direction, minEdge, maxEdge)
-  if not nearlyEqual(windowEdge, currentEdge) then return windowEdge, 'window' end
+  if not nearlyEqual(windowEdge, currentEdge) then return windowEdge end
 
-  return nextResizeEdgeFromEdges(resizeEdgesForWindow(window, true), currentEdge, direction, minEdge, maxEdge), 'grid'
-end
-
-local function logResizeWindowState(window, delta, activeUnit, targetUnit, branchName, selectedEdge, selectedSource)
-  local screen = window:screen()
-  local screenId = screen:id()
-  local screenFrame = screen:frame()
-  local windowFrame = window:frame()
-  local direction = delta > 0 and 'positive' or 'negative'
-
-  logResizeDebug(string.format(
-    'resize delta=%s branch=%s selectedEdge=%s selectedSource=%s focused=%s frame=%s screen=%s unit=%s target=%s',
-    direction,
-    branchName or 'none',
-    selectedEdge and string.format('%.4f', selectedEdge) or 'nil',
-    selectedSource or 'nil',
-    windowName(window),
-    formatFrame(windowFrame),
-    formatFrame(screenFrame),
-    formatUnit(activeUnit),
-    formatUnit(targetUnit)
-  ))
-
-  for _, otherWindow in ipairs(hs.window.visibleWindows()) do
-    if otherWindow:id() ~= window:id() and otherWindow:screen():id() == screenId then
-      local frame = otherWindow:frame()
-      local leftEdge = (frame.x - screenFrame.x) / screenFrame.w
-      local rightEdge = (frame.x + frame.w - screenFrame.x) / screenFrame.w
-      logResizeDebug(string.format(
-        'candidate window=%s frame=%s leftEdge=%.4f rightEdge=%.4f',
-        windowName(otherWindow),
-        formatFrame(frame),
-        leftEdge,
-        rightEdge
-      ))
-    end
-  end
+  return nextResizeEdgeFromEdges(resizeEdgesForWindow(window, true), currentEdge, direction, minEdge, maxEdge)
 end
 
 local function moveFocusedWindow(targetUnit)
@@ -274,15 +210,9 @@ local function resizeSnappedWindow(delta)
 
   local activeUnit = currentUnit(window)
   local targetUnit = nil
-  local branchName = nil
-  local selectedEdge = nil
-  local selectedSource = nil
 
   if sameUnit(activeUnit, maximum) and delta > 0 then
-    branchName = 'max-positive'
-    local nextLeftEdge, edgeSource = nextResizeEdge(window, activeUnit.x, delta, 0.00, 1.00 - resizeStep)
-    selectedEdge = nextLeftEdge
-    selectedSource = edgeSource
+    local nextLeftEdge = nextResizeEdge(window, activeUnit.x, delta, 0.00, 1.00 - resizeStep)
     targetUnit = {
       x = nextLeftEdge,
       y = activeUnit.y,
@@ -290,10 +220,7 @@ local function resizeSnappedWindow(delta)
       h = activeUnit.h,
     }
   elseif sameUnit(activeUnit, maximum) and delta < 0 then
-    branchName = 'max-negative'
-    local nextRightEdge, edgeSource = nextResizeEdge(window, activeUnit.x + activeUnit.w, delta, resizeStep, 1.00)
-    selectedEdge = nextRightEdge
-    selectedSource = edgeSource
+    local nextRightEdge = nextResizeEdge(window, activeUnit.x + activeUnit.w, delta, resizeStep, 1.00)
     targetUnit = {
       x = 0.00,
       y = activeUnit.y,
@@ -301,10 +228,7 @@ local function resizeSnappedWindow(delta)
       h = activeUnit.h,
     }
   elseif nearlyEqual(activeUnit.x, 0.00) then
-    branchName = 'left-edge'
-    local nextRightEdge, edgeSource = nextResizeEdge(window, activeUnit.x + activeUnit.w, delta, resizeStep, 1.00)
-    selectedEdge = nextRightEdge
-    selectedSource = edgeSource
+    local nextRightEdge = nextResizeEdge(window, activeUnit.x + activeUnit.w, delta, resizeStep, 1.00)
     targetUnit = {
       x = 0.00,
       y = activeUnit.y,
@@ -312,10 +236,7 @@ local function resizeSnappedWindow(delta)
       h = activeUnit.h,
     }
   elseif nearlyEqual(activeUnit.x + activeUnit.w, 1.00) then
-    branchName = 'right-edge'
-    local nextLeftEdge, edgeSource = nextResizeEdge(window, activeUnit.x, delta, 0.00, 1.00 - resizeStep)
-    selectedEdge = nextLeftEdge
-    selectedSource = edgeSource
+    local nextLeftEdge = nextResizeEdge(window, activeUnit.x, delta, 0.00, 1.00 - resizeStep)
     targetUnit = {
       x = nextLeftEdge,
       y = activeUnit.y,
@@ -324,7 +245,6 @@ local function resizeSnappedWindow(delta)
     }
   end
 
-  logResizeWindowState(window, delta, activeUnit, targetUnit, branchName, selectedEdge, selectedSource)
   if targetUnit then window:move(targetUnit, nil, true) end
 end
 
