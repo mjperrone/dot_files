@@ -4,12 +4,83 @@ hs.window.animationDuration = 0
 
 opencodeStatus = {
   url = 'http://127.0.0.1:4097',
+  port = 4097,
+  command = '/Users/mperrone/.opencode/bin/opencode',
+  logPath = os.getenv('HOME') .. '/Library/Logs/opencode-server-hammerspoon.log',
+  enabledHostnames = {
+    ['mike’s MacBook Pro'] = true,
+    ["mike's MacBook Pro"] = true,
+  },
   isRunning = false,
   lastCheckedAt = nil,
-  menubar = hs.menubar.new(),
+  menubar = nil,
 }
 
-local function setOpencodeMenuTitle()
+local setOpencodeMenuTitle
+local updateOpencodeMenu
+local checkOpencodeStatus
+
+local function shellQuote(value)
+  return "'" .. tostring(value):gsub("'", "'\\''") .. "'"
+end
+
+local function openOpencode()
+  hs.urlevent.openURL(opencodeStatus.url)
+end
+
+local function tableHasKey(table, key)
+  return key and table[key] == true
+end
+
+local function shouldShowOpencodeMenu()
+  return tableHasKey(opencodeStatus.enabledHostnames, hs.host.localizedName())
+end
+
+local function startOpencodeServer()
+  if opencodeStatus.isRunning then
+    hs.alert.show('OpenCode server is already running')
+    openOpencode()
+    return
+  end
+
+  local command = table.concat({
+    shellQuote(opencodeStatus.command),
+    'serve',
+    '--port',
+    tostring(opencodeStatus.port),
+    '>',
+    shellQuote(opencodeStatus.logPath),
+    '2>&1',
+    '&',
+  }, ' ')
+
+  hs.execute(command, true)
+  hs.alert.show('Starting OpenCode server')
+  hs.timer.doAfter(1, checkOpencodeStatus)
+  hs.timer.doAfter(3, checkOpencodeStatus)
+end
+
+local function stopOpencodeServer(callback)
+  local command = string.format('lsof -ti tcp:%d | xargs kill 2>/dev/null || true', opencodeStatus.port)
+  hs.task.new('/bin/zsh', function()
+    hs.timer.doAfter(1, function()
+      checkOpencodeStatus()
+      if callback then callback() end
+    end)
+  end, { '-lc', command }):start()
+end
+
+local function restartOpencodeServer()
+  hs.alert.show('Restarting OpenCode server')
+  stopOpencodeServer(function()
+    opencodeStatus.isRunning = false
+    setOpencodeMenuTitle()
+    updateOpencodeMenu()
+    startOpencodeServer()
+  end)
+end
+
+function setOpencodeMenuTitle()
   if not opencodeStatus.menubar then return end
 
   if opencodeStatus.isRunning then
@@ -21,7 +92,7 @@ local function setOpencodeMenuTitle()
   end
 end
 
-local function updateOpencodeMenu()
+function updateOpencodeMenu()
   if not opencodeStatus.menubar then return end
 
   local status = opencodeStatus.isRunning and 'running' or 'not running'
@@ -31,8 +102,10 @@ local function updateOpencodeMenu()
     { title = 'OpenCode server is ' .. status, disabled = true },
     { title = 'Last checked: ' .. lastChecked, disabled = true },
     { title = '-' },
-    { title = 'Open local OpenCode', fn = function() hs.urlevent.openURL(opencodeStatus.url) end },
+    { title = 'Open local OpenCode', fn = openOpencode },
     { title = 'Copy local URL', fn = function() hs.pasteboard.setContents(opencodeStatus.url) end },
+    { title = 'Start server', fn = startOpencodeServer, disabled = opencodeStatus.isRunning },
+    { title = 'Restart server', fn = restartOpencodeServer },
     { title = '-' },
     { title = 'Refresh status', fn = function() checkOpencodeStatus() end },
     { title = 'Reload Hammerspoon', fn = function() hs.reload() end },
@@ -48,10 +121,13 @@ function checkOpencodeStatus()
   end)
 end
 
-setOpencodeMenuTitle()
-updateOpencodeMenu()
-checkOpencodeStatus()
-opencodeStatus.timer = hs.timer.doEvery(5, checkOpencodeStatus)
+if shouldShowOpencodeMenu() then
+  opencodeStatus.menubar = hs.menubar.new()
+  setOpencodeMenuTitle()
+  updateOpencodeMenu()
+  checkOpencodeStatus()
+  opencodeStatus.timer = hs.timer.doEvery(5, checkOpencodeStatus)
+end
 
 dictationNudge = {
   enabled = true,
