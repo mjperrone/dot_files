@@ -67,6 +67,12 @@ def load_jsonc(path):
     return json.loads(strip_jsonc(path.read_text()))
 
 
+def expand_config_string(value):
+    if not isinstance(value, str):
+        return value
+    return value.replace("{env:HOME}", str(HOME))
+
+
 def status(icon, message):
     print(f"{icon} {message}")
 
@@ -98,6 +104,12 @@ def has_secret_like_value(value):
         return False
     lower = value.lower()
     return "bearer " in lower or "token" in lower or bool(re.search(r"[a-zA-Z0-9_-]{24,}\.[a-zA-Z0-9_-]{24,}", value))
+
+
+def has_machine_specific_home_path(value):
+    if not isinstance(value, str):
+        return False
+    return bool(re.search(r"/Users/[^/]+/", value))
 
 
 def check_local_command(name, command):
@@ -156,6 +168,12 @@ def main():
     else:
         warn("config schema URL is missing or unexpected")
 
+    config_text = CONFIG_PATH.read_text()
+    if has_machine_specific_home_path(config_text):
+        warn("config contains hardcoded /Users/<name>/ paths; prefer {env:HOME}")
+    else:
+        ok("config avoids hardcoded home-directory paths")
+
     experimental = config.get("experimental") or {}
     if experimental.get("disable_paste_summary") is True:
         ok("paste summaries disabled for dictation-friendly input")
@@ -202,6 +220,13 @@ def main():
         for header_name, header_value in headers.items():
             if has_secret_like_value(header_value):
                 warn(f"{name}: header {header_name} looks like an embedded secret")
+
+        for value in mcp.get("command") or []:
+            expanded = expand_config_string(value)
+            if has_machine_specific_home_path(value):
+                warn(f"{name}: command contains hardcoded home path")
+            if isinstance(expanded, str) and expanded.startswith(str(HOME) + "/") and not Path(expanded).exists():
+                warn(f"{name}: referenced path missing ({expanded})")
 
     if HAMMERSPOON_PATH.exists():
         text = HAMMERSPOON_PATH.read_text()
