@@ -7,18 +7,23 @@ opencodeStatus = {
   port = 4097,
   command = '/Users/mperrone/.opencode/bin/opencode',
   logPath = os.getenv('HOME') .. '/Library/Logs/opencode-server-hammerspoon.log',
+  healthcheckPath = '/Users/mperrone/code/mjperrone/dot_files/scripts/opencode-healthcheck.py',
   enabledHostnames = {
     ['mike’s MacBook Pro'] = true,
     ["mike's MacBook Pro"] = true,
   },
   isRunning = false,
+  healthStatus = 'unknown',
+  healthMessage = 'healthcheck not run',
   lastCheckedAt = nil,
+  healthLastCheckedAt = nil,
   menubar = nil,
 }
 
 local setOpencodeMenuTitle
 local updateOpencodeMenu
 local checkOpencodeStatus
+local checkOpencodeHealth
 
 local function shellQuote(value)
   return "'" .. tostring(value):gsub("'", "'\\''") .. "'"
@@ -34,6 +39,25 @@ end
 
 local function shouldShowOpencodeMenu()
   return tableHasKey(opencodeStatus.enabledHostnames, hs.host.localizedName())
+end
+
+local function firstHealthIssue(output)
+  for line in (output or ''):gmatch('[^\r\n]+') do
+    if line:match('^FAIL ') then
+      return line
+    end
+
+    if line:match('^WARN .+: MCP not configured')
+        or line:match('^WARN .+: MCP configured but disabled')
+        or line:match('^WARN .+: unknown MCP type')
+        or line:match('^FAIL .+: command not found')
+        or line:match('^FAIL .+: executable missing')
+        or line:match('^FAIL .+: remote MCP missing URL') then
+      return line
+    end
+  end
+
+  return nil
 end
 
 local function startOpencodeServer()
@@ -83,12 +107,16 @@ end
 function setOpencodeMenuTitle()
   if not opencodeStatus.menubar then return end
 
-  if opencodeStatus.isRunning then
-    opencodeStatus.menubar:setTitle('OC')
-  else
+  if not opencodeStatus.isRunning then
     opencodeStatus.menubar:setTitle(hs.styledtext.new('OC', {
       color = { red = 1, green = 0.18, blue = 0.18, alpha = 1 },
     }))
+  elseif opencodeStatus.healthStatus == 'warning' then
+    opencodeStatus.menubar:setTitle(hs.styledtext.new('OC', {
+      color = { red = 1, green = 0.78, blue = 0.18, alpha = 1 },
+    }))
+  else
+    opencodeStatus.menubar:setTitle('OC')
   end
 end
 
@@ -97,10 +125,14 @@ function updateOpencodeMenu()
 
   local status = opencodeStatus.isRunning and 'running' or 'not running'
   local lastChecked = opencodeStatus.lastCheckedAt and os.date('%H:%M:%S', opencodeStatus.lastCheckedAt) or 'never'
-  opencodeStatus.menubar:setTooltip('OpenCode local server is ' .. status)
+  local healthChecked = opencodeStatus.healthLastCheckedAt and os.date('%H:%M:%S', opencodeStatus.healthLastCheckedAt) or 'never'
+  opencodeStatus.menubar:setTooltip('OpenCode local server is ' .. status .. '; health is ' .. opencodeStatus.healthStatus)
   opencodeStatus.menubar:setMenu({
     { title = 'OpenCode server is ' .. status, disabled = true },
     { title = 'Last checked: ' .. lastChecked, disabled = true },
+    { title = 'Health: ' .. opencodeStatus.healthStatus, disabled = true },
+    { title = opencodeStatus.healthMessage, disabled = true },
+    { title = 'Health checked: ' .. healthChecked, disabled = true },
     { title = '-' },
     { title = 'Open local OpenCode', fn = openOpencode },
     { title = 'Copy local URL', fn = function() hs.pasteboard.setContents(opencodeStatus.url) end },
@@ -108,6 +140,7 @@ function updateOpencodeMenu()
     { title = 'Restart server', fn = restartOpencodeServer },
     { title = '-' },
     { title = 'Refresh status', fn = function() checkOpencodeStatus() end },
+    { title = 'Run healthcheck', fn = function() checkOpencodeHealth() end },
     { title = 'Reload Hammerspoon', fn = function() hs.reload() end },
   })
 end
@@ -121,12 +154,45 @@ function checkOpencodeStatus()
   end)
 end
 
+function checkOpencodeHealth()
+  if not hs.fs.attributes(opencodeStatus.healthcheckPath) then
+    opencodeStatus.healthStatus = 'warning'
+    opencodeStatus.healthMessage = 'healthcheck script missing'
+    opencodeStatus.healthLastCheckedAt = os.time()
+    setOpencodeMenuTitle()
+    updateOpencodeMenu()
+    return
+  end
+
+  hs.task.new('/usr/bin/env', function(exitCode, stdout, stderr)
+    local output = (stdout or '') .. '\n' .. (stderr or '')
+    local issue = firstHealthIssue(output)
+
+    opencodeStatus.healthLastCheckedAt = os.time()
+    if exitCode ~= 0 then
+      opencodeStatus.healthStatus = 'warning'
+      opencodeStatus.healthMessage = issue or ('healthcheck failed with exit ' .. tostring(exitCode))
+    elseif issue then
+      opencodeStatus.healthStatus = 'warning'
+      opencodeStatus.healthMessage = issue
+    else
+      opencodeStatus.healthStatus = 'ok'
+      opencodeStatus.healthMessage = 'MCP setup ok'
+    end
+
+    setOpencodeMenuTitle()
+    updateOpencodeMenu()
+  end, { 'python3', opencodeStatus.healthcheckPath }):start()
+end
+
 if shouldShowOpencodeMenu() then
   opencodeStatus.menubar = hs.menubar.new()
   setOpencodeMenuTitle()
   updateOpencodeMenu()
   checkOpencodeStatus()
+  checkOpencodeHealth()
   opencodeStatus.timer = hs.timer.doEvery(5, checkOpencodeStatus)
+  opencodeStatus.healthTimer = hs.timer.doEvery(300, checkOpencodeHealth)
 end
 
 dictationNudge = {
