@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Page title and URL to Markdown URL
-// @version      6
+// @version      8
 // @description  Copies the title and URL of the page to the clipboard in a markdown formatted URL
 // @match        http://*/*
 // @match        https://*/*
@@ -44,10 +44,90 @@ function getPRLineCounts() {
         }
     }
     console.log(`[link-shortcut] line counts: scanned ${srOnlyEls.length} .sr-only els, matched ${matchCount}, added=${added} removed=${removed}`);
+    return formatLineCounts(added, removed);
+}
+
+function formatLineCounts(added, removed) {
     if (added && removed) return `(+${added}/-${removed})`;
     if (added) return `(+${added})`;
     if (removed) return `(-${removed})`;
     return '';
+}
+
+/**
+ * Line counts for any PR (not just the one on screen): the Files changed route
+ * returns React payload JSON with per-file diffSummaries when asked for JSON.
+ */
+async function fetchPRLineCounts(origin, org, repo, prNumber) {
+  try {
+    const res = await fetch(`${origin}/${org}/${repo}/pull/${prNumber}/changes`, {
+      credentials: 'include',
+      headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'GitHub-Verified-Fetch': 'true' },
+    });
+    if (!res.ok) return '';
+    const summaries = (await res.json())?.payload?.pullRequestsChangesRoute?.diffSummaries;
+    if (!Array.isArray(summaries) || !summaries.length) return '';
+    let added = 0, removed = 0;
+    for (const f of summaries) {
+      added += Number(f.linesAdded) || 0;
+      removed += Number(f.linesDeleted) || 0;
+    }
+    return formatLineCounts(added, removed);
+  } catch (e) {
+    console.log(`[link-shortcut] failed to fetch line counts for #${prNumber}:`, e);
+    return '';
+  }
+}
+
+const GITHUB_TITLE_SELECTORS = [
+  'h1[data-component="PH_Title"] span',  // 2026 GitHub UI
+  'bdi.markdown-title',                   // 2025 GitHub UI
+  '.js-issue-title',                      // legacy
+];
+
+function getGitHubTitle() {
+  const matchedSelector = GITHUB_TITLE_SELECTORS.find(sel => document.querySelector(sel));
+  const titleElement = matchedSelector ? document.querySelector(matchedSelector) : null;
+  console.log(`[link-shortcut] github title selector matched: ${matchedSelector || 'NONE (falling back to document.title)'}`);
+  const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
+  return { titleElement, prTitle };
+}
+
+/**
+ * GitHub native stacked PRs: the PR page embeds React payload JSON with
+ * payload.pullRequestsLayoutRoute.stack = { position, size, pulls: [{ number, title, state, url }] }
+ * (pulls ordered top of stack first; stack is null for unstacked PRs).
+ */
+function stackFromDocument(doc, prNumber) {
+  const scripts = doc.querySelectorAll('script[type="application/json"][data-target="react-app.embeddedData"]');
+  for (const script of scripts) {
+    let layout;
+    try {
+      layout = JSON.parse(script.textContent)?.payload?.pullRequestsLayoutRoute;
+    } catch {
+      continue;
+    }
+    if (!layout || String(layout.pullRequest?.number) !== String(prNumber)) continue;
+    return { found: true, stack: layout.stack?.pulls?.length ? layout.stack : null };
+  }
+  return { found: false, stack: null };
+}
+
+async function getGitHubStack(cleanUrl, prNumber) {
+  // Embedded data can be stale or missing after client-side navigation, so fall
+  // back to fetching the PR page (same-origin, so private repos work via cookies).
+  let result = stackFromDocument(document, prNumber);
+  if (!result.found) {
+    try {
+      const res = await fetch(cleanUrl, { credentials: 'include', headers: { Accept: 'text/html' } });
+      const html = await res.text();
+      result = stackFromDocument(new DOMParser().parseFromString(html, 'text/html'), prNumber);
+    } catch (e) {
+      console.log('[link-shortcut] failed to fetch PR page for stack info:', e);
+    }
+  }
+  console.log(`[link-shortcut] stack: ${result.stack ? `${result.stack.size} PRs` : 'none'} (embedded data found=${result.found})`);
+  return result.stack;
 }
 
 function formatPRTitle(title) {
@@ -164,15 +244,7 @@ function main() {
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
   } else if (url.includes('github.com')) {
-    const titleSelectors = [
-      'h1[data-component="PH_Title"] span',  // 2026 GitHub UI
-      'bdi.markdown-title',                   // 2025 GitHub UI
-      '.js-issue-title',                      // legacy
-    ];
-    const matchedSelector = titleSelectors.find(sel => document.querySelector(sel));
-    const titleElement = matchedSelector ? document.querySelector(matchedSelector) : null;
-    console.log(`[link-shortcut] github title selector matched: ${matchedSelector || 'NONE (falling back to document.title)'}`);
-    const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
+    const { titleElement, prTitle } = getGitHubTitle();
     const cleanUrl = url.replace(/\/(files|changes)(\/?|$).*/, '');
 
     // If on files/changes page, redirect to summary and auto-copy after load
@@ -284,16 +356,33 @@ function main() {
   }
 }
 
-function githubCopy(titleElement, prTitle, cleanUrl) {
-  const [, org, repo, , number] = new URL(cleanUrl).pathname.split('/');
-  const linkDisplayText = org === 'headway' ? `${repo}#${number}` : `${org}/${repo}#${number}`;
-  const lineCounts = getPRLineCounts();
-  const formattedTitle = formatPRTitle(prTitle);
+async function githubCopy(titleElement, prTitle, cleanUrl) {
+  const { origin } = new URL(cleanUrl);
+  const [, org, repo, kind, number] = new URL(cleanUrl).pathname.split('/');
+  const displayFor = n => (org === 'headway' ? `${repo}#${n}` : `${org}/${repo}#${n}`);
+  const lineCounts = getPRLineCounts() ||
+    (kind === 'pull' ? await fetchPRLineCounts(origin, org, repo, number) : '');
   const eddyConvoUrl = getEddyConvoLink();
   const eddyLink = eddyConvoUrl ? ` [(Eddy Convo)](${eddyConvoUrl})` : '';
-  const text = `[${linkDisplayText}](${cleanUrl}): ${formattedTitle}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
+  const currentLine = `[${displayFor(number)}](${cleanUrl}): ${formatPRTitle(prTitle)}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
 
-  console.log(`[link-shortcut] githubCopy: title="${prTitle}" lineCounts="${lineCounts}" eddy="${eddyConvoUrl || 'none'}"`);
+  const stack = kind === 'pull' ? await getGitHubStack(cleanUrl, number) : null;
+  let text = currentLine;
+  if (stack) {
+    // GitHub lists the top of the stack first; emit bottom → top (merge order).
+    const pulls = [...stack.pulls].reverse();
+    const counts = await Promise.all(pulls.map(pr =>
+      String(pr.number) === String(number) ? lineCounts : fetchPRLineCounts(origin, org, repo, pr.number)));
+    const lines = pulls.map((pr, i) => {
+      if (String(pr.number) === String(number)) return `- ${currentLine} 👈`;
+      const prUrl = pr.url ? new URL(pr.url, origin).href : `${origin}/${org}/${repo}/pull/${pr.number}`;
+      const state = pr.state === 'MERGED' ? ' (merged)' : pr.state === 'CLOSED' ? ' (closed)' : '';
+      return `- [${displayFor(pr.number)}](${prUrl}): ${formatPRTitle(pr.title || '')}${counts[i] ? ' ' + counts[i] : ''}${state}`;
+    });
+    text = lines.join('\n');
+  }
+
+  console.log(`[link-shortcut] githubCopy: title="${prTitle}" lineCounts="${lineCounts}" eddy="${eddyConvoUrl || 'none'}" stack=${stack ? stack.size : 0}`);
   copyToClipboard(text);
   if (titleElement) colorChangeFeedback(titleElement);
 }
@@ -307,15 +396,7 @@ function runPendingPRCopy() {
   sessionStorage.removeItem('pendingPRCopy');
   const url = window.location.href;
   if (!url.includes('github.com')) return;
-  const titleSelectors = [
-    'h1[data-component="PH_Title"] span',
-    'bdi.markdown-title',
-    '.js-issue-title',
-  ];
-  const matchedSelector = titleSelectors.find(sel => document.querySelector(sel));
-  const titleElement = matchedSelector ? document.querySelector(matchedSelector) : null;
-  console.log(`[link-shortcut] post-redirect github title selector matched: ${matchedSelector || 'NONE'}`);
-  const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
+  const { titleElement, prTitle } = getGitHubTitle();
   githubCopy(titleElement, prTitle, url);
 }
 
