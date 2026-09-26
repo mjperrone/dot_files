@@ -1,0 +1,22 @@
+userscripts/generic-link-shortcut.js
+  s_a608b7035f4cc9::t_76d6b0f994ef28 3,47-50,57-132,247,359-364,367-383,385,399
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "71bfad77be56125e71ec25c102d9d335c9d59d7d",
+  "prompts": {},
+  "sessions": {
+    "s_a608b7035f4cc9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c5f10410-f4ad-4633-ba59-f4adfc8a8be6",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Mike Perrone <mjperrone@users.noreply.github.com>",
+      "custom_attributes": {
+        "runtime": "local"
+      }
+    }
+  }
+}
