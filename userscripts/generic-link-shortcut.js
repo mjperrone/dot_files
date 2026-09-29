@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Page title and URL to Markdown URL
-// @version      8
+// @version      9
 // @description  Copies the title and URL of the page to the clipboard in a markdown formatted URL
 // @match        http://*/*
 // @match        https://*/*
@@ -149,6 +149,66 @@ function colorChangeFeedback(element) {
     console.log(`changing color back`);
     element.style.color = oldColor;
   }, 3000);
+}
+
+const CAMERA_ICON = ':camera:';
+
+/**
+ * Real content images only. Skips GitHub emoji, avatars, and small badges such
+ * as Cursor's "Open in Web" / "Open in Cursor" buttons (114x28 <img>s that ride
+ * along in every Cursor cloud-agent PR description).
+ */
+function isContentImage(img) {
+  if (img.classList.contains('emoji') || img.closest('g-emoji') || img.classList.contains('avatar')) return false;
+  if (/^open in /i.test(img.getAttribute('alt') || '')) return false;
+  const height = parseInt(img.getAttribute('height'), 10);
+  if (height && height <= 40) return false;
+  return true;
+}
+
+function hasContentImage(root) {
+  return Array.from(root.querySelectorAll('img')).some(isContentImage);
+}
+
+/** Description source (markdown and/or HTML) contains a content image. */
+function bodyTextHasImage(text) {
+  if (!text) return false;
+  if (/!\[[^\]]*\]\(/.test(text)) return true;  // markdown image
+  if (/(^|\s)https:\/\/github\.com\/user-attachments\/assets\/\S+/.test(text)) return true;  // bare upload URL
+  return hasContentImage(new DOMParser().parseFromString(text, 'text/html'));
+}
+
+/**
+ * Whether a PR page's description contains an image. Checks the rendered
+ * description first, then the embedded React payload. Returns false when unsure.
+ */
+function descriptionHasImagesInDocument(doc, prNumber) {
+  const descBody = doc.querySelector('.comment-body');
+  if (descBody) return hasContentImage(descBody);
+  const scripts = doc.querySelectorAll('script[type="application/json"][data-target="react-app.embeddedData"]');
+  for (const script of scripts) {
+    let pr;
+    try {
+      pr = JSON.parse(script.textContent)?.payload?.pullRequestsLayoutRoute?.pullRequest;
+    } catch {
+      continue;
+    }
+    if (!pr || String(pr.number) !== String(prNumber)) continue;
+    return bodyTextHasImage(pr.bodyHTML || pr.body || '');
+  }
+  return false;
+}
+
+async function prHasDescriptionImages(origin, org, repo, prNumber) {
+  try {
+    const res = await fetch(`${origin}/${org}/${repo}/pull/${prNumber}`, { credentials: 'include', headers: { Accept: 'text/html' } });
+    if (!res.ok) return false;
+    const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+    return descriptionHasImagesInDocument(doc, prNumber);
+  } catch (e) {
+    console.log(`[link-shortcut] failed to check description images for #${prNumber}:`, e);
+    return false;
+  }
 }
 
 function copyToClipboard(textToCopy) {
@@ -364,25 +424,29 @@ async function githubCopy(titleElement, prTitle, cleanUrl) {
     (kind === 'pull' ? await fetchPRLineCounts(origin, org, repo, number) : '');
   const eddyConvoUrl = getEddyConvoLink();
   const eddyLink = eddyConvoUrl ? ` [(Eddy Convo)](${eddyConvoUrl})` : '';
-  const currentLine = `[${displayFor(number)}](${cleanUrl}): ${formatPRTitle(prTitle)}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
+  const hasImages = kind === 'pull' && descriptionHasImagesInDocument(document, number);
+  const currentLine = `${hasImages ? CAMERA_ICON + ' ' : ''}[${displayFor(number)}](${cleanUrl}): ${formatPRTitle(prTitle)}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
 
   const stack = kind === 'pull' ? await getGitHubStack(cleanUrl, number) : null;
   let text = currentLine;
   if (stack) {
     // GitHub lists the top of the stack first; emit bottom → top (merge order).
     const pulls = [...stack.pulls].reverse();
-    const counts = await Promise.all(pulls.map(pr =>
-      String(pr.number) === String(number) ? lineCounts : fetchPRLineCounts(origin, org, repo, pr.number)));
+    const isCurrent = pr => String(pr.number) === String(number);
+    const [counts, images] = await Promise.all([
+      Promise.all(pulls.map(pr => isCurrent(pr) ? lineCounts : fetchPRLineCounts(origin, org, repo, pr.number))),
+      Promise.all(pulls.map(pr => isCurrent(pr) ? hasImages : prHasDescriptionImages(origin, org, repo, pr.number))),
+    ]);
     const lines = pulls.map((pr, i) => {
-      if (String(pr.number) === String(number)) return `- ${currentLine} 👈`;
+      if (isCurrent(pr)) return currentLine;
       const prUrl = pr.url ? new URL(pr.url, origin).href : `${origin}/${org}/${repo}/pull/${pr.number}`;
       const state = pr.state === 'MERGED' ? ' (merged)' : pr.state === 'CLOSED' ? ' (closed)' : '';
-      return `- [${displayFor(pr.number)}](${prUrl}): ${formatPRTitle(pr.title || '')}${counts[i] ? ' ' + counts[i] : ''}${state}`;
+      return `${images[i] ? CAMERA_ICON + ' ' : ''}[${displayFor(pr.number)}](${prUrl}): ${formatPRTitle(pr.title || '')}${counts[i] ? ' ' + counts[i] : ''}${state}`;
     });
     text = lines.join('\n');
   }
 
-  console.log(`[link-shortcut] githubCopy: title="${prTitle}" lineCounts="${lineCounts}" eddy="${eddyConvoUrl || 'none'}" stack=${stack ? stack.size : 0}`);
+  console.log(`[link-shortcut] githubCopy: title="${prTitle}" lineCounts="${lineCounts}" eddy="${eddyConvoUrl || 'none'}" stack=${stack ? stack.size : 0} images=${hasImages}`);
   copyToClipboard(text);
   if (titleElement) colorChangeFeedback(titleElement);
 }
