@@ -1,10 +1,30 @@
+Skip to chat
+generic-link-shortcut.js
+Updated Oct 5, 4:00 PM
+
+Review
+
+Share
+
+Edit
+
+More
+
+generic-link-shortcut.js
+javascript
+Colors on
+Copy
 // ==UserScript==
 // @name         Page title and URL to Markdown URL
-// @version      9
+// @version      11
 // @description  Copies the title and URL of the page to the clipboard in a markdown formatted URL
 // @match        http://*/*
 // @match        https://*/*
 // @grant        GM_setClipboard
+// @grant        GM_xmlhttpRequest
+// @connect      github.com
+// @connect      githubusercontent.com
+// @connect      amazonaws.com
 // @run-at       document-start
 // ==/UserScript==
 
@@ -185,6 +205,12 @@ function bodyTextHasImage(text) {
 function descriptionHasImagesInDocument(doc, prNumber) {
   const descBody = doc.querySelector('.comment-body');
   if (descBody) return hasContentImage(descBody);
+  const pr = embeddedPullRequest(doc, prNumber);
+  return pr ? bodyTextHasImage(pr.bodyHTML || pr.body || '') : false;
+}
+
+/** The PR object from the page's embedded React payload, if present. */
+function embeddedPullRequest(doc, prNumber) {
   const scripts = doc.querySelectorAll('script[type="application/json"][data-target="react-app.embeddedData"]');
   for (const script of scripts) {
     let pr;
@@ -193,21 +219,119 @@ function descriptionHasImagesInDocument(doc, prNumber) {
     } catch {
       continue;
     }
-    if (!pr || String(pr.number) !== String(prNumber)) continue;
-    return bodyTextHasImage(pr.bodyHTML || pr.body || '');
+    if (pr && String(pr.number) === String(prNumber)) return pr;
   }
-  return false;
+  return null;
 }
 
-async function prHasDescriptionImages(origin, org, repo, prNumber) {
+function contentImageUrls(root, baseUrl) {
+  return Array.from(root.querySelectorAll('img'))
+    .filter(isContentImage)
+    .map(img => img.getAttribute('src'))
+    .filter(Boolean)
+    .map(src => new URL(src, baseUrl).href);
+}
+
+/** URLs of content images in the current PR's description, in order. */
+function descriptionImageUrls(doc, prNumber) {
+  const base = window.location.href;
+  let urls = [];
+  const descBody = doc.querySelector('.comment-body');
+  if (descBody) {
+    urls = contentImageUrls(descBody, base);
+  } else {
+    const pr = embeddedPullRequest(doc, prNumber);
+    if (pr?.bodyHTML) {
+      urls = contentImageUrls(new DOMParser().parseFromString(pr.bodyHTML, 'text/html'), base);
+    } else if (pr?.body) {
+      const md = [...pr.body.matchAll(/!\[[^\]]*\]\((\S+?)(?:\s+"[^"]*")?\)/g)].map(m => m[1]);
+      const html = contentImageUrls(new DOMParser().parseFromString(pr.body, 'text/html'), base);
+      const bare = [...pr.body.matchAll(/(?:^|\s)(https:\/\/github\.com\/user-attachments\/assets\/\S+)/g)].map(m => m[1]);
+      urls = [...md, ...html, ...bare];
+    }
+  }
+  return [...new Set(urls)];
+}
+
+/** Gap between clipboard writes so clipboard-history managers record each one. */
+const CLIPBOARD_STEP_DELAY_MS = 600;
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+/** GM_xmlhttpRequest bypasses CORS, so GitHub's signed image URLs can be read. */
+function fetchImageBlob(url) {
+  return new Promise((resolve, reject) => {
+    GM_xmlhttpRequest({
+      method: 'GET',
+      url,
+      responseType: 'blob',
+      timeout: 15000,
+      onload: r => (r.status >= 200 && r.status < 300 ? resolve(r.response) : reject(new Error(`HTTP ${r.status}`))),
+      onerror: () => reject(new Error('network error')),
+      ontimeout: () => reject(new Error('timeout')),
+    });
+  });
+}
+
+/** Async Clipboard API only reliably accepts image/png, so re-encode anything else. */
+async function toPngBlob(blob) {
+  if (blob.type === 'image/png') return blob;
+  const bitmap = await createImageBitmap(blob);
+  const canvas = document.createElement('canvas');
+  canvas.width = bitmap.width;
+  canvas.height = bitmap.height;
+  canvas.getContext('2d').drawImage(bitmap, 0, 0);
+  bitmap.close();
+  return new Promise((resolve, reject) =>
+    canvas.toBlob(b => (b ? resolve(b) : reject(new Error('toBlob failed'))), 'image/png'));
+}
+
+/** Download and PNG-encode every image; failures are logged and dropped. */
+async function loadPngImages(urls) {
+  const results = await Promise.all(urls.map(async url => {
+    try {
+      return await toPngBlob(await fetchImageBlob(url));
+    } catch (e) {
+      console.log(`[link-shortcut] failed to load image ${url}:`, e);
+      return null;
+    }
+  }));
+  return results.filter(Boolean);
+}
+
+/** Write each image to the clipboard in turn. Returns how many succeeded. */
+async function copyImagesToClipboard(pngs) {
+  let copied = 0;
+  for (const png of pngs) {
+    try {
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': png })]);
+      copied++;
+      console.log(`[link-shortcut] copied image ${copied}/${pngs.length} to clipboard`);
+      await sleep(CLIPBOARD_STEP_DELAY_MS);
+    } catch (e) {
+      console.log('[link-shortcut] failed to write image to clipboard:', e);
+    }
+  }
+  return copied;
+}
+
+/**
+ * Fetches another PR's page once and reports whether its description has
+ * images plus a promise for those images (already downloading) as PNGs.
+ */
+async function fetchPRDescriptionImages(origin, org, repo, prNumber) {
+  const none = { hasImages: false, pngs: Promise.resolve([]) };
   try {
     const res = await fetch(`${origin}/${org}/${repo}/pull/${prNumber}`, { credentials: 'include', headers: { Accept: 'text/html' } });
-    if (!res.ok) return false;
+    if (!res.ok) return none;
     const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
-    return descriptionHasImagesInDocument(doc, prNumber);
+    if (!descriptionHasImagesInDocument(doc, prNumber)) return none;
+    const urls = descriptionImageUrls(doc, prNumber);
+    console.log(`[link-shortcut] #${prNumber} description has ${urls.length} image(s)`);
+    return { hasImages: true, pngs: loadPngImages(urls) };
   } catch (e) {
     console.log(`[link-shortcut] failed to check description images for #${prNumber}:`, e);
-    return false;
+    return none;
   }
 }
 
@@ -425,18 +549,26 @@ async function githubCopy(titleElement, prTitle, cleanUrl) {
   const eddyConvoUrl = getEddyConvoLink();
   const eddyLink = eddyConvoUrl ? ` [(Eddy Convo)](${eddyConvoUrl})` : '';
   const hasImages = kind === 'pull' && descriptionHasImagesInDocument(document, number);
+  // Start downloading images now so it overlaps with the stack/line-count fetches.
+  const imagesPromise = hasImages ? loadPngImages(descriptionImageUrls(document, number)) : Promise.resolve([]);
   const currentLine = `${hasImages ? CAMERA_ICON + ' ' : ''}[${displayFor(number)}](${cleanUrl}): ${formatPRTitle(prTitle)}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
 
   const stack = kind === 'pull' ? await getGitHubStack(cleanUrl, number) : null;
   let text = currentLine;
+  let pngs;
   if (stack) {
     // GitHub lists the top of the stack first; emit bottom → top (merge order).
     const pulls = [...stack.pulls].reverse();
     const isCurrent = pr => String(pr.number) === String(number);
-    const [counts, images] = await Promise.all([
+    const [counts, imageInfos] = await Promise.all([
       Promise.all(pulls.map(pr => isCurrent(pr) ? lineCounts : fetchPRLineCounts(origin, org, repo, pr.number))),
-      Promise.all(pulls.map(pr => isCurrent(pr) ? hasImages : prHasDescriptionImages(origin, org, repo, pr.number))),
+      Promise.all(pulls.map(pr => isCurrent(pr)
+        ? { hasImages, pngs: imagesPromise }
+        : fetchPRDescriptionImages(origin, org, repo, pr.number))),
     ]);
+    const images = imageInfos.map(info => info.hasImages);
+    // Every PR's images, bottom of the stack first (same order as the text lines).
+    pngs = (await Promise.all(imageInfos.map(info => info.pngs))).flat();
     const lines = pulls.map((pr, i) => {
       if (isCurrent(pr)) return currentLine;
       const prUrl = pr.url ? new URL(pr.url, origin).href : `${origin}/${org}/${repo}/pull/${pr.number}`;
@@ -444,9 +576,13 @@ async function githubCopy(titleElement, prTitle, cleanUrl) {
       return `${images[i] ? CAMERA_ICON + ' ' : ''}[${displayFor(pr.number)}](${prUrl}): ${formatPRTitle(pr.title || '')}${counts[i] ? ' ' + counts[i] : ''}${state}`;
     });
     text = lines.join('\n');
+  } else {
+    pngs = await imagesPromise;
   }
 
-  console.log(`[link-shortcut] githubCopy: title="${prTitle}" lineCounts="${lineCounts}" eddy="${eddyConvoUrl || 'none'}" stack=${stack ? stack.size : 0} images=${hasImages}`);
+  console.log(`[link-shortcut] githubCopy: title="${prTitle}" lineCounts="${lineCounts}" eddy="${eddyConvoUrl || 'none'}" stack=${stack ? stack.size : 0} images=${pngs.length}`);
+  // Images go on the clipboard first so the PR text ends up as the latest entry.
+  await copyImagesToClipboard(pngs);
   copyToClipboard(text);
   if (titleElement) colorChangeFeedback(titleElement);
 }
@@ -469,3 +605,5 @@ if (document.readyState === 'loading') {
 } else {
   runPendingPRCopy();
 }
+
+1Password menu is available. Press down arrow to select.
