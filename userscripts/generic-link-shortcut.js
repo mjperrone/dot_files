@@ -84,16 +84,28 @@ async function fetchPRLineCounts(origin, org, repo, prNumber) {
 }
 
 const GITHUB_TITLE_SELECTORS = [
+  'h1 > span.markdown-title',             // Oct 2026 UI (h1 also holds an sr-only " - #N" span, so target the span)
   'h1[data-component="PH_Title"] span',  // 2026 GitHub UI
   'bdi.markdown-title',                   // 2025 GitHub UI
   '.js-issue-title',                      // legacy
 ];
 
+/**
+ * document.title on GitHub looks like "Title by author · Pull Request #123 · org/repo"
+ * (or "Title · Issue #123 · org/repo"). Strip that suffix when no title element matched.
+ */
+function titleFromDocumentTitle() {
+  return document.title
+    .replace(/\s*·\s*(Pull Request|Issue) #\d+\s*·\s*[^·]+$/i, '')
+    .replace(/\s+by\s+\S+$/i, '')
+    .trim();
+}
+
 function getGitHubTitle() {
   const matchedSelector = GITHUB_TITLE_SELECTORS.find(sel => document.querySelector(sel));
   const titleElement = matchedSelector ? document.querySelector(matchedSelector) : null;
   console.log(`[link-shortcut] github title selector matched: ${matchedSelector || 'NONE (falling back to document.title)'}`);
-  const prTitle = (titleElement ? titleElement.textContent : document.title).trim();
+  const prTitle = titleElement ? titleElement.textContent.trim() : titleFromDocumentTitle();
   return { titleElement, prTitle };
 }
 
@@ -143,16 +155,18 @@ function formatPRTitle(title) {
   return `\`${title}\``;
 }
 
+const PENDING_COLOR = 'orange';
+const DONE_COLOR = 'green';
+const ERROR_COLOR = 'red';
+
+/** Permanent (no timeout / revert): the title stays this color until reload. */
+function setTitleColor(element, color) {
+  element.style.setProperty('color', color, 'important');
+}
+
+/** Final "copied" feedback. */
 function colorChangeFeedback(element) {
-  const oldColor = element.style.color;
-  setTimeout(function() {
-    console.log(`changing color to green`);
-    element.style.color = 'green';
-  }, 100);
-  setTimeout(function() {
-    console.log(`changing color back`);
-    element.style.color = oldColor;
-  }, 3000);
+  setTitleColor(element, DONE_COLOR);
 }
 
 const CAMERA_ICON = ':camera:';
@@ -291,7 +305,7 @@ async function copyImagesToClipboard(pngs) {
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': png })]);
       copied++;
       console.log(`[link-shortcut] copied image ${copied}/${pngs.length} to clipboard`);
-      await sleep(CLIPBOARD_STEP_DELAY_MS);
+      if (copied < pngs.length) await sleep(CLIPBOARD_STEP_DELAY_MS);
     } catch (e) {
       console.log('[link-shortcut] failed to write image to clipboard:', e);
     }
@@ -525,11 +539,25 @@ function main() {
 }
 
 async function githubCopy(titleElement, prTitle, cleanUrl) {
+  // Immediate feedback: the click was registered, copy is in progress.
+  if (titleElement) setTitleColor(titleElement, PENDING_COLOR);
+  try {
+    await githubCopyInner(titleElement, prTitle, cleanUrl);
+  } catch (e) {
+    console.log('[link-shortcut] githubCopy failed:', e);
+    if (titleElement) setTitleColor(titleElement, ERROR_COLOR);
+  }
+}
+
+async function githubCopyInner(titleElement, prTitle, cleanUrl) {
   const { origin } = new URL(cleanUrl);
   const [, org, repo, kind, number] = new URL(cleanUrl).pathname.split('/');
   const displayFor = n => (org === 'headway' ? `${repo}#${n}` : `${org}/${repo}#${n}`);
-  const lineCounts = getPRLineCounts() ||
-    (kind === 'pull' ? await fetchPRLineCounts(origin, org, repo, number) : '');
+  // Line counts and stack info are independent network fetches; run them together.
+  const [lineCounts, stack] = await Promise.all([
+    getPRLineCounts() || (kind === 'pull' ? fetchPRLineCounts(origin, org, repo, number) : ''),
+    kind === 'pull' ? getGitHubStack(cleanUrl, number) : null,
+  ]);
   const eddyConvoUrl = getEddyConvoLink();
   const eddyLink = eddyConvoUrl ? ` [(Eddy Convo)](${eddyConvoUrl})` : '';
   const hasImages = kind === 'pull' && descriptionHasImagesInDocument(document, number);
@@ -537,7 +565,6 @@ async function githubCopy(titleElement, prTitle, cleanUrl) {
   const imagesPromise = hasImages ? loadPngImages(descriptionImageUrls(document, number)) : Promise.resolve([]);
   const currentLine = `${hasImages ? CAMERA_ICON + ' ' : ''}[${displayFor(number)}](${cleanUrl}): ${formatPRTitle(prTitle)}${eddyLink}${lineCounts ? ' ' + lineCounts : ''}`;
 
-  const stack = kind === 'pull' ? await getGitHubStack(cleanUrl, number) : null;
   let text = currentLine;
   let pngs;
   if (stack) {
