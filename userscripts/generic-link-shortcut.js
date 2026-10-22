@@ -1,19 +1,3 @@
-Skip to chat
-generic-link-shortcut.js
-Updated Oct 5, 4:00 PM
-
-Review
-
-Share
-
-Edit
-
-More
-
-generic-link-shortcut.js
-javascript
-Colors on
-Copy
 // ==UserScript==
 // @name         Page title and URL to Markdown URL
 // @version      11
@@ -605,5 +589,3 @@ if (document.readyState === 'loading') {
 } else {
   runPendingPRCopy();
 }
-
-1Password menu is available. Press down arrow to select.
