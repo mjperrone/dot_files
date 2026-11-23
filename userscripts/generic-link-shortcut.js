@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Page title and URL to Markdown URL
-// @version      11
+// @version      13
 // @description  Copies the title and URL of the page to the clipboard in a markdown formatted URL
 // @match        http://*/*
 // @match        https://*/*
@@ -17,9 +17,6 @@ const SHORTCUT = {
   shiftKey: true,
   code: 'KeyC'
 };
-
-/** Shown before the title in markdown for Eddy artifact links (e.g. Slack custom emoji). */
-const EDIFACT_ICON = ':edifact::';
 
 /** Backslash-escape [] and () so titles are safe inside Markdown [text](url) link text. */
 function escapeMarkdownLinkTitle(text) {
@@ -84,7 +81,8 @@ async function fetchPRLineCounts(origin, org, repo, prNumber) {
 }
 
 const GITHUB_TITLE_SELECTORS = [
-  'h1 > span.markdown-title',             // Oct 2026 UI (h1 also holds an sr-only " - #N" span, so target the span)
+  'h1 > span[class*="markdownTitle"]',   // Nov 2026 UI: CSS-module hashed class (markdownTitle__xxxx). The h1 also holds an sr-only " - #N" span, so target the span
+  'h1 > span.markdown-title',             // Oct 2026 UI
   'h1[data-component="PH_Title"] span',  // 2026 GitHub UI
   'bdi.markdown-title',                   // 2025 GitHub UI
   '.js-issue-title',                      // legacy
@@ -200,8 +198,17 @@ function bodyTextHasImage(text) {
  * Whether a PR page's description contains an image. Checks the rendered
  * description first, then the embedded React payload. Returns false when unsure.
  */
+/**
+ * The PR description's rendered body. Older GitHub UIs use .comment-body; the
+ * Nov 2026 UI renders <section aria-label="Description"> with a .markdown-body inside.
+ */
+function descriptionBodyElement(doc) {
+  return doc.querySelector('.comment-body')
+    || doc.querySelector('section[aria-label="Description"] .markdown-body');
+}
+
 function descriptionHasImagesInDocument(doc, prNumber) {
-  const descBody = doc.querySelector('.comment-body');
+  const descBody = descriptionBodyElement(doc);
   if (descBody) return hasContentImage(descBody);
   const pr = embeddedPullRequest(doc, prNumber);
   return pr ? bodyTextHasImage(pr.bodyHTML || pr.body || '') : false;
@@ -234,7 +241,7 @@ function contentImageUrls(root, baseUrl) {
 function descriptionImageUrls(doc, prNumber) {
   const base = window.location.href;
   let urls = [];
-  const descBody = doc.querySelector('.comment-body');
+  const descBody = descriptionBodyElement(doc);
   if (descBody) {
     urls = contentImageUrls(descBody, base);
   } else {
@@ -339,7 +346,7 @@ function copyToClipboard(textToCopy) {
 }
 
 function getEddyConvoLink() {
-  const descBody = document.querySelector('.comment-body');
+  const descBody = descriptionBodyElement(document);
   if (!descBody) return '';
   const links = descBody.querySelectorAll('a');
   for (const link of links) {
@@ -416,6 +423,176 @@ function linearIssueDisplayId(url) {
   return '';
 }
 
+const EDDY_HOSTNAME = 'eddy.internal.headway.co';
+
+/**
+ * Slack custom emoji shown before the title for each kind of Eddy page. The
+ * trailing ":" makes the link read "<emoji>: Title" (e.g. ":edifact:: Report").
+ */
+const EDDY_ICONS = {
+  conversation: ':eddy::',
+  coordinator: ':eddy-on-it::',            // Eddy Projects coordinator chat
+  worker: ':eddy-admires-subagents::',     // Eddy Projects worker chat
+  artifact: ':edifact::',
+  workflow: ':eddy-blueprint::',
+  scheduled: ':eddy-scheduled::',
+  slackAgent: ':eddy-slack-agent::',
+  webhook: ':edhooks::',
+  skill: ':eddy-student::',                // library items / catalog skills
+  other: ':eddy::',
+};
+
+/** Query params that only drive one-time UI (back-link, share dialog, approval card, composer prefill). */
+const EDDY_TRANSIENT_PARAMS = ['from', 'share', 'approve', 'prefill'];
+
+function isEddyUrl(url) {
+  try {
+    return new URL(url).hostname === EDDY_HOSTNAME;
+  } catch {
+    return false;
+  }
+}
+
+/** Which kind of Eddy page this is, from the path alone. */
+function eddyPageKind(pathname) {
+  if (/^\/(conversations|projects)\/[^/]+/.test(pathname)) return 'conversation';
+  if (/^\/(artifacts\/[^/]+|a\/[^/]+)/.test(pathname)) return 'artifact';
+  if (/^\/(workflows|blueprints|workflow-runs)(\/|$)/.test(pathname)) return 'workflow';
+  if (/^\/(library\/scheduled|schedules)(\/|$)/.test(pathname)) return 'scheduled';
+  if (/^\/(library\/slack|slack-agents)(\/|$)/.test(pathname)) return 'slackAgent';
+  if (/^\/library\/webhooks(\/|$)/.test(pathname)) return 'webhook';
+  if (/^\/library\/(items|catalog)\/|^\/library\/[^/]+$/.test(pathname)) return 'skill';
+  return 'other';
+}
+
+/**
+ * Eddy Projects role of the open conversation. The header carries a role pill
+ * (data-project-role-pill="coordinator" | "worker"); the header tint
+ * (violet = coordinator, sky = worker) is the fallback.
+ */
+function eddyConversationRole() {
+  const pill = document.querySelector('header [data-project-role-pill], [data-project-role-pill]');
+  const role = pill?.getAttribute('data-project-role-pill');
+  if (role === 'coordinator' || role === 'worker') return role;
+  const header = document.querySelector('header.sticky');
+  if (header?.className.includes('border-violet-500')) return 'coordinator';
+  if (header?.className.includes('border-sky-500')) return 'worker';
+  return null;
+}
+
+function isVisible(el) {
+  return el.getClientRects().length > 0;
+}
+
+/**
+ * The page's visible title element. Owners get a "Click to rename" button
+ * (conversations and artifacts both use one); otherwise Eddy renders a
+ * plain h1 / font-semibold span in the sticky header. The header renders a
+ * mobile and a desktop copy of the title, so pick the visible one.
+ */
+function eddyTitleElement() {
+  const selectors = [
+    'header button[aria-label="Click to rename"]',
+    'button[aria-label="Click to rename"]',
+    'header h1',
+    'header span.font-semibold',
+    'main h1',
+    'h1',
+  ];
+  for (const sel of selectors) {
+    for (const el of document.querySelectorAll(sel)) {
+      if (isVisible(el) && el.textContent.trim()) return el;
+    }
+  }
+  return null;
+}
+
+/**
+ * The element's own text, ignoring child elements. The artifact page renders a
+ * "Shared" badge inside the rename button, so textContent would be "TitleShared".
+ */
+function eddyElementText(el) {
+  const own = Array.from(el.childNodes)
+    .filter(n => n.nodeType === Node.TEXT_NODE)
+    .map(n => n.textContent)
+    .join('')
+    .trim();
+  return own || el.textContent.trim();
+}
+
+/**
+ * Some Eddy pages have no header to color (artifact app mode: /a/<name> for
+ * viewers, ?mode=app), so flash a bar across the top of the page instead.
+ */
+function eddyFallbackFeedback() {
+  const bar = document.createElement('div');
+  bar.style.cssText = `position:fixed;top:0;left:0;right:0;height:4px;background:${DONE_COLOR};z-index:2147483647;pointer-events:none`;
+  document.documentElement.appendChild(bar);
+  setTimeout(() => bar.remove(), 1500);
+}
+
+/** document.title without Eddy's tab-status prefixes and " - Eddy" style suffixes. */
+function eddyTitleFromDocumentTitle() {
+  return document.title
+    .replace(/^(\(\d+\)\s*)?([^\p{L}\p{N}\s]+\s*)+/u, '')
+    .replace(/(\s+-\s+(Library|Agents|Workflows|Eddy))+\s*$/g, '')
+    .trim();
+}
+
+/** The title an HTML artifact gives itself (<title>, else first h1/h2), read from the iframe's srcdoc. */
+function artifactInnerTitle() {
+  // The iframe is sandboxed without allow-same-origin, so contentDocument is
+  // off limits, but the srcdoc attribute the host page sets is readable.
+  const iframe = document.querySelector('iframe[data-artifact-iframe]');
+  if (!iframe?.srcdoc) return '';
+  try {
+    const doc = new DOMParser().parseFromString(iframe.srcdoc, 'text/html');
+    return (
+      doc.querySelector('title')?.textContent?.trim() ||
+      doc.querySelector('h1')?.textContent?.trim() ||
+      doc.querySelector('h2')?.textContent?.trim() ||
+      ''
+    );
+  } catch (e) {
+    console.log('[link-shortcut] failed to parse iframe srcdoc:', e);
+    return '';
+  }
+}
+
+/** "report.inline.html" style labels: the artifact still shows its filename, not a chosen title. */
+function looksLikeFilename(text) {
+  return /\.[a-z0-9]{1,6}$/i.test(text) && !/\s/.test(text);
+}
+
+function eddyCleanUrl(url) {
+  const u = new URL(url);
+  for (const p of EDDY_TRANSIENT_PARAMS) u.searchParams.delete(p);
+  return u.href;
+}
+
+function eddyCopy(url) {
+  const cleanUrl = eddyCleanUrl(url);
+  let kind = eddyPageKind(new URL(cleanUrl).pathname);
+  if (kind === 'conversation') kind = eddyConversationRole() || 'conversation';
+
+  const titleElement = eddyTitleElement();
+  let title = titleElement ? eddyElementText(titleElement) : eddyTitleFromDocumentTitle();
+  if (kind === 'artifact') {
+    // Prefer the artifact's own title over a bare filename, but keep a
+    // display title the owner chose.
+    const inner = artifactInnerTitle();
+    if (inner && (!title || looksLikeFilename(title))) title = inner;
+  }
+
+  const markdownUrl = `[${EDDY_ICONS[kind]} ${escapeMarkdownLinkTitle(title)}](${cleanUrl})`;
+  console.log(`[link-shortcut] eddy page kind=${kind} title element=${titleElement ? titleElement.tagName : 'NONE'}`);
+  copyToClipboard(markdownUrl);
+  // Color the visible page title, never the sandboxed artifact iframe (that
+  // was invisible: the iframe's own document ignores the parent's styles).
+  if (titleElement) colorChangeFeedback(titleElement);
+  else eddyFallbackFeedback();
+}
+
 function main() {
   const url = window.location.href;
 
@@ -480,52 +657,8 @@ function main() {
     const markdownUrl = `[${escapeMarkdownLinkTitle(title)}](${url})`;
     copyToClipboard(markdownUrl);
     colorChangeFeedback(titleElement);
-  } else if (url.includes('eddy.internal.headway.co/conversations/')) {
-    const titleElement =
-      document.querySelector('button[aria-label="Click to rename"]') ||
-      document.querySelector('button[aria-label="Conversation options"] > span') ||
-      document.querySelector('header span.font-semibold');
-    const title = titleElement ? titleElement.textContent.trim() : document.title.trim();
-    const markdownUrl = `[:eddy:: ${escapeMarkdownLinkTitle(title)}](${url})`;
-    copyToClipboard(markdownUrl);
-    if (titleElement) colorChangeFeedback(titleElement);
-  } else if (url.includes('eddy.internal.headway.co/artifacts/')) {
-    // Eddy artifact page — prefer the title rendered *inside* the artifact (e.g. the
-    // <title> or first <h1> of the inline HTML) over the artifact's filename.
-    // The artifact iframe is sandboxed without allow-same-origin, so we can't read
-    // contentDocument — but the `srcdoc` attribute set by the host page is still
-    // readable from the parent, so we parse it with DOMParser.
-    let title = null;
-    let titleElement = null;
-    const iframe = document.querySelector('iframe[data-artifact-iframe]');
-    if (iframe && iframe.srcdoc) {
-      try {
-        const doc = new DOMParser().parseFromString(iframe.srcdoc, 'text/html');
-        const inner =
-          doc.querySelector('title')?.textContent?.trim() ||
-          doc.querySelector('h1')?.textContent?.trim() ||
-          doc.querySelector('h2')?.textContent?.trim();
-        if (inner) {
-          title = inner;
-          titleElement = iframe;
-        }
-      } catch (e) {
-        console.log('[link-shortcut] failed to parse iframe srcdoc:', e);
-      }
-    }
-    // Fallbacks for non-HTML artifacts: page-shell <h1> (filename) → document.title.
-    if (!title) {
-      titleElement =
-        document.querySelector('h1.truncate') ||
-        document.querySelector('main h1') ||
-        document.querySelector('h1');
-      title = titleElement
-        ? titleElement.textContent.trim()
-        : document.title.trim().replace(/\s*[-–]\s*Eddy\s*$/, '');
-    }
-    const markdownUrl = `[${EDIFACT_ICON} ${escapeMarkdownLinkTitle(title)}](${url})`;
-    copyToClipboard(markdownUrl);
-    if (titleElement) colorChangeFeedback(titleElement);
+  } else if (isEddyUrl(url)) {
+    eddyCopy(url);
   } else {
     const title = document.title.trim();
     const markdownUrl = `[${escapeMarkdownLinkTitle(title)}](${url})`;
